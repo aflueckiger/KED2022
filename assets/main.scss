@@ -1,0 +1,90 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");
+/* @import url("https://cdn.jsdelivr.net/npm/pygments-rouge-css@0.1.0/monokai.css"); */
+
+
+/*********************************************
+* TAGS
+*********************************************/
+
+
+body {
+    background: #f7f6f7;
+}
+
+h1 {
+    font-size: 42px;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+i {
+    font-size: 1.5em;
+    color: rgb(10, 102, 180);
+}
+i:hover{
+  color: rgb(180, 10, 34);
+}
+
+a:visited, a {
+    color: rgb(10, 102, 180);
+}
+a:hover{
+  color: rgb(180, 10, 34);
+  text-decoration: None;
+}
+
+
+table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+thead tr {
+    background-color: #009879;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 0px;
+}
+
+
+/*********************************************
+* CLASSES
+*********************************************/
+
+.course-title {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.course-info {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-bottom: 1em;
+}
+
+.footer-col-1 {
+    width: calc(25% - (30px / 2));
+}
+.footer-col-2 {
+    width: calc(50% - (30px / 2));
+}
+.footer-col-3 {
+    width: calc(25% - (30px / 2));
+}
+
+.trigger i{
+    font-size: 1em;
+    color: black;
+}

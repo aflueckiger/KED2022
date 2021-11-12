@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+  }
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: #f7f6f7;
+      background-color: #f7f6f7;
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: #1d1e1f;
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: rgb(10, 102, 180);
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 8px;
+      bottom: 16px;
+      right: 2px;
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .progress {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .slide-number {
+      right: 18px;
+      bottom: 4px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #1d1e1f;
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: rgb(10, 102, 180);
+  }
+
+  .subtitle{
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 3em;
+      color: rgb(4, 43, 77);
+  }
+
+  p.author,
+  p.date,
+  .institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  .institute{
+      font-size: 0.5em
+  }
+
+  .reveal h1,
+  .reveal h2 {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: rgb(7, 72, 128);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+   margin-top: 0.2em;
+   list-style-type: None;
+   font-style: italic;
+   font-size: 0.8em;
+   font-family: Georgia;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: rgb(170, 180, 10);
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    font-style: italic;
+    font-size: 75%; }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: #1d1e1f;
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#3 Setting up your Development Environment</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">11 March 2021<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>research workflow <span class="emoji" data-emoji="bookmark_tabs">📑</span></li>
+<li>interacting with computers <span class="emoji" data-emoji="computer">💻</span></li>
+<li>installation of programs <span class="emoji" data-emoji="hammer">🔨</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Organisatorisches
+<ul>
+<li>Mail erhalten?</li>
+<li>Videos verlinkt auf Kurswebsite</li>
+<li>1 Person weniger</li>
+</ul></li>
+<li>Exkurs: wieso braucht es das ganze Tooling?
+<ul>
+<li>Wissenschaft als Praxis</li>
+</ul></li>
+<li>Grundverständis für Mensch-Maschine-Interaktion</li>
+<li>Installation
+<ul>
+<li>abschliessen/Fehler beheben</li>
+<li>Zeitplan für Installation schwierig abzuschätzen</li>
+<li>Feierabend wenn System läuft</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>textual data is challenging</li>
+<li>machine-readable data</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Bedeutung kontextabhängig</li>
+<li>Unvergleichbarkeit diskreter Symbole</li>
+<li>Ziel: Abstraktion + Kontextualität kombinieren
+<ul>
+<li>Quali + Quanti</li>
+<li>Generalisierung + Rekontextualisierung</li>
+</ul></li>
+<li>Fragen
+<ul>
+<li>wichtigste Dateiformate?
+<ul>
+<li>txt, csv, tsv (xml)</li>
+</ul></li>
+<li>Sinn von Texteditor?
+<ul>
+<li>keine Formatierung</li>
+</ul></li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="the-zen-of-organizing" class="title-slide slide level1 white-text" data-background="../images/puzzle_unsplash.jpg">
+<h1 class="white-text" data-background="../images/puzzle_unsplash.jpg">The Zen of Organizing</h1>
+
+</section>
+<section id="research-means-organizing" class="slide level2">
+<h2>Research means Organizing</h2>
+<h3 id="computational-approach">Computational approach</h3>
+<ul>
+<li>scripts as documentation <span class="emoji" data-emoji="memo">📝</span></li>
+<li>efficient automation <span class="emoji" data-emoji="recycle">♻️</span>
+<ul>
+<li>“don’t repeat yourself”</li>
+</ul></li>
+<li>less error-prone <span class="emoji" data-emoji="woman_facepalming">🤦‍♀️</span> <span class="emoji" data-emoji="man_facepalming">🤦‍♂️</span></li>
+<li>reproducible <span class="emoji" data-emoji="100">💯</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Wissenschaft auch praktische Seite, nicht nur theoretische
+<ul>
+<li>chaotisch statt strukturiert -&gt; Organisation von Komplexität als Problem</li>
+</ul></li>
+<li>Reproduzierbarkeit höchster Wert
+<ul>
+<li>Wiederverwendung von Code/Datensatz + Literatur/Vorlagen</li>
+</ul></li>
+<li>Wieso computational approach?
+<ul>
+<li>Reproduzierbarkeit und Kritisierbarkeit garantiert</li>
+<li>Automatisierung von Repetition -&gt; spart Zeit</li>
+</ul></li>
+<li>Code strukturiert/dokumentiert Arbeitsablauf
+<ul>
+<li>gegen Vergessenheit</li>
+<li>schützt nicht vor Fehler, aber sichert inkrementellen Fortschritt</li>
+</ul></li>
+<li>wichtig für grössere Projekte + Abschlussarbeiten</li>
+<li>kurzfristig langsamer, langfristig effizienter
+<ul>
+<li>keine mühsame Fehlersuche, Wiederholung</li>
+</ul></li>
+</ul>
+<p><a href="https://unsplash.com/photos/3y1zF4hIPCg">image-src</a></p>
+</aside>
+</section>
+<section id="organizing-literature" class="slide level2">
+<h2>Organizing Literature</h2>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>manage literature in one place</li>
+<li>generating bibliographies</li>
+<li>collect with a click</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<figure>
+<img data-src="../images/zotero.png" alt="Zotero" /><figcaption aria-hidden="true"><a href="https://www.zotero.org/">Zotero</a></figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Organisation betrifft auch Literatur</li>
+<li>Fragen, wer Literaturverwaltungssystem nutzt
+<ul>
+<li>was? wieso nützlich?</li>
+</ul></li>
+<li>Zotero
+<ul>
+<li>kostenlos, Weiterentwicklung</li>
+</ul></li>
+<li>Nutzen
+<ul>
+<li>verschiedene Zitationsstile</li>
+<li>einmal indexiert, immer gleich</li>
+<li>Recherche: Metadaten automatisch setzen</li>
+<li>Bibliographie automatisch zusammenstellen</li>
+</ul></li>
+</ul>
+</aside>
+</div>
+</section></section>
+<section>
+<section id="computers" class="title-slide slide level1">
+<h1>Computers</h1>
+
+</section>
+<section id="two-trends-in-computing" class="slide level2">
+<h2>Two Trends in Computing</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<ul>
+<li>everyday, mobile, cloud-centered, touch/click-based model
+<ul>
+<li>single-purpose application</li>
+<li>smartphones</li>
+</ul></li>
+<li>engineering, open-source, machine-oriented model
+<ul>
+<li>powerful due to modularity</li>
+<li>workflow for data science</li>
+</ul></li>
+</ul>
+<p><span class="citation" data-cites="Healy2019">(see also Healy 2019)</span></p>
+</div><div class="column" style="width:20%;">
+<p><img src="../images/original-apple-iphone.jpg" alt="Apple Original iPhone" style="zoom:20%;" /></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Computer haben sich massiv verändert -&gt; am meisten an Oberfläche</li>
+<li>Spannungsfeld zweier Trends
+<ul>
+<li>Einfachheit –&gt; Eingeschränktheit</li>
+<li>Flexibilität –&gt; technisches Vorwissen</li>
+</ul></li>
+<li>Apple: GUI/Bedienung Angleichung an physische Welt</li>
+<li>Engineering: schwieriger Einstieg/Lernen, dafür sehr viel effektiver/vielseitiger
+<ul>
+<li>ist alternativlos für Standardisierung unstandardisierter Daten</li>
+<li>keine Zauberei, aber sehr nützlich</li>
+</ul></li>
+<li>von Wissen/Tools der Engineers profitieren
+<ul>
+<li>nicht selber Tools bauen</li>
+<li>geniale Arbeitsabläufe + Modularität</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="operating-systems-os" class="slide level2">
+<h2>Operating Systems (OS)</h2>
+<ul>
+<li>Microsoft Windows</li>
+<li>macOS</li>
+<li>Linux / Unix <span class="emoji" data-emoji="nerd_face">🤓</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>OS</li>
+<li>windows = dominator, Alltag</li>
+<li>unix = stable, secure, free, innovative. Became more user-friendly, sometimes still issue</li>
+<li>mac = restricted to mac HW, Unix-Derivat, vereint beide Welten</li>
+<li>Betriebssysteme wie Autos, Fahrräder</li>
+<li>Angleichung über Zeit
+<ul>
+<li>Installation von Linux in Windows</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="user-interfaces" class="slide level2">
+<h2>User Interfaces</h2>
+<div class="columns">
+<div class="column">
+<h3 id="graphical-user-interface-gui">graphical user interface (GUI)</h3>
+<p><img data-src="../images/graphical_user_interface.png" style="height:14cm" /></p>
+</div><div class="column">
+<h3 id="command-line-interface-cli">command line interface (CLI)</h3>
+<p><img data-src="../images/command_line.png" style="height:14cm" /></p>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>historisch nur CLI zur Computersteuerung</li>
+<li>GUI von Apple entwickelt 1984, in 90er Standard</li>
+<li>CLI ist mehr als Sentimentalität
+<ul>
+<li>mächtiger dank Automatisierbarkeit</li>
+<li>schneller</li>
+<li>auf Server einzig mögliche Interaktion</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="an-awesome-programmer-saves-the-world" class="slide level2 white-text" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">
+<h2 class="white-text" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">“An awesome Programmer saves the World”</h2>
+<aside class="notes">
+<ul>
+<li>CLI auch in Popkultur, allerdings falsch dargestellt</li>
+</ul>
+</aside>
+</section>
+<section id="human-machine-interaction" class="slide level2">
+<h2>Human-Machine Interaction</h2>
+<ul>
+<li>text commands instead of clicks</li>
+<li>similar to a human languages
+<ul>
+<li>syntax (form)</li>
+<li>semantics (meaning)</li>
+</ul></li>
+<li>computers are literalists</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Automatisierung über GUI nicht möglich
+<ul>
+<li>statt “hier” klicken, einfach Skript</li>
+</ul></li>
+<li>viele verschiedene Programmiersprachen</li>
+<li>Syntax sehr restriktiv
+<ul>
+<li>Computer sind ziemlich doof, aber sehr gehorsam.</li>
+<li>Machen genau, was man ihnen sagt, nichts mehr, nichts weniger. Nie.</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="programming" class="slide level2">
+<h2>Programming</h2>
+<ul>
+<li>command languages
+<ul>
+<li>Bourne-Again shell (Bash), since 1989</li>
+</ul></li>
+<li>programming languages
+<ul>
+<li>Python, R, Java, C++ etc.</li>
+</ul></li>
+<li>instructions → program ≡ algorithm
+<ul>
+<li>cooking</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>CLI primär für Dateimanipulation/Verarbeitung</li>
+<li>Python
+<ul>
+<li>einfach: reduziert auf das elementare</li>
+<li>Python is a general-purpose language whereas R is a statistical programming language.</li>
+</ul></li>
+<li>Software heisst neuerdings Algorithmus
+<ul>
+<li>falsch: “Algo als Böses/Mystisches”</li>
+<li>korrekt: schrittweise Umwandlung von Input zu Output</li>
+<li>software = program + data (complement HW)</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="package-manager" class="slide level2">
+<h2>Package Manager</h2>
+<ul>
+<li><p>automation of software installation</p>
+<ul>
+<li>system: apt, Homebrew</li>
+<li>Python: conda, pip</li>
+</ul></li>
+<li><p>software dependencies</p></li>
+<li><p>similar to app stores</p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>SW baut auf weiterer SW auf
+<ul>
+<li>keine vollständigen Programme</li>
+<li>bei Installation hunderte von Kompatibilitäts-Checks</li>
+</ul></li>
+<li>zentrale Verwaltung installierter SW
+<ul>
+<li>update aller Programme mit einem Befehl</li>
+</ul></li>
+<li>2 Manager: systemweit, Python</li>
+<li>app stores keine Innovation</li>
+<li>gehört auch zur Arbeitsorganisation</li>
+</ul>
+</aside>
+</section>
+<section id="open-source-is-a-mindset" class="slide level2">
+<h2>Open-Source is a Mindset</h2>
+<h3 id="standing-on-the-shoulders-of-giants.">Standing on the shoulders of giants.</h3>
+<ul>
+<li>free + open software</li>
+<li>cross-platform portability</li>
+<li>collaboration
+<ul>
+<li>share + reuse</li>
+</ul></li>
+<li>helpful community</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Zusammen erreicht man mehr -&gt; Abhängigkeiten</li>
+<li>Abhängigkeiten funktionieren am besten, wenn offen
+<ul>
+<li>Rückmeldungen -&gt; gemeinsame Verbesserung</li>
+<li>enorme Entwicklungsfortschritte</li>
+</ul></li>
+<li>CS offenste Disziplin
+<ul>
+<li>Private + Firmen</li>
+<li>oft unentgeltlich</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions">Stack Overflow</a>
+<ul>
+<li>where you get answers to technical questions</li>
+</ul></li>
+<li><a href="https://github.com/">GitHub</a>
+<ul>
+<li>where you find open software</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Kollaboration nicht nur für SW, auch für Fragenbeantwortung</li>
+<li>allermeiste Fragen/Probleme nicht neu, schon beantwortet
+<ul>
+<li>bash commands auf stackoverflow</li>
+<li>installationsprobleme</li>
+</ul></li>
+<li>Github
+<ul>
+<li>source code + anleitung für Millionen von Programmen (klein und gross)</li>
+<li>repository</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="learning-by-doing-doing-by-googleing." class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Learning by doing, doing by googleing.</h2>
+<aside class="notes">
+<ul>
+<li><p>Technical problems are normal + solutions around the corner</p>
+<ul>
+<li>Fehlermeldung lesen + googlen</li>
+</ul></li>
+<li><p>Without the internet, you are a nobody</p></li>
+<li><p>Installation is sometimes harder and much more poorly documented than mere usage</p></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="set-up-your-system" class="title-slide slide level1">
+<h1>Set up your System</h1>
+
+</section>
+<section id="backup" class="slide level2" data-background="#b5533c">
+<h2 data-background="#b5533c">Backup</h2>
+<p>You don’t need it until you desperately need it!</p>
+</section>
+<section id="setting-up-your-development-environment" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">Setting up your Development Environment</h2>
+<h3 id="installation">Installation</h3>
+<ul>
+<li>Anaconda Platform with Python 3.8
+<ul>
+<li>packages for NLP + visualization</li>
+</ul></li>
+<li>Tesseract</li>
+<li>various Bash tools</li>
+</ul>
+<p><span class="emoji" data-emoji="point_right">👉</span> Follow the <a href="https://aflueckiger.github.io/KED2021/materials/installation_guide.pdf">installation guide</a> for your OS.</p>
+<aside class="notes">
+<ul>
+<li>verschiedene Installationsmöglichkeiten
+<ul>
+<li>Idee: plattformübergreifend, relativ einfach, uneingeschränkt</li>
+<li>individuell evtl. Alternativen besser</li>
+</ul></li>
+<li>Python mit Anaconda
+<ul>
+<li>wichtigste Packages mitinstalliert</li>
+</ul></li>
+<li>Windows Leute installieren Ubuntu für Bash</li>
+<li>Installations Guide folgen
+<ul>
+<li>Verstehen aktuell egal</li>
+<li>Fragen willkommen</li>
+<li>Ablauf verfolgen &amp; auf Fehler achten?</li>
+</ul></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="relax.-it-takes-a-while." class="title-slide slide level1 white-text" data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">
+<h1 class="white-text" data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">Relax. <br>It takes a while.</h1>
+
+</section>
+<section id="jupyterlab" class="slide level2">
+<h2>JupyterLab</h2>
+<ul>
+<li>a web-based development environment</li>
+<li>interactive analysis</li>
+<li>cross-platform</li>
+</ul>
+<p><img data-src="../images/jupyterlab.png" /></p>
+<aside class="notes">
+<ul>
+<li>Teil von Anaconda</li>
+<li>Jupyterlab als Entwicklungscockpit
+<ul>
+<li>in-class zeigen</li>
+</ul></li>
+<li>code, Erklärung, output an selbem Ort</li>
+</ul>
+</aside>
+</section>
+<section id="first-steps-in-python" class="slide level2">
+<h2>First steps in Python</h2>
+<p>Learn Python with interactive tutorials</p>
+<ul>
+<li><a href="https://pythonprinciples.com">Python Principles</a></li>
+<li><a href="https://www.learnpython.org/en/Welcome">LearnPython</a></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Python individuell vertiefen</li>
+</ul>
+</aside>
+</section>
+<section id="readings" class="slide level2">
+<h2>Readings</h2>
+<h3 id="optional-pimp-your-workflow">optional: pimp your workflow</h3>
+<p>Healy, Kieran. 2019. “The Plain Person’s Guide to Plain Text Social Science.” <a href="https://kieranhealy.org/publications/plain-person-text/">online</a>.</p>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Healy2019" class="csl-entry" role="doc-biblioentry">
+Healy, Kieran. 2019. <span>“The <span>Plain Person</span>’s <span>Guide</span> to <span>Plain Text Social Science</span>.”</span> <a href="https://kieranhealy.org/publications/plain-person-text/">https://kieranhealy.org/publications/plain-person-text/</a>.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

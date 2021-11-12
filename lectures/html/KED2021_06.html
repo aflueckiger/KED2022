@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+  }
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: #f7f6f7;
+      background-color: #f7f6f7;
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: #1d1e1f;
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: rgb(10, 102, 180);
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 8px;
+      bottom: 16px;
+      right: 2px;
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .progress {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .slide-number {
+      right: 18px;
+      bottom: 4px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #1d1e1f;
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: rgb(10, 102, 180);
+  }
+
+  .subtitle{
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 3em;
+      color: rgb(4, 43, 77);
+  }
+
+  p.author,
+  p.date,
+  .institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  .institute{
+      font-size: 0.5em
+  }
+
+  .reveal h1,
+  .reveal h2 {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: rgb(7, 72, 128);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+   margin-top: 0.2em;
+   list-style-type: None;
+   font-style: italic;
+   font-size: 0.8em;
+   font-family: Georgia;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: rgb(170, 180, 10);
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    font-style: italic;
+    font-size: 75%; }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: #1d1e1f;
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#6 Learning Regular Expressions</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">01 April 2021<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>well solved assignment #1 <span class="emoji" data-emoji="confetti_ball">🎊</span>
+<ul>
+<li><a href="https://github.com/aflueckiger/KED2021/blob/master/assignments/assignment_1/flueckiger_KED2021_1_solutions.sh">example solution</a></li>
+</ul></li>
+<li>counting words <span class="emoji" data-emoji="1234">🔢</span>
+<ul>
+<li>particular or all words</li>
+</ul></li>
+<li>preprocessing ​and cleaning <span class="emoji" data-emoji="soap">🧼</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Übung
+<ul>
+<li>Feedback alle erhalten? Fragen?</li>
+<li>Bearbeitungszeit unterschiedlich (45min - 5h)</li>
+<li>Google ok, aber commands erklären</li>
+<li>Beispiellösungen aufgeschaltet, andere Wege möglich</li>
+<li>Ordner müssen existieren, Dateien nicht um reinzuschreiben</li>
+</ul></li>
+<li>Frequenzanalysen
+<ul>
+<li>Übersicht gewinnen: Wo liegen Schwerpunkte?</li>
+<li>vergleichbar mit Ngram-Viewer</li>
+<li>gleiche Tools erlauben auch über die Zeit</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>introduction regular expression <span class="emoji" data-emoji="sparkles">✨</span></li>
+<li>practicing RegEx <span class="emoji" data-emoji="roller_coaster">🎢</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Halbzeit von Semester, langsam gehts ans Eingemachte</li>
+<li>Simpler Plan, RegEx allerdings mühsam</li>
+<li>uralt, aber unumgänglich für Data Cleaning</li>
+<li>je nach Zeit, nächstes Mal nochmals RegEx + Übungszeit
+<ul>
+<li>evtl. Verschiebungen im Zeitplan</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="text-as-pattern" class="title-slide slide level1">
+<h1>Text as Pattern</h1>
+
+</section>
+<section id="formal-search-patterns" class="slide level2">
+<h2>Formal Search Patterns</h2>
+<h3 id="how-to-extract-any-email-address-in-a-text-collection">How to extract <strong>any</strong> email address in a text collection?</h3>
+<pre class="bash"><code>Please contact us via info@organization.org.
+---
+For specific questions ask Mrs. Green (a.green@mail.com).
+---
+Reach out to support@me.ch</code></pre>
+<div class="fragment">
+<p><strong>Solution:</strong> Write a single pattern to match any valid email all</p>
+<pre class="bash"><code>[\w.-_]+@[\w-_]+\.[a-z]{2,}     # matches any valid email address</code></pre>
+<aside class="notes">
+<ul>
+<li>Was meint Text als Pattern?
+<ul>
+<li>am einfachsten an Problemstellung zu sehen</li>
+</ul></li>
+<li>Frage an Studis: Wie macht ihr das?
+<ul>
+<li>Bsp. Marketing-Analyse oder Wistleblower Korpus</li>
+</ul></li>
+<li>allen bekannt: Suche in Text
+<ul>
+<li>Suche nach @ findet alle Adressen</li>
+<li>wie aber extrahieren und welche Teile gehören genau dazu?</li>
+</ul></li>
+<li>kryptisch + hässlich, aber beliebig expressive Beschreibungssprache</li>
+</ul>
+</aside>
+</div>
+</section>
+<section id="what-are-patterns-for" class="slide level2">
+<h2>What are patterns for?</h2>
+<ul>
+<li>finding <span class="emoji" data-emoji="mag_right">🔎</span></li>
+<li>extracting <span class="emoji" data-emoji="hammer_and_wrench">🛠️</span></li>
+<li>removing/cleaning <span class="emoji" data-emoji="wastebasket">🗑️</span></li>
+<li>replacing <span class="emoji" data-emoji="repeat">🔁</span></li>
+</ul>
+<p><br></p>
+<p><strong>… any parts in texts</strong></p>
+<aside class="notes">
+<ul>
+<li>RegEx mit breiter Anwendung
+<ul>
+<li>für Preprocessing Textanalysen unverzichtbar</li>
+<li>Data Cleaning</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="data-cleaning-is-paramount" class="slide level2">
+<h2>Data Cleaning is paramount!</h2>
+<p><img data-src="../images/data_cleaning.png" /></p>
+<aside class="notes">
+<ul>
+<li>Aufbereitung braucht viel Zeit</li>
+</ul>
+<p><a href="https://medium.com/koverhoop/data-cleaning-and-pre-processing-in-python-b28eea7ac045">src</a></p>
+</aside>
+</section>
+<section id="what-is-regex" class="slide level2">
+<h2>What is RegEx?</h2>
+<h3 id="regex-regular-expressions-patterns">RegEx = Regular Expressions = Patterns</h3>
+<ul>
+<li><strong>literal</strong> string of characters
+<ul>
+<li>word, phrases, dates etc.</li>
+</ul></li>
+<li>highly flexible <strong>meta</strong> expressions
+<ul>
+<li>e.g.,<code>\w</code> represents alphanumeric characters</li>
+</ul></li>
+<li><code>[Cc]o+l</code> → Col, col, Cool, coool …</li>
+<li>akin to regular languages</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Regex = Muster = generalisierende Beschreibung</li>
+<li>Erklären von String = Zeichensequenz</li>
+<li>zwei Arten von Zeichen</li>
+<li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreue Repräsentation)
+<ul>
+<li>wie letztes Mal</li>
+</ul></li>
+<li>Meta-Zeichen = Zeichen mit spezieller Bedeutung
+<ul>
+<li>anfänglich verwirrend</li>
+<li>Thema heutiger Sitzung</li>
+</ul></li>
+<li>genaue mathematische Definition hier nicht Thema</li>
+</ul>
+</aside>
+</section>
+<section id="finding-extracting" class="slide level2">
+<h2>Finding + Extracting</h2>
+<h4 id="globally-search-for-regular-expression-and-print-grep"><strong>g</strong>lobally search for <strong>r</strong>egular <strong>e</strong>xpression and <strong>p</strong>rint (grep)</h4>
+<ul>
+<li>tool to filter/keep certain lines only</li>
+<li>allow extended regex patterns
+<ul>
+<li>use <code>egrep</code> instead of <code>grep</code></li>
+</ul></li>
+</ul>
+<pre class="bash"><code>egrep &#39;yes&#39; file.txt        # search in a specific file
+egrep -r &#39;yes&#39; folder       # search recursively within folder
+
+egrep &#39;yes&#39; *.txt           # keep lines containing pattern (yes)
+egrep -i &#39;yes&#39; *.txt        # dito, ignore casing (Yes, yes, YES ...)
+egrep -v &#39;noisy&#39; *.txt      # do NOT keep lines containing noisy
+
+# extract raw match only to allow for subsequent counting
+egrep –o &#39;only&#39; *.txt       # print match only, not entire line
+egrep –h &#39;only&#39; *.txt       # suppress file name</code></pre>
+<aside class="notes">
+<ul>
+<li>Empfehlung: immer egrep benutzen</li>
+</ul>
+</aside>
+</section>
+<section id="quantifiers" class="slide level2">
+<h2>Quantifiers</h2>
+<h4 id="repeat-preceding-character-x-times">repeat preceding character <code>X</code> times</h4>
+<ul>
+<li><code>?</code> zero or one</li>
+<li><code>+</code> one or more</li>
+<li><code>*</code> zero or any number</li>
+<li><code>{n}</code>, <code>{m,n}</code> a specified number of times</li>
+</ul>
+<pre class="bash"><code>egrep -r &quot;Bundesrath?es&quot;        # match old and new spelling of
+egrep -r &quot;aa+&quot;                  # match two or more &quot;a&quot;
+egrep -r &quot;e{2}&quot;                 # match sequence of two &quot;e&quot;</code></pre>
+<p><span class="emoji" data-emoji="warning">⚠️</span> Do not confuse regex with Bash wildcards!</p>
+<aside class="notes">
+<ul>
+<li>erste Klasse von Meta-Symbolen: Quantifikatoren</li>
+<li>definieren Anzahl von vorangehendem Zeichen</li>
+<li>in Regex beziehen sich Operatoren auf vorderes Zeichen, in Wildcard nicht</li>
+</ul>
+</aside>
+</section>
+<section id="character-sets" class="slide level2">
+<h2>Character Sets</h2>
+<ul>
+<li><code>[...]</code> any of these character
+<ul>
+<li>any vowel: <code>[auoei]</code></li>
+<li>any digit: <code>[0-9]</code></li>
+<li>any letter: <code>[A-Za-z]</code></li>
+</ul></li>
+<li><code>[^...]</code> any character but none of these
+<ul>
+<li>anything but the vowels: <code>[^auoei]</code></li>
+</ul></li>
+</ul>
+<pre class="bash"><code># match the capitalized and non-capitalized form
+egrep -r &#39;[Gg]rüne&#39;
+
+# match sequences of 3 vowels
+egrep -r [aeiou]{3}
+
+# extract all bigrams (sequence of two words)
+egrep -rohi &#39;[a-z]+ [a-z]+&#39;</code></pre>
+</section>
+<section id="special-symbols" class="slide level2">
+<h2>Special Symbols</h2>
+<ul>
+<li><code>.</code> any character (excl. newline)</li>
+<li><code>\</code> escaping to match literal
+<ul>
+<li><code>\.</code> means the literal <code>.</code> instead of “any symbol”</li>
+</ul></li>
+<li><code>\w</code> any alpha-numeric character
+<ul>
+<li>same as <code>[A-Za-z0-9_]</code></li>
+</ul></li>
+<li><code>\s</code> any whitespace (space, newline, tab)
+<ul>
+<li>same as <code>[ \t\n]</code></li>
+</ul></li>
+</ul>
+<pre class="bash"><code># match anything between brackets
+egrep -r &#39;\(.*\)&#39;</code></pre>
+<aside class="notes">
+<ul>
+<li>Klammern sind auch Metasymbole</li>
+</ul>
+</aside>
+</section>
+<section id="the-power-of-." class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">The power of <code>.*</code> …</h2>
+<p>matches <strong><em>any character</em></strong> <strong><em>any times</em></strong></p>
+</section>
+<section id="more-complex-examples" class="slide level2">
+<h2>More complex Examples</h2>
+<pre class="bash"><code># extract basename of URLs
+egrep -ro &quot;www\.[\w-_]+\.[a-z]{2,}&quot;
+
+# extract valid email adresses
+egrep -ro &quot;[\w.-_]+@[\w-_]+\.[a-z]{2,}&quot; */*.txt</code></pre>
+<aside class="notes">
+<ul>
+<li>bei Erstellung von Online-Accounts prüfen RegEx Validität von Email</li>
+</ul>
+</aside>
+</section>
+<section id="combining-regex-with-frequency-analysis" class="slide level2">
+<h2>Combining RegEx with Frequency Analysis</h2>
+<h3 id="something-actually-useful">something actually useful</h3>
+<pre class="bash"><code># count political areas by looking up words ending with &quot;politik&quot;
+egrep -rioh &#39;\w*politik&#39; */*.txt | sort | uniq -c | sort -h
+
+# count ideologies/concepts by looking up words ending with &quot;ismus&quot;
+egrep -rioh &#39;\w*ismus&#39; */*.txt | sort | uniq -c | sort -h</code></pre>
+<aside class="notes">
+<ul>
+<li>bis jetzt Spielerei, um RegEx zu lernen</li>
+<li>Eingehen auf Resourcen am Ende von Präsentation</li>
+</ul>
+</aside>
+</section>
+<section id="start-simple-add-complexity-subsequently." class="slide level2" data-background="../images/knitting.jpg">
+<h2 data-background="../images/knitting.jpg">Start simple, <br>add complexity subsequently.</h2>
+<!-- https://wallpaperscraft.com/download/needles_thread_knitting_105073/2048x1365 -->
+</section>
+<section id="replacing-removing" class="slide level2">
+<h2>Replacing + Removing</h2>
+<h3 id="stream-editor-sed"><strong>s</strong>tream <strong>ed</strong>itor (sed)</h3>
+<ul>
+<li>advanced find + replace using regex
+<ul>
+<li><code>sed "s/WHAT/WITH/g" file.txt</code></li>
+</ul></li>
+<li><code>sed</code> replaces any sequence, <code>tr</code> only single symbols</li>
+</ul>
+<pre class="bash"><code>echo &quot;hello&quot; | sed &quot;s/llo/y/g&quot;      # replace &quot;llo&quot; with a &quot;y&quot;
+
+# by setting the g flag in &quot;s/llo/y/g&quot;,
+# sed replaces all occurences, not only the first one</code></pre>
+<aside class="notes">
+<ul>
+<li>egrep für Extraktion, sed für Manipulation
+<ul>
+<li>wichtig um Daten aufzubereiten</li>
+</ul></li>
+<li>wie Funktion von Word, nur mächtiger dank Regex</li>
+<li>Löschen = Ersetzen mit leeren Sequenz</li>
+<li>flag “global”</li>
+<li>Demonstration mit \b</li>
+<li>echo <code>"hello hell" | sed "s/l\b/y/g"</code></li>
+</ul>
+</aside>
+</section>
+<section id="contextual-replacing" class="slide level2">
+<h2>Contextual Replacing</h2>
+<h4 id="reuse-match-with-grouping">reuse match with grouping</h4>
+<ul>
+<li>define a group with parentheses <code>(group_pattern)</code></li>
+<li><code>\1</code> equals the expression inside first pair of parentheses</li>
+<li><code>\2</code> expression of second pair</li>
+<li>…</li>
+</ul>
+<pre class="bash"><code># swap order of name (last first -&gt; first last)
+echo &quot;Lastname Firstname&quot; | sed -E &quot;s/(.*) (.*)/\2 \1/&quot;
+
+# matching also supports grouping
+# match any pair of digits (two identical digits)
+egrep -r &quot;([0-9])\1([0-9])\2&quot;</code></pre>
+<aside class="notes">
+<ul>
+<li>Teilausdruck gruppieren zur Wiederverwendung</li>
+<li>Klammern
+<ul>
+<li>ebenfalls Metazeichen</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="more-meta-symbols" class="slide level2">
+<h2>More Meta-Symbols</h2>
+<ul>
+<li><p><code>\b</code> word boundary</p>
+<ul>
+<li><code>word\b</code> does not match <code>words</code></li>
+</ul></li>
+<li><p><code>^</code> begin of line and <code>$</code> end of line</p>
+<ul>
+<li><code>^A</code> matches only <code>A</code> at line start</li>
+</ul></li>
+<li><p><code>|</code> disjunction (OR)</p>
+<ul>
+<li><code>(Mr|Mrs|Mr\.|Mrs\.) Green</code> matches alternatives</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>diese Symbole sind leer, sie matchen keine Zeichen</li>
+<li>spezifizieren Positon von regulärem Ausdruck</li>
+<li>line start hilfreich für übung</li>
+</ul>
+</aside>
+</section>
+<section id="greediness-trap" class="slide level2">
+<h2>Greediness Trap</h2>
+<ul>
+<li>greedy ~ match the longest string possible</li>
+<li>quantifiers <code>*</code> or <code>+</code> are greedy</li>
+<li>non-greedy by excluding some symbols
+<ul>
+<li><code>[^EXCLUDE_SYMBOLS]</code> instead of <code>.*</code></li>
+</ul></li>
+</ul>
+<pre class="bash"><code># greedy: an apple, other apple
+echo &#39;an apple, other apple&#39; | egrep &#39;a.*apple&#39;
+
+# non-greedy: an apple
+echo &#39;an apple, other apple&#39; | egrep &#39;a[^,]*apple&#39;</code></pre>
+<aside class="notes">
+<ul>
+<li><code>.</code> = jegliche Zeichen, beliebige Länge</li>
+</ul>
+</aside>
+</section>
+<section id="assignment-2" class="slide level2">
+<h2>Assignment #2 <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<ul>
+<li>get/submit via OLAT
+<ul>
+<li>starting tomorrow</li>
+<li>deadline 9 April 2021, 23:59</li>
+</ul></li>
+<li>use forum on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16703095856">OLAT</a>
+<ul>
+<li>subscribe to get notifications</li>
+</ul></li>
+<li>ask friends for support, not solutions</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>neue Deadline</li>
+</ul>
+</aside>
+</section>
+<section id="in-class-game" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Game</h2>
+<ol type="1">
+<li>Make sure that your local copy of the Github repository KED2021 is up-to-date with <code>git pull</code>. Go to the party programmes in <code>materials/party_programmes/txt</code>.</li>
+<li>Use <code>egrep</code> to extract all uppercased words like <code>UNO, OECD, SP</code> and count their frequency.</li>
+<li>Send me a private chat message with the most frequent abbreviation from 2).</li>
+</ol>
+<pre class="bash"><code># Some not so random hints 
+piping with |
+sort
+uniq -c
+egrep -roh */*.txt</code></pre>
+<aside class="notes">
+<ul>
+<li><code>egrep -roh '[A-Z]{2,}' */*.txt | sort | uniq -c | sort -h</code></li>
+</ul>
+</aside>
+</section>
+<section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises I</h2>
+<ol type="1">
+<li><p>Update your local copy of the GitHub repository KED2021 with <code>git pull</code>. Go to the party programmes in <code>KED2021/materials/data/swiss_party_programmes/txt</code>.</p></li>
+<li><p>Use <code>egrep</code> to extract all uppercased words that are abbreviations in most cases (e.g., UNO, SVP, SP).</p></li>
+<li><p>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>.</p></li>
+<li><p>Do the self-check on the next slide.</p></li>
+<li><p>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.</p></li>
+</ol>
+</section>
+<section id="in-class-self-check" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Self-Check</h2>
+<h4 id="equivalent-patterns">equivalent patterns</h4>
+<pre class="bash"><code>a+ == aa*               # &quot;a&quot; once or more than once
+a? == (a|_)             # &quot;a&quot; once or nothing
+a{3} == aaa             # three &quot;a&quot;
+a{2,3} == (aa|aaa)      # two or three &quot;a&quot;
+[ab] == (a|b)           # &quot;a&quot; or &quot;b&quot;
+[0-9] == (0|1|2|3|4|5|6|7|8|9)  #any digit</code></pre>
+</section>
+<section id="in-class-exercise-ii" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercise II</h2>
+<ol type="1">
+<li><p>Since you know about RegEx, we can use a more sophisticated tokenizer to split a text into words. What is the difference between the old and new approach? Test it and check the helper page with <code>man</code>.</p>
+<pre class="bash"><code># new, improved approach
+cat text.txt | tr -sc &quot;[a-zäöüA-ZÄÖÜ0-9-]&quot; &quot;\n&quot;
+
+# old approach
+cat text.txt | tr &#39; &#39; &#39;\n&#39;   </code></pre></li>
+</ol>
+</section>
+<section id="in-class-exercise-iii" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercise III</h2>
+<ol type="1">
+<li>Count all the bigrams (sequence of two words) using character sets and quantifiers. What about trigrams (three words)?</li>
+<li>Extract the words following numbers (also consider numbers like: <code>1'000, 1,000 or 5%</code>). Then, count all the words while excluding the numbers themselves. Hint: Pipe another grep to remove the digits.</li>
+<li>You are ready to come up with your own patterns…</li>
+</ol>
+<aside class="notes">
+<ul>
+<li>number task
+<ul>
+<li><code>egrep -rho "[0-9',%] \w+" | egrep -hoi '[a-z]+' | sort | uniq -c | sort -h</code></li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="more-resources" class="slide level2">
+<h2>More Resources</h2>
+<h4 id="required">required</h4>
+<ul>
+<li>Ben Schmidt. 2019. Regular Expressions. <a href="https://github.com/HumanitiesDataAnalysis/HDA19/blob/master/Handouts/01-regex.pdf">online</a></li>
+</ul>
+<h4 id="highly-recommended">highly recommended</h4>
+<ul>
+<li>Nikolaj Lindberg. egrep for Linguists. <a href="https://stts.se/egrep_for_linguists/egrep_for_linguists.pdf">online</a></li>
+</ul>
+</section>
+<section id="have-a-nice-easter-break" class="slide level2" data-background="../images/easter-eggs.jpg">
+<h2 data-background="../images/easter-eggs.jpg">Have a nice <br>Easter break!</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

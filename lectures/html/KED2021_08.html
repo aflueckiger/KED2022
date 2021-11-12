@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+  }
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: #f7f6f7;
+      background-color: #f7f6f7;
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: #1d1e1f;
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: rgb(10, 102, 180);
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 8px;
+      bottom: 16px;
+      right: 2px;
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .progress {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .slide-number {
+      right: 18px;
+      bottom: 4px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #1d1e1f;
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: rgb(10, 102, 180);
+  }
+
+  .subtitle{
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 3em;
+      color: rgb(4, 43, 77);
+  }
+
+  p.author,
+  p.date,
+  .institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  .institute{
+      font-size: 0.5em
+  }
+
+  .reveal h1,
+  .reveal h2 {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: rgb(7, 72, 128);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+   margin-top: 0.2em;
+   list-style-type: None;
+   font-style: italic;
+   font-size: 0.8em;
+   font-family: Georgia;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: rgb(170, 180, 10);
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    font-style: italic;
+    font-size: 75%; }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: #1d1e1f;
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#8 Ethics and the Evolution of NLP</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">22 April 2021<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>an abundance data sources
+<ul>
+<li>JSTOR, Nexis, few datasets</li>
+</ul></li>
+<li>creating your own dataset
+<ul>
+<li>converting any data to <code>.txt</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>interessante Quellen für Sozialwissenschaften
+<ul>
+<li>Unmenge intressanter Daten, wenig Datensätze</li>
+<li>Konversion, da Dokument nicht in maschinenlesbarer Form</li>
+</ul></li>
+<li>gerüstet um mit (fast) allen Textdaten zu arbeiten</li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>cover last lecture’s batch processing <span class="emoji" data-emoji="memo">📝</span></li>
+<li>ethics is your responsibility <span class="emoji" data-emoji="see_no_evil">🙈</span><span class="emoji" data-emoji="hear_no_evil">🙉</span><span class="emoji" data-emoji="speak_no_evil">🙊</span></li>
+<li>understand the development of modern NLP <span class="emoji" data-emoji="rocket">🚀</span>
+<ul>
+<li>… or how to put words into computers</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Inhalte letzter Lektion fertig bearbeiten</li>
+<li>heute ein Sprung, der über praktischen Teil von Seminar hinausgeht
+<ul>
+<li>Mix aus Ethik und Entwicklung NLP</li>
+<li>moderne NLP mächtig, aber mit Problemen</li>
+</ul></li>
+<li>AI ist Werkzeug, erstmal weder gut noch schlecht
+<ul>
+<li>Vergleich: Motor für Krankenwagen oder Panzer.</li>
+<li>Internet für Wikipedia oder für Kinderpornographie</li>
+</ul></li>
+<li>Die Frage ist: Wer profitiert genau von was? Wer verliert dabei?</li>
+<li>Technische Fragen stellen, da ich Technologien selber verwende</li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="a-primer-on-ethics" class="title-slide slide level1">
+<h1>A primer on Ethics</h1>
+
+</section>
+<section id="ethics-doesnt-need-to-be-abstract" class="slide level2">
+<h2>Ethics doesn’t need to be abstract</h2>
+<h4 id="cv-assessment">CV Assessment</h4>
+<ol type="1">
+<li>You send a CV for a job.</li>
+<li>The company automatically pre-filters candidates.</li>
+<li>Do you pass?</li>
+<li><span class="emoji" data-emoji="red_circle">🔴</span> <span class="emoji" data-emoji="green_circle">🟢</span></li>
+</ol>
+<p><img data-src="../images/cv.jpg" class="l-image-corner" style="height:60.0%" alt="Did you include the right keywords? (src)" /> <br></p>
+<h4 id="interview-assessment">Interview Assessment</h4>
+<ol type="1">
+<li>You got a video interview.</li>
+<li>This company does a computational personality test.</li>
+<li>How do you like that?</li>
+<li><span class="emoji" data-emoji="slightly_smiling_face">🙂</span> <span class="emoji" data-emoji="pensive">😔</span></li>
+</ol>
+<aside class="notes">
+<ul>
+<li>Anekdoten aus eigenem Bewerbungsprozess
+<ul>
+<li><p>alle betroffen</p></li>
+<li><p>Ethik ist nicht abstrakt und gehört nicht nur in Philosophie</p>
+<ul>
+<li>nicht Begriff ist wichtig, sondern Denkart</li>
+<li>nachdenken über Ausgangslage + Konsequenzen</li>
+</ul></li>
+</ul></li>
+<li>automatische Vorselektion Bewerbungen</li>
+<li>bestenfalls: naiv, schlechtensfalls: anti-liberal/diskriminierend</li>
+<li>besseres Verständnis = bessere Data Science</li>
+</ul>
+</aside>
+</section>
+<section id="dont-worry-about-the-future" class="slide level2" data-background="var(--red)">
+<h2 data-background="var(--red)">Don’t worry about the future …</h2>
+<h3 id="worry-about-the-present.">… worry about the present.</h3>
+<ul>
+<li>AI is persuasive in everyday’s life</li>
+<li>AI is extremely capable</li>
+<li>AI is not so smart</li>
+</ul>
+<p><span class="emoji" data-emoji="bulb">💡</span> what is going on behind the scene?</p>
+<aside class="notes">
+<ul>
+<li>Entwicklung NLP und Ethik hängen zusammen</li>
+<li>je mehr die Systeme können, desto mehr werden sie eingesetzt, desto unsichtbarer wird, was sie nicht können</li>
+<li>NLP lernt Muster aus Daten
+<ul>
+<li>generalisiert blind oder eben genau so wie gelernt</li>
+</ul></li>
+<li>Ungleichheit werden reproduziert, gar verstärkt durch Systematik
+<ul>
+<li>Geschlecht, Ethnie, sozioökonomisch</li>
+</ul></li>
+<li>Anwendungen für Text, Bild, Video
+<ul>
+<li>Objektererkennung
+<ul>
+<li>self-driving cars (walking pedestrians vs wheel chair pedestrians)</li>
+</ul></li>
+<li>Klassifikation sexuelle Orientierung</li>
+<li>Risikobestimmung
+<ul>
+<li>öffentlicher Raum</li>
+<li>Terrorbekämpfung</li>
+<li>Rückfall Kriminalität</li>
+</ul></li>
+<li>Leistungskontrollen</li>
+<li>In the hands of exploitative companies or oppressive law enforcement, a more accurate facial recognition system is harmful.</li>
+</ul></li>
+<li>Problematik ist Reichweite und Intransparenz
+<ul>
+<li>Menschen auch fallibel, aber mit grösser Varietät</li>
+</ul></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="an-revolution-of-nlp" class="title-slide slide level1">
+<h1>An (R)evolution of NLP</h1>
+
+</section>
+<section id="from-bag-of-words-to-embeddings" class="slide level2">
+<h2>From Bag of Words to Embeddings</h2>
+<h3 id="putting-words-into-computers-smith2020-church2021">Putting Words into Computers <span class="citation" data-cites="Smith2020 Church2021">(Smith 2020; Church and Liberman 2021)</span></h3>
+<ul>
+<li>from <strong>coarse, static</strong> to <strong>fine, contextual</strong> meaning</li>
+<li>how to measure similarity
+<ul>
+<li>string-based</li>
+<li>syntactic (e.g., part-of-speech)</li>
+<li>semantic (e.g., animate)</li>
+<li>embedding</li>
+</ul></li>
+<li>from counting to learning representations
+<ul>
+<li>end2end deep learning</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Ein Sprung, wie diese Technologie gewachsen ist</li>
+</ul>
+</aside>
+</section>
+<section id="bag-of-words" class="slide level2">
+<h2>Bag of Words</h2>
+<ul>
+<li>word as arbitrary, discrete numbers
+<ul>
+<li><code>King = 1, Queen = 2, Man = 3, Woman = 4</code></li>
+</ul></li>
+<li>intrinsic meaning
+<ul>
+<li>derived from data</li>
+<li>defined by experts</li>
+</ul></li>
+<li>how are these words similar?</li>
+</ul>
+<figure>
+<img data-src="../images/word2vec-one-hot.png" alt="Discrete, symbolic words (Colyer 2016)" /><figcaption aria-hidden="true">Discrete, symbolic words <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>jedes Wort ist anderes alles jedes andere, in unvergleichbarer Weise</li>
+</ul>
+</aside>
+</section>
+<section id="corpus-representation" class="slide level2">
+<h2>Corpus Representation</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="collection-of-documents">Collection of Documents</h4>
+<div class="l-left-align">
+<ol type="1">
+<li><p><code>NLP is great. I love NLP.</code></p></li>
+<li><p><code>I understand NLP.</code></p></li>
+<li><p><code>NLP, NLP, NLP.</code></p></li>
+</ol>
+</div>
+</div><div class="column" style="width:50%;">
+<h4 id="document-term-matrix">Document Term Matrix</h4>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>NLP</code></th>
+<th><code>I</code></th>
+<th><code>is</code></th>
+<th><em>term</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Doc 1</strong></td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td><strong>Doc 2</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>…</td>
+</tr>
+<tr class="odd">
+<td><strong>Doc 3</strong></td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>…</td>
+</tr>
+<tr class="even">
+<td><strong><em>Doc ID</em></strong></td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td><em>term frequency</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<blockquote>
+<p>You shall know a word by the company it keeps!</p>
+<p><span class="citation" data-cites="Firth1957">Firth (1957)</span></p>
+</blockquote>
+<aside class="notes">
+<ul>
+<li>kontextuelle Bedeutung statt intrinschische Definition</li>
+<li>Saussure: Zeichen nur definiert durch andere Zeichen</li>
+<li>relationale Bedeutung</li>
+</ul>
+</aside>
+</section>
+<section id="i-hate-___-but-the-others-eat-anything." class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">“I hate <code>___</code>, but the others eat anything.”</h2>
+</section>
+<section id="word-embeddings" class="slide level2">
+<h2>Word Embeddings</h2>
+<h3 id="word2vec-mikolov2013">word2vec <span class="citation" data-cites="Mikolov2013">(Mikolov et al. 2013)</span></h3>
+<ul>
+<li>words as continuous vectors
+<ul>
+<li>accounting for similarity between words</li>
+</ul></li>
+<li>semantic similarity
+<ul>
+<li><code>King – Man + Woman = Queen</code></li>
+</ul></li>
+</ul>
+<div class="l-multiple">
+<figure>
+<img data-src="../images/word_vectors.png" alt="Single continuous vector per word (Colyer 2016)" /><figcaption aria-hidden="true">Single continuous vector per word <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+</figure>
+<figure>
+<img data-src="../images/word2vec-king-queen-vectors.png" alt="Words as points in a semantic space (Colyer 2016)" /><figcaption aria-hidden="true">Words as points in a semantic space <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+</figure>
+<figure>
+<img data-src="../images/word2vec-king-queen-composition.png" alt="Doing arithmetics with words (Colyer 2016)" /><figcaption aria-hidden="true">Doing arithmetics with words <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+</figure>
+</div>
+<aside class="notes">
+<ul>
+<li>vector = list of numbers -&gt; point in Euclidean space</li>
+<li>Idee: wenn Wort genau gleich gebraucht wird, dann selbe Stelle</li>
+<li>Synonyme, Analogien</li>
+<li>alles noch globale Information, da einzelner Vektor je Wort</li>
+<li>Was passiert mit mehrdeutigen Wörter (z.B. Bank)?</li>
+</ul>
+</aside>
+</section>
+<section id="contextualized-word-embeddings" class="slide level2">
+<h2>Contextualized Word Embeddings</h2>
+<h3 id="bert-devlin2019">BERT <span class="citation" data-cites="Devlin2019">(Devlin et al. 2019)</span></h3>
+<ul>
+<li>recontextualize static word embedding
+<ul>
+<li>different embedding in different contexts</li>
+<li>accounting for ambiguity (e.g., <code>bank</code>)</li>
+</ul></li>
+<li>acquire linguistic knowledge from language models (LM)
+<ul>
+<li>LM predict next/missing word</li>
+<li>pre-trained on massive data (&gt; 1 billion words)</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><span class="emoji" data-emoji="boom">💥</span> embeddings mark a new era of NLP</p>
+<aside class="notes">
+<ul>
+<li>alles lässt sich embedden (Wörter, Sätze, Paragraphen, Dokumente)</li>
+</ul>
+</aside>
+</section>
+<section id="cultural-associations-in-data" class="slide level2">
+<h2>(Cultural) Associations in Data</h2>
+<ul>
+<li>«<code>___</code> becomes a doctor.»</li>
+<li>«<code>___</code> takes care of the children.»</li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<ul>
+<li><p>«Doing <span style="background-color: #FFFF80">illegal</span> things is <span style="background-color: #FFFF80">bad</span>.»</p></li>
+<li><p>«A recent study by the Swiss state secretariat for migrants (SEM)<br> estimates that there were 76,000 <span style="background-color: #FFFF80"> illegal immigrants</span>.»</p></li>
+</ul>
+<p><span class="emoji" data-emoji="thinking">🤔</span> Are migrants somehow bad, then?</p>
+</div>
+</section>
+<section id="word-vectors-are-biased" class="slide level2">
+<h2>Word vectors are biased …</h2>
+<h3 id="because-our-data-is-we-are-biased.-bender2021">… because <del>our data is</del> we are biased. <span class="citation" data-cites="Bender2021">(Bender et al. 2021)</span></h3>
+<aside class="notes">
+<ul>
+<li>Timnit Gebru (Google Ethics Lead) gefeuert für dieses Paper</li>
+</ul>
+</aside>
+</section>
+<section id="two-sides-of-the-ai-coin" class="slide level2">
+<h2>Two Sides of the AI Coin</h2>
+<h3 id="explaining-vs.-solving">Explaining vs. Solving</h3>
+<ul>
+<li>understanding matters in <strong>science</strong>: <strong>data analysis</strong></li>
+<li>automating matters in <strong>business</strong>: <strong>applied AI</strong></li>
+</ul>
+</section></section>
+<section>
+<section id="biased-data-and-beyond" class="title-slide slide level1">
+<h1>Biased Data and beyond</h1>
+
+</section>
+<section id="data-digital-traces-social-artifacts" class="slide level2">
+<h2>Data = Digital Traces = Social Artifacts</h2>
+<ul>
+<li>collecting, curating, preserving traces</li>
+<li>data is a <strong>tool</strong> to refine questions <strong>rather than reflection</strong> of the world</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Was sind Daten?
+<ul>
+<li>Daten sind kein Abbild der Welt, nichts natürliches.</li>
+</ul></li>
+<li>Analog zu Romanos: Massenmedien sind nicht die Welt
+<ul>
+<li>Daten sind auch nicht die Welt</li>
+</ul></li>
+<li>Daten liegen nicht einfach herum, sondern gemacht (siehe Schritte)</li>
+</ul>
+</aside>
+</section>
+<section id="data-vs.-capta" class="slide level2">
+<h2>Data vs. Capta</h2>
+<blockquote>
+<p>Differences in the etymological roots of the terms data and capta make the distinction between constructivist and realist approaches clear. <em>Capta</em> is <span style="color:#b5533c"><strong>“taken”</strong></span> actively while <em>data</em> is assumed to be a <span style="color:#b5533c"><strong>“given”</strong></span> able to be recorded and observed.</p>
+</blockquote>
+<blockquote>
+<p>Humanistic inquiry acknowledges the situated, partial, and constitutive character of knowledge production, the recognition that knowledge is constructed, <em>taken</em>, <span style="color:#b5533c"><strong>not simply given as a natural representation</strong></span> of pre-existing fact.</p>
+<p><span class="citation" data-cites="Drucker2011">Drucker (2011)</span></p>
+</blockquote>
+<aside class="notes">
+<ul>
+<li>viel Konflikt geht auf diese Realismus/Konstruktivismus Perspektive zurück</li>
+<li>Konstruktivmus heisst nur, Fragen zu stellen, wieso die Dinge sind, wie sie ausschauen</li>
+</ul>
+</aside>
+</section>
+<section id="imperfect-data-a-tail-of-bias" class="slide level2">
+<h2>Imperfect Data: A Tail of Bias</h2>
+<ul>
+<li><p>social bias</p>
+<ul>
+<li>view from somewhere, stereotypes</li>
+</ul></li>
+<li><p>data/archive holes</p>
+<ul>
+<li>lost, uncollected</li>
+</ul></li>
+<li><p>corpus curation</p>
+<ul>
+<li>supposition that key-word indicates topic</li>
+</ul></li>
+<li><p>noise in data</p>
+<ul>
+<li>OCR errors, inconsistent spelling, non-content</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> think about the data and mitigate issues</p>
+<aside class="notes">
+<ul>
+<li>fehlende, rauschende, selektive &amp; verzerrte Daten</li>
+<li>sozialer Kontext
+<ul>
+<li>z.B. Budgetkürzung oder Neuausrichtung –&gt; Wegfall von Thema</li>
+<li>Sicht von weisen Männern auf Thema</li>
+</ul></li>
+<li>non-content elements
+<ul>
+<li>Metadaten, Kopfzeilen etc.</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<blockquote>
+<p>Raw data is an oxymoron.</p>
+<p><span class="citation" data-cites="Gitelman2013">Gitelman (2013)</span></p>
+</blockquote>
+</section>
+<section id="mind-your-data" class="slide level2">
+<h2>Mind your Data</h2>
+<ul>
+<li>Who has a voice in your data?
+<ul>
+<li>social context</li>
+</ul></li>
+<li>bigger is not necessarily better
+<ul>
+<li>more vs. more diverse data</li>
+</ul></li>
+<li>clean your data thoroughly
+<ul>
+<li>noisy vs. clean data</li>
+</ul></li>
+</ul>
+</section>
+<section id="section-2" class="slide level2" data-background="../images/datahumanism.jpeg" data-background-size="90%">
+<h2 data-background="../images/datahumanism.jpeg" data-background-size="90%"></h2>
+<!-- https://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold -->
+</section>
+<section id="fair-is-a-fad" class="slide level2">
+<h2>Fair is a Fad</h2>
+<ul>
+<li><em>Fair</em> and <em>good</em> – but to whom? <span class="citation" data-cites="Kalluri2020">(Kalluri 2020 )</span></li>
+<li>lacking democratic legitimacy</li>
+<li>debiasing data to avoid regulation</li>
+<li>looking beyond data
+<ul>
+<li>invading privacy</li>
+<li>economic monopolies</li>
+<li>(unpaid) AI-trainers and click-workers</li>
+<li>environmental costs</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Fair kann ziemlich vieles bedeuten, solange man es selbst definieren kann
+<ul>
+<li>demokratische Legitimität fehlt für all diese Systeme</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<blockquote>
+<p>Don’t ask if artificial intelligence is good or fair, <br>ask how it shifts power.</p>
+<p><span class="citation" data-cites="Kalluri2020">Kalluri (2020)</span></p>
+</blockquote>
+</section>
+<section id="anatomy-of-aicrawford2018-illustrated-by-the-amazon-echo" class="slide level2" data-background="../images/anatomy_of_ai.png">
+<h2 data-background="../images/anatomy_of_ai.png"><span style="color:var(--red)">Anatomy of AI<span class="citation" data-cites="Crawford2018">(Crawford and Joler 2018)</span><br> illustrated by the Amazon Echo</span></h2>
+<aside class="notes">
+<ul>
+<li>Es geht um mehr als nur Technologie</li>
+<li>Technologie ist eingewoben ins Soziale</li>
+<li>Soziotechnische Systeme</li>
+</ul>
+</aside>
+</section>
+<section id="data-represents-real-life." class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Data represents real life.</h2>
+<p>Don’t be a fool. Be wise, think twice.</p>
+<aside class="notes">
+<ul>
+<li>The L in NLP is Language, language means people</li>
+<li>https://medium.com/<span class="citation" data-cites="TSchnoebelen/ethics-and-nlp-some-further-thoughts-53bd7cc3ff69">(<strong>TSchnoebelen/ethics-and-nlp-some-further-thoughts-53bd7cc3ff69?</strong>)</span></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Bender2021" class="csl-entry" role="doc-biblioentry">
+Bender, Emily M., Timnit Gebru, Angelina McMillan-Major, and Shmargaret Shmitchell. 2021. <span>“On the <span>Dangers</span> of <span>Stochastic Parrots</span>: <span>Can Language Models Be Too Big</span>? 🦜.”</span> In <em>Proceedings of the 2021 <span>ACM Conference</span> on <span>Fairness</span>, <span>Accountability</span>, and <span>Transparency</span></em>, 610–23. <span>Virtual Event Canada</span>: <span>ACM</span>. <a href="https://doi.org/10.1145/3442188.3445922">https://doi.org/10.1145/3442188.3445922</a>.
+</div>
+<div id="ref-Church2021" class="csl-entry" role="doc-biblioentry">
+Church, Kenneth, and Mark Liberman. 2021. <span>“The <span>Future</span> of <span>Computational Linguistics</span>: <span>On Beyond Alchemy</span>.”</span> <em>Frontiers in Artificial Intelligence</em> 4. <a href="https://doi.org/10.3389/frai.2021.625341">https://doi.org/10.3389/frai.2021.625341</a>.
+</div>
+<div id="ref-Colyer2016" class="csl-entry" role="doc-biblioentry">
+Colyer, Adrian. 2016. <span>“The Amazing Power of Word Vectors.”</span> <span>the morning paper</span>. 2016. <a href="https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/">https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/</a>.
+</div>
+<div id="ref-Crawford2018" class="csl-entry" role="doc-biblioentry">
+Crawford, Kate, and Vladan Joler. 2018. <span>“Anatomy of an <span>AI System</span>.”</span> <span>Anatomy of an AI System</span>. 2018. <a href="http://www.anatomyof.ai">http://www.anatomyof.ai</a>.
+</div>
+<div id="ref-Devlin2019" class="csl-entry" role="doc-biblioentry">
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: <span>Pre</span>-Training of <span>Deep Bidirectional Transformers</span> for <span>Language Understanding</span>.”</span> May 24, 2019. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+</div>
+<div id="ref-Drucker2011" class="csl-entry" role="doc-biblioentry">
+Drucker, Johanna. 2011. <span>“Humanities <span>Approaches</span> to <span>Graphical Display</span>.”</span> <em>Digital Humanities Quarterly</em> 5 (1). <a href="http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html">http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html</a>.
+</div>
+<div id="ref-Firth1957" class="csl-entry" role="doc-biblioentry">
+Firth, John R. 1957. <span>“A Synopsis of Linguistic Theory, 1930-1955.”</span> In <em>Studies in <span>Linguistic Analysis</span>: <span>Special Volume</span> of the <span>Philological Society</span></em>, edited by John R. Firth, 1–32. <span>Oxford</span>: <span>Blackwell</span>. <a href="http://ci.nii.ac.jp/naid/10020680394/">http://ci.nii.ac.jp/naid/10020680394/</a>.
+</div>
+<div id="ref-Gitelman2013" class="csl-entry" role="doc-biblioentry">
+Gitelman, Lisa. 2013. <em>Raw <span>Data Is</span> an <span>Oxymoron</span></em>. <span>Cambridge</span>: <span>MIT</span>.
+</div>
+<div id="ref-Kalluri2020" class="csl-entry" role="doc-biblioentry">
+Kalluri, Pratyusha. 2020. <span>“Don’t Ask If Artificial Intelligence Is Good or Fair, Ask How It Shifts Power.”</span> <em>Nature</em> 583 (7815, 7815): 169–69. <a href="https://doi.org/10.1038/d41586-020-02003-2">https://doi.org/10.1038/d41586-020-02003-2</a>.
+</div>
+<div id="ref-Mikolov2013" class="csl-entry" role="doc-biblioentry">
+Mikolov, Tomas, Ilya Sutskever, Kai Chen, Greg S. Corrado, and Jeff Dean. 2013. <span>“Distributed Representations of Words and Phrases and Their Compositionality.”</span> In <em>Advances in Neural Information Processing Systems</em>, 3111–19.
+</div>
+<div id="ref-Smith2020" class="csl-entry" role="doc-biblioentry">
+Smith, Noah A. 2020. <span>“Contextual Word Representations: Putting Words into Computers.”</span> <em>Communications of the ACM</em> 63 (6): 66–74. <a href="https://doi.org/10.1145/3347145">https://doi.org/10.1145/3347145</a>.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

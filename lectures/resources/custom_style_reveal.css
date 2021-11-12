@@ -1,0 +1,340 @@
+<style type='text/css'>
+
+
+/*********************************************
+* CUSTOM COLORS
+
+https://colorate.azurewebsites.net/Color/0A66B4
+*********************************************/
+
+:root {
+    --green: #4d7e65;
+    --blue: #3c70b5;
+    --red: #b5533c;
+    --black: #1d1e1f;
+}
+
+/*********************************************
+* GLOBAL STYLES
+*********************************************/
+
+.reveal-viewport {
+    background: #f7f6f7;
+    background-color: #f7f6f7;
+  }
+
+.reveal {
+   font-size: 2.4em;
+   font-weight: normal;
+   color: #1d1e1f;
+}
+
+.reveal ::selection {
+   color: #f7f6f7;
+   background: rgb(10, 102, 180);
+   text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+   color: #f7f6f7;
+   background: rgb(10, 102, 180);
+   text-shadow: none;
+}
+
+.reveal ::marker {
+    color: rgb(10, 102, 180);
+}
+section.has-dark-background ::marker {
+    color: white;
+}
+
+.reveal .controls {
+    font-size: 8px;
+    bottom: 16px;
+    right: 2px;
+    color: rgb(10, 102, 180);
+}
+
+.reveal .progress {
+    color: rgb(10, 102, 180);
+}
+
+.reveal .slide-number {
+    right: 18px;
+    bottom: 4px;
+    font-size: 14px;
+    background-color: transparent;
+    color: #1d1e1f;
+}
+
+
+/*********************************************
+* HEADERS
+*********************************************/
+
+h1.title {
+    font-size: 3em;
+    font-weight: bold;
+    color: rgb(10, 102, 180);
+}
+
+.subtitle{
+    font-size: 1.5em;
+    padding-top: 1em;
+    padding-bottom: 3em;
+    color: rgb(4, 43, 77);
+}
+
+p.author,
+p.date,
+.institute{
+    text-align: left;
+    font-size: 0.7em;
+    margin-top: -0.7em;
+    margin-left: 2.5%;
+}
+
+.institute{
+    font-size: 0.5em
+}
+
+.reveal h1,
+.reveal h2 {
+    color: rgb(10, 102, 180);
+}
+
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    color: rgb(7, 72, 128);
+}
+
+.reveal h2 {
+    margin-bottom: +50px;
+}
+
+.reveal h3 {
+    font-size: 1.3em;
+}
+
+
+/*********************************************
+* FULL SCREEN SLIDES
+*********************************************/
+
+.reveal section[data-background*="images"] {
+    font-size: 1.2em;
+    background-color: rgba(00, 00, 00, .2);
+    padding: 1em;
+    width: 80% !important;
+    left: 10%;
+    margin: auto;
+    /* border-bottom: 30px solid orange; */
+}
+.reveal h2[data-background*="images"] {
+    color: white;
+    font-family: Lato;
+    font-weight: bold;
+}
+
+
+/*********************************************
+* LISTS
+*********************************************/
+.reveal ul,
+.reveal ol {
+    margin-bottom: 0.6em;
+}
+
+ol li,
+ul li {
+  margin-top: 0.6em;
+}
+
+ol li li,
+ul li li {
+ margin-top: 0.2em;
+ list-style-type: None;
+ font-style: italic;
+ font-size: 0.8em;
+ font-family: Georgia;
+}
+
+/*********************************************
+* OTHER TEXT
+*********************************************/
+section:not(.has-dark-background) strong,
+section:not(.has-dark-background) b {
+  color: rgb(170, 180, 10);
+}
+
+.reveal a {
+    color: rgb(84, 151, 207);
+}
+
+.reveal a:hover {
+  color: rgb(180, 10, 34);
+  text-shadow: none;
+  border: none;
+}
+
+.reveal section.has-dark-background a {
+    color: white;
+    text-decoration: underline;
+}
+
+.reveal figure figcaption {
+  font-style: italic;
+  font-size: 75%; }
+
+section:not(.has-dark-background) span.citation{
+    font-size: 60%;
+    font-style: italic;
+    color: gray;
+    vertical-align: bottom;
+}
+
+.reveal pre {
+    margin-top: 2em;
+    margin-bottom: 4em;
+}
+
+.reveal pre code {
+    font-size: 1.5em;
+    padding: 1.5em;
+    line-height: 1.2em;
+    max-height: 600px;
+}
+
+
+.reveal table {
+    font-size: 0.8em;
+}
+
+.emoji {
+    font-size: 1.2em
+}
+
+/*********************************************
+* QUOTES
+*********************************************/
+
+.reveal blockquote  {
+  font-family: Georgia;
+  color: #1d1e1f;
+  max-width: 80%;
+  text-align: left;
+  box-shadow: none;
+  font-size: 130%;
+  position: relative; }
+  .reveal blockquote p{
+      line-height: 1.15em;
+  }
+  .reveal blockquote p:first-child::before {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '«'; }
+.reveal blockquote p:first-child::after {
+  font-size: 1.5em;
+  font-family: Georgia, serif;
+  color: rgb(10, 102, 180);
+  content: '»'; }
+
+
+.reveal blockquote cite{
+    color: rgb(10, 102, 180);
+    text-align: right;
+    font-style: normal;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top:1em;
+}
+
+.reveal blockquote cite:before {
+    content: "\2014";
+}
+
+/*********************************************
+* CUSTOM CLASSES
+*********************************************/
+.white-text {
+    color:#f9f9ff !important;
+}
+.dark-text {
+    color:#0c0c0c !important;
+    font-weight: bold;
+}
+
+.answer {
+    font-style: italic;
+    background-color: rgba(00, 00, 00, .2);
+    padding: 0.8em;
+    margin-top: 0.3em;
+    width: 70%;
+    margin: auto;
+    margin-top: 1em;
+}
+
+.highlight {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size: 2em;
+    background: rgba(255, 255, 255, .5);
+    width: 80%;
+    margin:auto;
+    padding:1em;
+}
+
+.reading p,
+.reading h3,
+.csl-entry {
+    text-align: left;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.reading p,
+.references {
+    font-size: 0.7em;
+
+}
+
+.references > div{
+    margin-bottom: 0.4em;
+}
+
+/*********************************************
+* CUSTOM LAYOUT CLASSES
+*********************************************/
+
+.l-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.l-multiple {
+  display: flex;
+  justify-content: space-around;
+}
+
+.l-double strong {
+  font-size: 1.3em;
+  color: #4b729e;
+}
+
+.l-image-corner {
+    position: absolute;
+    right: 0;
+    transform: translate(0%,-55%);
+}
+
+.l-left-align {
+  text-align: left;
+}
+
+</style>

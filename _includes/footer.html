@@ -1,0 +1,42 @@
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">
+            {%- if site.author -%}
+              {{ site.author | escape }}
+            {%- else -%}
+              {{ site.title | escape }}
+            {%- endif -%}
+            </li>
+                {%- if site.email -%}
+                    <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+                {%- endif -%}
+       </ul>
+      </div>
+        <div class="footer-col footer-col-2">
+                {%- if site.address -%}
+                  {{ site.address |  newline_to_br }}
+                {%- endif -%}
+      </div>
+      <div class="footer-col footer-col-3">
+       <ul class="social-media-list">
+
+        {% if site.githubdir %}
+          <li>
+            <a href="https://github.com/{{ site.githubdir }}">
+              <i class="fab fa-github" style="color:gray"></i> {{ site.githubdir }}
+            </a>
+          </li>
+        {% endif %}
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>

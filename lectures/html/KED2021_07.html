@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+  }
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: #f7f6f7;
+      background-color: #f7f6f7;
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: #1d1e1f;
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: rgb(10, 102, 180);
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 8px;
+      bottom: 16px;
+      right: 2px;
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .progress {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal .slide-number {
+      right: 18px;
+      bottom: 4px;
+      font-size: 14px;
+      background-color: transparent;
+      color: #1d1e1f;
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: rgb(10, 102, 180);
+  }
+
+  .subtitle{
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 3em;
+      color: rgb(4, 43, 77);
+  }
+
+  p.author,
+  p.date,
+  .institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  .institute{
+      font-size: 0.5em
+  }
+
+  .reveal h1,
+  .reveal h2 {
+      color: rgb(10, 102, 180);
+  }
+
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: rgb(7, 72, 128);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+   margin-top: 0.2em;
+   list-style-type: None;
+   font-style: italic;
+   font-size: 0.8em;
+   font-family: Georgia;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: rgb(170, 180, 10);
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    font-style: italic;
+    font-size: 75%; }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: #1d1e1f;
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#7 Working with (your own) Data</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">15 April 2021<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="updated-schedule" class="slide level2">
+<h2>Updated Schedule</h2>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>25 February 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-1-introduction--where-is-the-digital-revolution">Introduction + Where is the digital revolution?</a></td>
+</tr>
+<tr class="even">
+<td>04 March 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-2-text-as-data">Text as Data</a></td>
+</tr>
+<tr class="odd">
+<td>11 March 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-3-setting-up-your-development-environment">Setting up your Development Environment</a></td>
+</tr>
+<tr class="even">
+<td>18 March 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-4-introduction-to-the-command-line">Introduction to the Command-line</a></td>
+</tr>
+<tr class="odd">
+<td>25 March 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-5-basic-nlp-with-command-line">Basic NLP with Command-line</a></td>
+</tr>
+<tr class="even">
+<td>01 April 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-6-learning-regular-expressions">Learning Regular Expressions</a></td>
+</tr>
+<tr class="odd">
+<td>08 April 2021</td>
+<td><em>no lecture (Osterpause)</em></td>
+</tr>
+<tr class="even">
+<td>15 April 2021</td>
+<td><strong><a href="https://aflueckiger.github.io/KED2021/lectures#week-7-regex--data-sources">Working with (your own) Data</a></strong> <del>Advanced RegEx + Data Sources</del></td>
+</tr>
+<tr class="odd">
+<td>22 April 2021</td>
+<td><strong><a href="https://aflueckiger.github.io/KED2021/lectures#week-8-ethics-and-the-evolution-of-nlp">Ethics and the Evolution of NLP</a></strong> <del>Creating new Data Sets + Ethics</del></td>
+</tr>
+<tr class="even">
+<td>29 April 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-9-introduction-to-python">Introduction to Python</a></td>
+</tr>
+<tr class="odd">
+<td>06 May 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-10-nlp-with-python">NLP with Python</a></td>
+</tr>
+<tr class="even">
+<td>13 May 2021</td>
+<td><em>no lecture (Christi Himmelfahrt)</em></td>
+</tr>
+<tr class="odd">
+<td>20 May 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-11-nlp-with-python-ii--working-session">NLP with Python + Working Session</a></td>
+</tr>
+<tr class="even">
+<td>27 May 2021</td>
+<td><a href="https://aflueckiger.github.io/KED2021/lectures#week-12-mini-project-presentations--discussion">Mini-Project Presentations + Discussion</a></td>
+</tr>
+<tr class="odd">
+<td>03 June 2021</td>
+<td><em>no lecture (Fronleichnam)</em></td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<ul>
+<li>Umstellungen Sitzungen</li>
+<li>heute letzte Sitzung zu Kommandozeile</li>
+<li>heutige Sitzung über Daten</li>
+<li>Überlegen, was für eine Analyse in MiniProject</li>
+</ul>
+</aside>
+</section>
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>extract + replace textual parts with RegEx
+<ul>
+<li>literal: <code>abc</code></li>
+<li>meta: <code>\w \s [^abc] *</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Regex für Extraktion + Säubern
+<ul>
+<li>man muss nur ungefähr wissen wonach suchen</li>
+<li>generalisierte Form = Muster</li>
+</ul></li>
+<li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreu)</li>
+<li>Meta-Zeichen = Zeichen mit spezieller Bedeutung</li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>you are on spot! ✋ <em>#assignment2</em></li>
+<li>learn about available data resources</li>
+<li>use your own textual data
+<ul>
+<li>any text <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
+<li>“any” format <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
+<li>from anywhere <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>dreiteilige Sitzung
+<ul>
+<li>Assignment 2, existierende Daten, eigene Daten</li>
+</ul></li>
+<li>interessannte Datasets für die Sozialwissenschaften
+<ul>
+<li>es gibt allerdings nicht viele</li>
+<li>zumeist eigene Daten präparieren</li>
+</ul></li>
+<li>eigene Textdaten nutzen unabhängig von
+<ul>
+<li>Formaten</li>
+<li>historischem Kontext</li>
+<li>Speicherort</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="assignment-2" class="title-slide slide level1">
+<h1>Assignment #2</h1>
+
+</section>
+<section id="feedback-assignment-2" class="slide level2">
+<h2>Feedback Assignment #2</h2>
+<p><a href="https://github.com/aflueckiger/KED2021/blob/master/assignments/assignment_2/flueckiger_KED2021_2_solutions.sh">example solution</a></p>
+<ul>
+<li>make patterns more general
+<ul>
+<li>date: <code>DD* Month DDDD</code></li>
+</ul></li>
+<li>keep it simple
+<ul>
+<li>name of month ~ any word ~ <code>\w+</code></li>
+</ul></li>
+<li>avoid false positives with positional information
+<ul>
+<li>start of line: <code>^</code></li>
+</ul></li>
+<li>names are hard to extract
+<ul>
+<li>variation + inconsistency</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> check the count of matches with <code>wc</code> + the cleanup with <code>diff</code></p>
+<aside class="notes">
+<ul>
+<li>posititv: gut gelöst, Bearbeitungszeit unterschiedlich (1h - 5h)</li>
+<li>Ziel Patterns: allgemeine Struktur/Eigenschaften beschreiben</li>
+<li>Tradeoff: generalisierung vs. spezifizität
+<ul>
+<li>Kunst ist: so generell wie möglich, so spezifisch wie nötig</li>
+</ul></li>
+<li>Checks
+<ul>
+<li>Zählen der matches, wenn Anzahl Metadaten bekannt</li>
+<li>Differenz File vor und nach Bereinigung</li>
+</ul></li>
+<li>Haben alle Commands funktioniert?</li>
+<li>Fragen</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="data-sources" class="title-slide slide level1" data-background="../images/text_data_mining.jpg">
+<h1 data-background="../images/text_data_mining.jpg">Data Sources</h1>
+
+</section>
+<section id="what-data-sources-are-there" class="slide level2">
+<h2>What Data Sources are there?</h2>
+<ul>
+<li>broadly social
+<ul>
+<li>newspapers + magazines</li>
+<li>websites + social media</li>
+<li>reports by NGOs/GOs</li>
+</ul></li>
+<li>scientific
+<ul>
+<li>journals</li>
+</ul></li>
+<li>economic
+<ul>
+<li>business plans/reports</li>
+<li>contracts</li>
+<li>patents</li>
+</ul></li>
+</ul>
+<p><span class="emoji" data-emoji="point_right">👉</span> basically, any textual document…</p>
+<aside class="notes">
+<ul>
+<li>unheimliche Vielfalt an Dokumenten</li>
+<li>Textkollektion ist bereits vorhanden im Gegensatz zu Survey
+<ul>
+<li>given data statt created data</li>
+<li>Datenbereinigungen sind nötig</li>
+</ul></li>
+<li>hier nur einen Bruchteil vorgestellt, soll als Inspiration dienen
+<ul>
+<li>Zeit reicht nicht, um auf alle Quellen einzugehen</li>
+</ul></li>
+</ul>
+<p><a href="https://www.copyrightuser.org/understand/exceptions/text-data-mining/">Image Credits</a></p>
+</aside>
+</section>
+<section id="interesting-publishers" class="slide level2">
+<h2>Interesting Publishers</h2>
+<ul>
+<li><a href="http://www.nexisuni.com/">Nexis Uni</a>
+<ul>
+<li>newspaper, business + legal reports (international)</li>
+<li>licensed by the university</li>
+</ul></li>
+<li><a href="https://www.hathitrust.org/datasets">HathiTrust</a>
+<ul>
+<li>massive collection of books (international)</li>
+<li>open, requires agreement</li>
+</ul></li>
+<li><a href="https://www.gutenberg.org/">Project Gutenberg</a>
+<ul>
+<li>huge collection of books (international)</li>
+<li>open-access</li>
+</ul></li>
+<li><a href="https://constellate.org/builder/">Constellate</a> by JSTOR and Portico
+<ul>
+<li>scientific articles across disciplines</li>
+<li>provides an easy dataset builder</li>
+</ul></li>
+</ul>
+<p><span class="emoji" data-emoji="point_right">👉</span> check out the licensed resources at <a href="https://www.zhbluzern.ch/recherche/e-medien">ZHB</a></p>
+<aside class="notes">
+<ul>
+<li>Ressourcen gelistet auf ZHBLuzern
+<ul>
+<li>Zugang tlw. über ezproxy</li>
+</ul></li>
+<li>Nexis vielleicht spannendste Quelle für Analyse soziale Probleme</li>
+<li>Wieso Literatur?
+<ul>
+<li>genderspezifische Sprache, Verweise Natur/Umwelt</li>
+</ul></li>
+<li>Constellate
+<ul>
+<li>brandneue Platform</li>
+<li>einfache Zusammenstellung von JSTOR Artikeln</li>
+<li>sehr gute Metadaten</li>
+<li>auch gut für schnelle Recherchen ohne Download</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="dataset-search" class="slide level2">
+<h2>Dataset Search</h2>
+<ul>
+<li><a href="https://dataverse.harvard.edu/">Harvard Dataverse</a>
+<ul>
+<li>open scientific data repository</li>
+</ul></li>
+<li><a href="https://datasetsearch.research.google.com">Google Dataset Search</a>
+<ul>
+<li>Google for datasets basically</li>
+</ul></li>
+<li>corpora by the <a href="https://www.cl.uzh.ch/en/texttechnologies/research.html">Department of Computational Linguistics @ UZH</a></li>
+</ul>
+<p><br></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> search for a topic followed by <code>corpus</code> or <code>text collection</code></p>
+<aside class="notes">
+<ul>
+<li>moderne Wissenschaft veröffentlicht nicht nur Paper, sondern auch Daten</li>
+<li>Suchmaschinen für Datensätze
+<ul>
+<li>allerlei Datensätze, primär aus Wissenschaft</li>
+</ul></li>
+<li>UZH hat Institut Computerlinguistik</li>
+<li>verschiedene Korpora
+<ul>
+<li>Credit Suisse PDF Bulletin Corpus</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="search-techniques" class="slide level2" data-background="var(--green)">
+<h2 data-background="var(--green)">Search Techniques</h2>
+<p>Make your web search more efficient by using dedicated <a href="https://support.google.com/websearch/answer/2466433?hl=en">tags</a>. Examples:</p>
+<ul>
+<li><p><code>"computational social science"</code></p></li>
+<li><p><code>nature OR environment</code></p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Quotes für Wörter die zusammen gehören</li>
+<li>Boolean Search
+<ul>
+<li>OR / AND</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="some-great-historical-corpora" class="slide level2">
+<h2>Some great historical Corpora</h2>
+<h4 id="ready-off-the-shelf-machine-readable">ready off the shelf, machine-readable</h4>
+<ul>
+<li><a href="https://www.republik.ch/2019/08/01/anleitung-fuer-die-perfekte-ansprache-zum-1-august">1 August speeches by Swiss Federal Councillors</a>
+<ul>
+<li>provided via <a href="https://github.com/aflueckiger/KED2021/blob/master/materials/data/dataset_speeches_federal_council_2019.csv">course repo</a></li>
+</ul></li>
+<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IAH8OY">Human Rights Texts</a></li>
+<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/0TJX8Y">United Nations General Debate Corpus</a></li>
+</ul>
+</section>
+<section id="online-computational-text-analysis" class="slide level2">
+<h2>Online Computational Text Analysis</h2>
+<ul>
+<li><a href="https://impresso-project.ch/app/">Impresso</a>
+<ul>
+<li>many historical newspapers + magazines (CH, LU)</li>
+<li>free, requires account</li>
+</ul></li>
+<li><a href="https://bookworm.htrc.illinois.edu">bookworm HathiTrust</a>
+<ul>
+<li>great filtering by metadata</li>
+<li>credible scientific source</li>
+</ul></li>
+<li><a href="https://books.google.com/ngrams#">Google Ngram Viewer</a>
+<ul>
+<li>no filtering option</li>
+<li>useful for quick analysis</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Datenanalysen online durchführen</li>
+<li>Absicherung über andere Quellen</li>
+<li>Impresso: Complete re-digitization of the NZZ (together with the Zurich Central Library and Swiss National Library)</li>
+</ul>
+</aside>
+</section>
+<section id="copyright" class="slide level2">
+<h2>Copyright <span class="emoji" data-emoji="no_entry_sign">🚫</span></h2>
+<ul>
+<li>may further limit access to high quality data</li>
+<li>check the rights before processing the data</li>
+</ul>
+<figure>
+<img data-src="../images/copyright.png" style="width:70.0%" alt="Copyrighs may restrict some data use (src)" /><figcaption aria-hidden="true">Copyrighs may restrict some data use (<a href="https://www.ct.edu/files/pdfs/Copyright%20and%20Creative%20Commons%20presentation%20March%201%202019.pdf">src</a>)</figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>Zugang zu Daten nicht immer einfach
+<ul>
+<li>open data unterschiedlich unterstützt</li>
+</ul></li>
+<li>Datenbereitstellung oftmals Teil von Geschäftsmodell
+<ul>
+<li>dann restriktiv</li>
+</ul></li>
+<li>oftmals ist Verwendung nicht geregelt
+<ul>
+<li>nutzt Graubereich</li>
+</ul></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="preparing-your-own-data" class="title-slide slide level1">
+<h1>Preparing your own Data</h1>
+
+</section>
+<section id="a-world-for-humans-and-a-jungle-of-file-formats." class="slide level2 dark-text" data-background="../images/file_types.jpg">
+<h2 class="dark-text" data-background="../images/file_types.jpg">A world for humans …<br>… and a jungle of file formats.</h2>
+<!-- https://www.studio-24-7.com/file-formats-and-their-uses-explained/ -->
+<aside class="notes">
+<ul>
+<li>extrem viele File-Typen</li>
+<li>mühsam, aber es gibt einfache Tools für Umwandlung</li>
+</ul>
+</aside>
+</section>
+<section id="common-conversions" class="slide level2">
+<h2>Common Conversions</h2>
+<h4 id="news-press-releases-reports-from-organizations">news, press releases, reports from organizations</h4>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
+<p>digital native documents <br><code>.pdf</code>, <code>.docx</code>, <code>.html</code><br></p>
+<p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
+<p>convert to <code>.txt</code></p>
+</div><div class="column" style="width:50%;">
+<p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
+<p>scans of (old) documents <br><code>.pdf</code>, <code>.jpg</code>, <code>.png</code><br></p>
+<p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
+<p>Optical Character Recognition (OCR)</p>
+</div>
+</div>
+<p><strong>machine-readable</strong> <span class="emoji" data-emoji="white_check_mark">✅</span></p>
+<aside class="notes">
+<ul>
+<li>PDF ist Publikationsstandard
+<ul>
+<li>neue (digital) vs. alte (scans)</li>
+<li>Kriterium: Suche möglich?</li>
+</ul></li>
+<li>anschliessend Schritte zur Umwandlung der wichtigsten Formate</li>
+<li>Keine Konzepte lernen, wie bei RegEx
+<ul>
+<li>nur welches Tool, für welche Umwandlung</li>
+<li>mehr oder weniger copy-paste</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="conversion-of-docx" class="slide level2">
+<h2>Conversion of DOCX</h2>
+<h4 id="use-case-news-articles-from-nexis">use case: news articles from <a href="https://www.nexisuni.com/">Nexis</a></h4>
+<ul>
+<li><code>pandoc</code> to convert many file formats</li>
+<li>download as single articles in <code>.docx</code> on Nexis</li>
+</ul>
+<pre class="bash"><code># convert docx to txt
+pandoc infile.docx -o outfile.txt
+
+### Install first with
+brew install pandoc     # macOS
+sudo apt install pandoc # Ubuntu</code></pre>
+<!-- [](../images/nexis.png) -->
+<aside class="notes">
+<ul>
+<li>pandoc ist ein fast-alles Könner für Dokumentkonversion
+<ul>
+<li>kann auch html konvertieren: pandoc slides/KED2021_01.html -t plain</li>
+</ul></li>
+<li>zusätzliche Installation</li>
+<li>Nexis = News-Datenbank
+<ul>
+<li>freier Zugang ezproxy</li>
+<li>kennen ezproxy alle?</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="conversion-of-native-pdf" class="slide level2">
+<h2>Conversion of native PDF</h2>
+<h4 id="use-case-swiss-party-programmes">use case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Swiss party programmes</a></h4>
+<ul>
+<li><code>pdftotext</code> extracts text from non-scanned PDF</li>
+</ul>
+<pre class="bash"><code># convert native pdf to txt
+pdftotext -nopgbrk -eol unix infile.pdf
+
+### Install first with
+brew install poppler            # macOS
+sudo apt install poppler-utils  # Ubuntu</code></pre>
+<aside class="notes">
+<ul>
+<li>pdftotext: Name ist Programm
+<ul>
+<li>Outputfilename kann nicht spezifiziert werden</li>
+</ul></li>
+<li>dieselben Parteiprogramme, die wir schon analysiert haben</li>
+<li>Layout kann Extraktion erschweren
+<ul>
+<li>Spalten/Tabelle</li>
+</ul></li>
+<li>Häufigkeitsanalysen von Wörter sind robust, Struktur egal</li>
+</ul>
+</aside>
+</section>
+<section id="optical-character-recognition-ocr" class="slide level2">
+<h2>Optical Character Recognition (OCR)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>OCR ~ convert images into text
+<ul>
+<li>extract text from scans/images</li>
+</ul></li>
+<li><code>tesseract</code> performs OCR
+<ul>
+<li>language-specific models</li>
+<li>supports handwriting + Fraktur texts</li>
+</ul></li>
+<li>image quality is crucial</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<figure>
+<img data-src="../images/ocr.png" alt="steps when performing OCR (Wikipedia)" /><figcaption aria-hidden="true">steps when performing OCR <a href="https://de.wikipedia.org/wiki/Texterkennung">(Wikipedia)</a></figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li><p>tatsächlicher Buchstabe, nicht nur Bild davon</p></li>
+<li><p>Zwischenschritt Verbesserung Kontrast, B/W</p></li>
+<li><p>technisch Deep-Learning, nicht weiter von Bedeutung</p></li>
+<li><p>auch von Handy-Bildern möglich, ohne teure Programme</p></li>
+</ul>
+</aside>
+</section>
+<section id="conversion-of-digitalized-pdf" class="slide level2">
+<h2>Conversion of digitalized PDF</h2>
+<h4 id="use-case-historical-party-programmes">use-case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">historical party programmes</a></h4>
+<ol type="1">
+<li>extract image from PDF + improve contrast</li>
+<li>run optical character recognition (OCR) on the image</li>
+</ol>
+<pre class="bash"><code># convert scanned pdf to tiff, control quality with parameters
+convert -density 300 -depth 8 -strip -background white -alpha off \
+infile.pdf temp.tiff
+
+# run OCR for German (&quot;eng&quot; for English, &quot;fra&quot; for French etc.)
+tesseract -l deu temp.tiff file_out
+
+### Install first with
+brew install imagemagick            # macOS
+sudo apt-get install imagemagick    # Ubuntu</code></pre>
+<aside class="notes">
+<ul>
+<li>Zwei Schritte: Bildumwandlung + OCR</li>
+<li>tesseract funktioniert für viele Bildformate
+<ul>
+<li>nicht direkt für PDF</li>
+</ul></li>
+<li>Beispiel: Kassenbon fotografieren &amp; mit Regex parsen
+<ul>
+<li>Wirtschaftswissenschaften: indexierter Warenkorb</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="lifehack-make-a-pdf-searchable" class="slide level2" data-background="var(--green)">
+<h2 data-background="var(--green)">#LifeHack: Make a PDF searchable</h2>
+<h4 id="use-case-scanned-book-chapters">use case: scanned book chapters</h4>
+<pre class="bash"><code># output searchable pdf instead of txt
+convert -density 300 -depth 8 -strip -background white -alpha off -compress group4 \
+file_in.pdf temp.tiff
+
+tesseract -l deu temp.tiff file_out pdf</code></pre>
+<aside class="notes">
+<ul>
+<li>Output als PDF statt Text</li>
+<li>für Suchen/Zitate rauskopieren</li>
+<li>convert hier mit Kompression, da PDFs zu gross werden ansonsten</li>
+</ul>
+</aside>
+</section>
+<section id="scraping-pdf-from-websites" class="slide level2">
+<h2>Scraping PDF from Websites</h2>
+<h4 id="use-case-swiss-voting-booklet">use case: <a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklet</a></h4>
+<ul>
+<li><code>wget</code> to download any files from the internet</li>
+</ul>
+<pre class="bash"><code># get a single file
+wget EXACT_URL
+
+# get all linked pdf from a single webpage
+wget --recursive --accept pdf -nH --cut-dirs=5 \
+--ignore-case --wait 1 --level 1 --directory-prefix=data \
+https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html
+
+# --accept FORMAT_OF_YOUR_INTEREST
+# --directory-prefix YOUR_OUTPUT_DIRECTORY</code></pre>
+<aside class="notes">
+<ul>
+<li>bis hierher: Wie Daten in txt Format bringen</li>
+<li>jetzt Download automatisieren
+<ul>
+<li>Vorteil: schneller systematischer Download &amp; Dokumentation von Quellen</li>
+</ul></li>
+<li>Haupt-URL angeben, wo PDF verlinkt sind</li>
+<li>Scraping von Blogs möglich über Python
+<ul>
+<li>nicht Teil von Seminar</li>
+</ul></li>
+<li>nicht auf alle Argumente eingehen</li>
+</ul>
+</aside>
+</section>
+<section id="example-sources" class="slide level2">
+<h2>Example Sources</h2>
+<ul>
+<li><a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Party Programmes across Europe</a></li>
+<li><a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklets</a></li>
+<li><a href="https://www.admin.ch/gov/de/start/dokumentation/reden/ansprachen-zum-nationalfeiertag.html">1 August speeches by Swiss Federal Councillors</a></li>
+<li><a href="https://www.nestle.com/csv/performance/downloads">Nestlé Annual Reports</a></li>
+<li>… any organization of your interest <span class="emoji" data-emoji="thumbsup">👍</span></li>
+</ul>
+</section>
+<section id="foundation-of-batch-processing" class="slide level2">
+<h2>Foundation of Batch Processing</h2>
+<h4 id="perform-the-same-operation-on-many-files">perform the same operation on many files</h4>
+<pre class="bash"><code># loop over all txt files
+for file in *.txt; do
+
+    # indent all commands in loop with a tab
+
+    # rename each file
+    # e.g. a.txt -&gt; new_a.txt
+    mv $file new_$file
+
+done</code></pre>
+<aside class="notes">
+<ul>
+<li>Batch Processing = gleiche Operation durchführen für alle Files</li>
+<li>Erklären von Loop/Schleife und Variable
+<ul>
+<li>Wildcard zur Selektion &gt; Liste von Files &gt; Variable</li>
+</ul></li>
+<li>for-loop wichtiges Programmierkonzept</li>
+<li>Tabulator fürs Einrücken</li>
+</ul>
+</aside>
+</section>
+<section id="perform-batch-ocr-from-pdf" class="slide level2">
+<h2>Perform Batch OCR from PDF</h2>
+<pre class="bash"><code>for FILEPATH in *.pdf; do
+    # convert pdf to image
+    convert -density 300 $FILEPATH -depth 8 -strip \
+    -background white -alpha off temp.tiff
+    
+    # define output name (remove .pdf from input)
+    OUTFILE=${FILEPATH%.pdf} 
+    
+    # perform OCR on the tiff image
+    tesseract -l deu temp.tiff $OUTFILE
+    
+    # remove the intermediate tiff image
+    rm temp.tiff
+
+done</code></pre>
+<aside class="notes">
+<ul>
+<li>sehr ähnlich wie vorher, nur für jedes einzelne File jetzt</li>
+</ul>
+</aside>
+</section>
+<section id="preprocessing-regex" class="slide level2" data-background="var(--red)">
+<h2 data-background="var(--red)">Preprocessing → RegEx</h2>
+<p><img data-src="../images/clean_data.png" /></p>
+<aside class="notes">
+<ul>
+<li>Aufbereitung unterschiedlich aufwendig</li>
+<li>für schnelle Analyse nicht notwendig</li>
+<li>nun alles da für Mini-Project, ausser wenn Lösung in Python</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="in-class-exercises-i" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">In-class: Exercises I</h2>
+<ol type="1">
+<li>Make sure that your local copy of the Github repository KED2021 is up-to-date with <code>git pull</code>. Check out the data samples and scripts in <code>materials/</code>.</li>
+<li>Install the missing tools with the commands given on the respective slides: <code>pandoc, imagemagick, poppler</code></li>
+<li><strong>Digest the commands. Test them. Check the resources. Ask questions. Think about your mini-project.</strong></li>
+<li>Use <code>wget</code> to download one or all <em>cogito</em> issues (PDF files) from the <a href="https://www.unilu.ch/magazin/service/pdf-und-archiv/#section=c67079">UniLu website</a>.</li>
+<li>Convert the <em>cogito</em> PDF files into TXT files.</li>
+<li><code>wget</code> is a powerful tool. Have a look at its arguments and search for more examples in tutorials on the web.</li>
+</ol>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<h4 id="make-a-more-sophisticated-script-for-pdf-conversion">Make a more sophisticated script for PDF conversion</h4>
+<ul>
+<li>Erick Peirson. 2015. Tutorial: Text Extraction and OCR with Tesseract and ImageMagick - Methods in Digital and Computational Humanities - DigInG Confluence. <a href="https://diging.atlassian.net/wiki/spaces/DCH/pages/5275668/Tutorial+Text+Extraction+and+OCR+with+Tesseract+and+ImageMagick">online</a></li>
+</ul>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+      
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

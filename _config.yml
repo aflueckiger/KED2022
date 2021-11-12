@@ -1,0 +1,50 @@
+# Site settings
+title: 'KED2021'
+subtitle: "The ABC of Computational Text Analysis"
+description: >-
+  In this hands-on seminar, bachelor students of social and cultural sciences learn the basics of programming among other essential technical skills. Building on a modern technology stack, it aims to prepare students to conduct data-driven research as well as to make everyday life easier by fostering technological fundamentals. In short, the course promotes practical and theoretical digital literacy.
+baseurl: "/KED2021"
+url: "https://aflueckiger.github.io/"
+image: _images/background.png
+categories: Sociology "Digital Humanities" "Computational Text Analysis"
+
+# Author information
+author: Alex Flückiger
+
+affiliation: University of Lucerne
+github_username:  aflueckiger
+
+address: |
+    University of Lucerne
+    Faculty of Humanities and Social Sciences
+    Frohburgstrasse 3
+    6002 Luzern (Switzerland)
+
+# Custom Variables
+syllabus: "https://github.com/aflueckiger/KED2021/raw/master/KED2021_syllabus.pdf"
+githubdir: "aflueckiger/KED2021"
+lecture_type: BA Seminar
+semester: "Spring 2021"
+university: "University of Lucerne"
+
+# Build settings
+theme: minima
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-target-blank
+
+target-blank:
+    css_class: post-content
+
+include:
+  - _images
+  - KED2021_syllabus.pdf
+  - lectures/pdf/
+  - materials/installation_guide.pdf
+
+exclude:
+  - lib/
+  - analysis/
+  - scripts/
+

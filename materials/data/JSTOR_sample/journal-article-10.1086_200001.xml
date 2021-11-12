@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<article xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:mml="http://www.w3.org/1998/Math/MathML"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         article-type="research-article"
+         dtd-version="1.0"
+         xml:lang="en">
+   <front>
+      <journal-meta>
+         <journal-id journal-id-type="publisher-id">curranth</journal-id>
+         <journal-title-group>
+            <journal-title>Current Anthropology</journal-title>
+         </journal-title-group>
+
+
+
+         <publisher>
+            <publisher-name>The University of Chicago Press</publisher-name>
+         </publisher>
+         <issn pub-type="ppub">00113204</issn>
+         <issn pub-type="epub">15375382</issn>
+         <custom-meta-group/>
+      </journal-meta>
+      <article-meta>
+         <article-id pub-id-type="jstor-stable">2991355</article-id>
+         <article-id pub-id-type="doi">10.1086/200001</article-id>
+         <article-id pub-id-type="msid">CAv40p101</article-id>
+
+         <title-group>
+            <article-title>Professions of Duplexity</article-title>
+            <subtitle>A Prehistory of Ethical Codes in Anthropology<xref ref-type="fn" rid="fn1">1</xref>
+            </subtitle>
+
+
+
+
+         </title-group>
+         <contrib-group>
+            <contrib contrib-type="author" xlink:type="simple">
+               <string-name>
+                  <given-names>Peter</given-names>
+                  <x xml:space="preserve"> </x>
+                  <surname>Pels</surname>
+               </string-name>
+            </contrib>
+            <bio xlink:type="simple">
+               <p>Peter Pels lectures at the Research Centre Religion and Society, University of Amsterdam (Oudezijds Achterburgwal 185, 1012 DK Amsterdam, The Netherlands), and is a research fellow of the Netherlands Foundation for the Advancement of Tropical Research. He has edited (with Lorraine Nencel) <italic>Constructing Knowledge: Authority and Critique in Social Science</italic> (London: Sage, 1991) and (with Oscar Salemink) <italic>Colonial Ethnographies</italic> (History and Anthropology 8 [1994]) and <italic>Colonial Subjects: Essays in the Practical History of Anthropology</italic> (Ann Arbor: University of Michigan Press, 1999) and is the author of <italic>A Politics of Presence: Contacts between Missionaries and Waluguru in Late Colonial Tanganyika</italic> (Chur: Harwood Academic Publishers, 1998). He is currently working on the anthropology and history of elections in late colonial Tanganyika and the history of the interconnections between anthropology and occultism in the 19th and 20th centuries.</p>
+            </bio>
+         </contrib-group>
+
+
+
+         <pub-date pub-type="ppub">
+            <month>04</month>
+            <year>1999</year>
+            <string-date>April 1999</string-date>
+         </pub-date>
+         <volume>40</volume>
+         <issue>2</issue>
+         <issue-id>ca.1999.40.issue-2</issue-id>
+         <fpage>101</fpage>
+         <lpage>136</lpage>
+
+         <permissions>
+            <copyright-statement>© 1999 by The Wenner‐Gren Foundation for Anthropological Research. All rights reserved</copyright-statement>
+            <copyright-year>1999</copyright-year>
+            <copyright-holder>The Wenner‐Gren Foundation for Anthropological Research</copyright-holder>
+         </permissions>
+         <self-uri xlink:href="https://www.jstor.org/stable/10.1086/200001"/>
+
+         <abstract>
+            <p>This paper attempts to contextualize the renewed vigor with which ethical codes have been discussed in anthropology in the 1990s. It outlines, with four historical sketches set in chronological order, different ways in which morals have been conceptualized and institutionalized in anthropology. It argues that the history of professional anthropology has been marked by a tension between an Occidental discourse on ethical duplicity and a more specifically anthropological epistemology of double identities. This has led to a situation of moral duplexity: an unintentional use of “double standards” in professional practice. An examination of the different ways in which this tension has worked out in different periods of the history of the discipline will show that the institutionalization of anthropological morals in the form of a code of ethical conduct is not only a very recent but—in terms of professional aims—a fairly unusual strategy. The emphasis now seems to lie on negotiation with the people studied as well as the sponsors of anthropological research, and this move may make the institutionalization of anthropological morals in an ethical code obsolete.</p>
+         </abstract>
+         <custom-meta-group>
+            <custom-meta>
+               <meta-name>lang</meta-name>
+               <meta-value>en</meta-value>
+            </custom-meta>
+         </custom-meta-group>
+      </article-meta>
+      <notes notes-type="footnote">
+         <fn-group>
+            <fn id="fn1">
+               <label>1</label>
+               <p>This paper emerged from discussions about a new ethical code for the Dutch Association for Social and Cultural Sciences and the Dutch Association of Anthropologists. I thank the relevant comittee of the former and the board of the latter for giving me the opportunity to clarify my ideas. An earlier version of the paper was presented at the workshop “The Ethics and Politics of Anthropoogical Research: Changing Paradigms” of the 4th Biennial Confernce of the European Association of Social Anthropologists in Barcelona in July 1996; I thank the participants in that workshop, and especially Cris Shore, George Ulrich, and Marilyn Strathern, for many crucial suggestions that improved the present version of the paper. It was read and criticized by my colleagues at the Research Centre Religion and Society of the University of Amsterdam in their habitually thorough and painstaking fashion. I thank Dick Fox and four referees for CA for their comments. I wish to emphasize that they cannot be blamed for the paper's imperfections.</p>
+            </fn>
+         </fn-group>
+      </notes>
+   </front>
+</article>
+
