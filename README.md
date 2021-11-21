@@ -1,4 +1,9 @@
+**THIS COURSE IS OUTDATED: 
+Please see the updated course [KED2022](https://github.com/aflueckiger/KED2022/)**.
+
 # KED2021
+
+
 This repository contains all the material for the following course that I teach at the University of Lucerne:
 
 *Seminar Kleines Einmaleins des Digitalen - Computergestützte Textanalyse: Universität Luzern, 2021*
