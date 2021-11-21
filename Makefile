@@ -1,19 +1,3 @@
-## Put this Makefile in your project directory---i.e., the directory
-## containing the paper you are writing. Assuming you are using the
-## rest of the toolchain here, you can use it to create .html, .tex,
-## and .pdf output files (complete with bibliography, if present) from
-## your markdown file.
-## -	Change the paths at the top of the file as needed.
-## -	Using `make` without arguments will generate html, tex, and pdf
-## 	output files from all of the files with the designated markdown
-##	extension. The default is `.md` but you can change this.
-## -	You can specify an output format with `make tex`, `make pdf` or
-## - 	`make html`.
-## -	Doing `make clean` will remove all the .tex, .html, and .pdf files
-## 	in your working directory. Make sure you do not have files in these
-##	formats that you want to keep!
-
-
 ## Location of Pandoc support files.
 PREFIX = /home/alex/pandoc-templates
 
@@ -55,7 +39,7 @@ materials-pdf := $(materials-md:.md=.pdf)
 materials:	$(materials-pdf)
 
 # SYLLABUS
-syllabus-pdf:= KED2021_syllabus.pdf
+syllabus-pdf:= KED2022_syllabus.pdf
 syllabus: $(syllabus-pdf)
 
 # TROUBLESHOOTING
@@ -83,6 +67,7 @@ $(LECTURES_HTML_DIR)/%.html: $(LECTURES_MD_DIR)/%.md $(CSS)
     -V theme=simple \
     -V navigationMode=linear \
     -V slideNumber=true \
+    -V hash \
     -V width=1920 -V height=1080 \
     --include-in-header lectures/resources/custom_style_reveal.css lectures/resources/code_highlighting.html \
 	-V biblio-title:References \
@@ -99,8 +84,8 @@ $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
 	mv $@.temp $@
 
 
-KED2021_syllabus.pdf: index.md schedule.md lectures.md assignments.md
-	cat index.md <(echo "[Go to Course Website](https://aflueckiger.github.io/KED2021/)" ) | grep -v "Go to UniLu website" | sed '/<div/,/div>/d'	> index.md.tmp
+KED2022_syllabus.pdf: index.md schedule.md lectures.md assignments.md
+	cat index.md <(echo "[Go to Course Website](https://aflueckiger.github.io/KED2022/)" ) | grep -v "Go to UniLu website" | sed '/<div/,/div>/d'	> index.md.tmp
 	sed '5 a # Schedule' schedule.md | sed 's/.lectures//' > schedule.md.tmp
 	sed '5 a # Lectures' lectures.md | sed 's/!.*\.svg)/Binder/' > lectures.md.tmp
 	sed '5 a # Assignments' assignments.md > assignments.md.tmp

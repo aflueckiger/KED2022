@@ -2,7 +2,7 @@
 title: 'The ABC of Computational Text Analysis'
 layout: default
 author: Alex Flückiger | University of Lucerne
-date: "2021-03-01"
+date: "2022-03-01"
 ---
 
 ![Country mentions in Speeches at the United Nation's General Debate](_images/background.png)

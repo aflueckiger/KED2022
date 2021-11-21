@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  https://www.color-hex.com/color-palette/1294
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+      --grey: #4a4a4b;
+      --color-control: #6497b1;
+      --color-headers: #03396c;
+      --color-marker: #b3cde0;
+
+  }
+
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: var(--bs-white);
+      background-color: var(--bs-white);
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: var(--black);
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: var(--color-marker)
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 12px;
+      bottom: 24px;
+      right: 2px;
+      color: var(--color-control);
+  }
+
+  .reveal .progress {
+      height: 5px;
+      color: var(--color-headers);
+  }
+
+  .reveal .slide-number {
+      right: 30px;
+      bottom: 4px;
+      font-size: 22px;
+      background-color: transparent;
+      color: var(--black);
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  .reveal h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--black);
+  }
+
+  p.subtitle{
+      color: var(--color-headers);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 5em;
+  }
+
+  p.author,
+  p.date,
+  p.institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  p.institute{
+      font-size: 0.5em
+  }
+
+  p.date {
+      margin-top: 1em;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: var(--color-headers);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+      font-style: italic;
+      margin-top: 0.2em;
+      list-style-type: None;
+      font-size: 0.8em;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: #005b96;
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    color: var(--grey);
+    font-size: 75%;
+  }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: var(--black);
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+
+  .funky {
+      font-family: Caveat;
+      font-size: 1.5em;
+  }
+
+  .green {
+      color: #386C03;
+  }
+
+  .red {
+      color: #B40A22;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#4 Introduction to the Command-line</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">18 March 2022<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>Successful installation? <span class="emoji" data-emoji="white_check_mark">✅</span><br />
+</li>
+<li>Scripting <span class="emoji" data-emoji="motorway">🛣️</span>
+<ul>
+<li>automate, document, reproduce</li>
+</ul></li>
+<li>Any questions?</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Installation
+<ul>
+<li>Installation erfolgreich?</li>
+<li>unklare Dinge im Guide?</li>
+<li>Voraussetzung für weitere Sessions</li>
+</ul></li>
+<li>Projektorganisation zentral</li>
+<li>Scripting bedeutet Organisation
+<ul>
+<li>iterative Entwicklung</li>
+<li>Reproduktion</li>
+<li>Chaos ist nachvollziehbar!</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>learn principles of the shell <span class="emoji" data-emoji="classical_building">🏛️</span></li>
+<li>perform shell commands <span class="emoji" data-emoji="racehorse">🐎</span></li>
+<li>solving exercises <span class="emoji" data-emoji="building_construction">🏗️</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>heute Einführung in Shell, nächstes Mal tatsächlich nützliche Dinge</li>
+<li>Commands statt Klicks</li>
+<li>Shell ist Cockpit bis zu Osterferien</li>
+<li>wichtig für alle Datei-Operationen, egal ob 1 oder Millionen</li>
+<li>Metaziel
+<ul>
+<li>sanfter Einstieg ins Programmieren</li>
+<li>Verstehen was wichtig ist in Computerinteraktion</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="starting-a-shell" class="slide level2">
+<h2>Starting a Shell</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h4 id="macos">macOS</h4>
+<ul>
+<li>open <code>Terminal</code></li>
+<li>shell type: <code>zsh</code></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h4 id="windows">Windows</h4>
+<ul>
+<li>open <code>Ubuntu 20.04 LTS</code></li>
+<li>shell type: <code>Bash</code></li>
+<li><del>open Windows Command Prompt</del></li>
+</ul>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>interaktiv: Studis sollen Bash auch öffnen</li>
+<li>Shell Befehle
+<ul>
+<li>platformübergreifend nutzbar</li>
+<li>ab macOS Catalina: zsh, früher Bash</li>
+</ul></li>
+<li>Shell zeigen: Erscheinungsbild je System unterschiedlich</li>
+</ul>
+</aside>
+</section>
+<section id="bourne-again-shell" class="slide level2">
+<h2>Bourne-again Shell</h2>
+<h3 id="bash">Bash</h3>
+<ul>
+<li>offers many built-in apps</li>
+<li>shell prompt
+<ul>
+<li><code>USER@HOSTNAME:~$</code></li>
+</ul></li>
+<li>home directory
+<ul>
+<li><code>~</code> refers to <code>/home/USER</code></li>
+</ul></li>
+<li>case-sensitive</li>
+<li>no feedback</li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>Computersteuerung komplett über CLI möglich</p>
+<ul>
+<li>unnütze Verdoppelung zu GUI?</li>
+<li>ermöglicht Bearbeitung Tausender Dateien</li>
+<li>schnelle Inspektion von Daten</li>
+</ul></li>
+<li><p>Empfehlung: konsequente Nutzung CLI</p>
+<ul>
+<li><p>Vertrauen, Geschwindigkeit</p></li>
+<li><p>Anfang braucht Gewöhnung</p></li>
+<li><p>Vorteilen von beiden nutzen</p></li>
+</ul></li>
+<li><p>no need to memorize syntax</p>
+<ul>
+<li>slides, google, stackoverflow</li>
+<li>wiederkehrendes auto-erinnern</li>
+</ul></li>
+<li><p>Eigenschaften</p>
+<ul>
+<li>extremely fast</li>
+<li>kompakter Code -&gt; komplexe Prozessierung</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="unix-philosophy" class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Unix Philosophy</h2>
+<h3 id="build-small-programs-that-do-one-thing-and-do-it-well.">Build small programs that <em>do one thing</em> <br>and <em>do it well</em>. <span class="emoji" data-emoji="nerd_face">🤓</span></h3>
+</section>
+<section id="getting-started-in-a-shell" class="slide level2">
+<h2>Getting started in a Shell</h2>
+<h3 id="generic-components">generic components</h3>
+<pre class="bash"><code>command -a --long_argument FILE     # non-working example command</code></pre>
+<h3 id="run-command-help">run command + help</h3>
+<pre class="bash"><code>echo &quot;hello world&quot;      # print some text
+echo --help             # get help for any command (e.g., echo)
+man echo                # get help for any command (e.g., echo)</code></pre>
+<aside class="notes">
+<ul>
+<li>CLI: Eingabe + Ausgabe gleiches Fenster</li>
+<li>Tradition von hello world</li>
+<li>quotes to preserve formatting</li>
+<li>Hilfeseiten sehr umfangreich
+<ul>
+<li>googlen oft schneller –&gt; stackoverflow</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="structure-of-a-file-system" class="slide level2">
+<h2>Structure of a File System</h2>
+<div class="columns">
+<div class="column">
+<ul>
+<li><p>hierarchical file system</p>
+<ul>
+<li>tree-like</li>
+</ul></li>
+<li><p>absolute path</p>
+<ul>
+<li><code>/home/alex/KED2022/slides/KED2022_01.html</code></li>
+</ul></li>
+<li><p>relative path from current directory</p>
+<ul>
+<li><code>KED2022/slides/KED2022_01.html</code></li>
+<li>works across systems</li>
+</ul></li>
+<li><p>common directories</p>
+<ul>
+<li><code>.</code> current dir</li>
+<li><code>..</code> parent dir</li>
+<li><code>~</code> home dir</li>
+</ul></li>
+<li><p>find your files on Windows</p>
+<ul>
+<li><code>/mnt/c/Users/YOUR_USERNAME/</code></li>
+<li>shortcut with <code>documents</code></li>
+</ul></li>
+</ul>
+</div><div class="column">
+<pre class="bash"><code>.
+├── data
+├── materials
+│   └── installation.pdf
+├── README.md
+└── slides
+    ├── images
+    │   ├── ai.jpg
+    │   └── zotero.png
+    ├── KED2022_01.html
+    ├── KED2022_01.md
+    ├── KED2022_02.html
+    └── KED2022_02.md</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>verschachtelte Struktur
+<ul>
+<li>Auffächerung wie Aktenschrank mit Ordner</li>
+</ul></li>
+<li>Baum, nicht Netzwerk
+<ul>
+<li>klassisch: Objekt erreichbar über einzigen Weg</li>
+</ul></li>
+<li>Navigation in diesem Baum
+<ul>
+<li>Positionieren</li>
+</ul></li>
+<li>Ordner / Dateien –&gt; Endungen
+<ul>
+<li>keine technische Notwendigkeit</li>
+</ul></li>
+<li>/ für Angabe von Pfad (Verzeichnis/Unterverzeichnis)</li>
+<li>Windows-Leute hinweisen auf Pfad innerhalb Ubuntu</li>
+</ul>
+</aside>
+</section>
+<section id="navigating-in-a-file-system" class="slide level2">
+<h2>Navigating in a File System</h2>
+<h3 id="list-content">list content</h3>
+<pre class="bash"><code>pwd                 # show absolute path of current directory
+
+ls                  # list content of current directory
+ls -lh              # list with more information
+ls dirname          # list content of directory dirname
+
+cd ..               # change directory to go folder up
+cd dir/subdir       # go to folder dir/subdir (two folders down)</code></pre>
+<h3 id="open-in-file-manager-gui">open in file manager (GUI)</h3>
+<pre class="bash"><code>open .          # open path in finder (macOS)
+explorer.exe .  # open Windows Explorer from WSL Ubuntu (Windows)
+nautilus .      # open path in file manager (Ubuntu)</code></pre>
+<aside class="notes">
+<ul>
+<li>Befehle sind Abkürzungen
+<ul>
+<li>cd = change directory</li>
+</ul></li>
+<li>diskutieren von ls output
+<ul>
+<li>Berechtigung/Eigentümer/Grösse/Mod.-datum/Name</li>
+<li>d für directory</li>
+</ul></li>
+<li>beliebige Verzeichnisse springen
+<ul>
+<li>oberstes Verzeichnis: C: oder /</li>
+<li>cd zurück ins home</li>
+</ul></li>
+<li>Kommentare mit #</li>
+</ul>
+</aside>
+</section>
+<section id="open-files" class="slide level2">
+<h2>Open Files</h2>
+<h3 id="show-within-shell">show within Shell</h3>
+<pre class="bash"><code>more text.txt           # print content (space to scroll)
+
+head text.txt           # print first 10 lines of file      
+tail -5 text.txt        # print last 5 lines of file</code></pre>
+<h3 id="show-with-default-application-gui">show with default application (GUI)</h3>
+<pre class="bash"><code>open text.txt           # macOS
+wslview text.txt        # WSL Ubuntu (Windows)
+xdg-open text.txt       # Ubuntu</code></pre>
+</section>
+<section id="useful-key-actions" class="slide level2">
+<h2>Useful Key Actions</h2>
+<ul>
+<li>autocompletion: <code>TAB</code></li>
+<li>get last command: <span class="emoji" data-emoji="arrow_up">⬆️</span></li>
+<li>scrolling: <code>SPACE</code></li>
+<li>interrupt <code>CTRL + C</code></li>
+<li>quit: <code>q</code> or <code>CTRL + D</code></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>lange Dateinamen, Programme nur halb erinnert</li>
+<li>q bspw. in Hilfe-Seite man</li>
+</ul>
+</aside>
+</section>
+<section id="creating-moving-and-copying" class="slide level2">
+<h2>Creating, Moving and Copying</h2>
+<h3 id="create-files-and-directories">create files and directories</h3>
+<pre class="bash"><code>touch test.txt      # create a new file
+mkdir data          # make a new directory</code></pre>
+<h3 id="copy-files">copy files</h3>
+<pre class="bash"><code>cp test.txt /other/.                # copy file, keep its name          
+mv test.txt /other/new_name.txt     # move or rename a file</code></pre>
+<aside class="notes">
+<ul>
+<li>touch abängig, ob Datei existiert</li>
+<li>mkdir -p für Subdirs</li>
+</ul>
+</aside>
+</section>
+<section id="removing-files" class="slide level2" data-background="#b5533c">
+<h2 data-background="#b5533c">Removing Files</h2>
+<p>Watch out, there is no recycle bin. No way back!</p>
+<pre class="bash"><code>rm old.txt          # remove a file
+rm -r old_data      # remove a folder with all its files</code></pre>
+<aside class="notes">
+<p><strong>Pause</strong></p>
+</aside>
+</section>
+<section id="wildcards" class="slide level2">
+<h2>Wildcards</h2>
+<h3 id="placeholders-to-match">placeholders to match …</h3>
+<ul>
+<li>any single character: <code>?</code></li>
+<li>any sequence of characters: <code>*</code></li>
+</ul>
+<pre class="bash"><code>mv data/*.txt new_data/.    # move txt-files from to another subfolder
+cp *.txt files/.            # copy all txt-files in a single folder</code></pre>
+<aside class="notes">
+<ul>
+<li>bei Unkenntnis oder Zusammenfassung von Dateinamen</li>
+<li>batch operation</li>
+<li>Ordner muss existieren
+<ul>
+<li>zeige Fehlermeldung</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="searching" class="slide level2">
+<h2>Searching</h2>
+<h4 id="collect-certain-files-only">collect certain files only</h4>
+<pre class="bash"><code>ls *.txt        # list all files with the suffix .txt (in current directory)</code></pre>
+<h4 id="find-specific-files">find specific files</h4>
+<pre class="bash"><code># search on filename
+find /path/to/dir -name &quot;fname&quot;  # find a file in specific directory
+locate -i pattern_1 pattern_2    # global search of files/folders
+
+# search on content
+grep -r &#39;x&#39;                      # find files in any subfolder containing x </code></pre>
+<aside class="notes">
+<ul>
+<li>grep ist mächtig, häufig brauchen</li>
+<li>grep nur für rohe Textformate (txt, html, csv etc.)</li>
+<li>arg -i case-insensitiveness</li>
+</ul>
+</aside>
+</section>
+<section id="expansion" class="slide level2">
+<h2>Expansion</h2>
+<h4 id="batch-processing-with-expansion">batch processing with expansion</h4>
+<pre class="bash"><code>touch text_{a..c}.txt   
+# is equivalent to
+touch text_a.txt text_b.txt text_c.txt
+
+mkdir {2000..2005}{a..c}
+# is equivalent to
+mkdir 2000a 2000b 2000c 2001a 2001b 2001c ...</code></pre>
+<aside class="notes">
+<ul>
+<li>hilfreich um Dateien zu ordnen</li>
+</ul>
+</aside>
+</section>
+<section id="operators" class="slide level2" data-background="../images/lego_stack.jpg">
+<h2 data-background="../images/lego_stack.jpg"><span style="color:#111">Operators</span></h2>
+<!-- https://www.pinterest.ch/pin/518265869592086618/ -->
+<aside class="notes">
+<ul>
+<li>Operators machten Probleme</li>
+<li>modulares Zusammenbauen von Commands</li>
+<li>“Leim” zum Übergeben von Resultaten</li>
+<li>Files als Zwischenprodukte umgehen</li>
+<li>Unix Philosophy</li>
+</ul>
+</aside>
+</section>
+<section id="combining-commands" class="slide level2">
+<h2>Combining Commands</h2>
+<h4 id="shell-operators-to">shell operators to …</h4>
+<ul>
+<li>stream to next command: <code>|</code> (pipe)</li>
+<li>redirect into file (overwrite): <code>&gt;</code></li>
+<li>append to existing file: <code>&gt;&gt;</code></li>
+</ul>
+<pre class="bash"><code>echo &#39;line 1&#39; &gt; test.txt    # write into file
+more test.txt | tail -1     # pass output to next command    </code></pre>
+<p><br></p>
+<p><a href="https://unix.stackexchange.com/questions/159513/what-are-the-shells-control-and-redirection-operators">Learn more about operators</a></p>
+<aside class="notes">
+<ul>
+<li>check output first, then overwrite file as a second step</li>
+</ul>
+</aside>
+</section>
+<section id="merging-files" class="slide level2">
+<h2>Merging Files</h2>
+<pre class="bash"><code>cat part_1.txt part_2.txt       # concatenate multiple files
+cat *.txt &gt; all_text.txt        # merge all txt into a single one</code></pre>
+<aside class="notes">
+<ul>
+<li>version controlling</li>
+<li>pull fürs regelmässige updaten</li>
+</ul>
+</aside>
+</section>
+<section id="writing-a-runnable-script" class="slide level2">
+<h2>Writing a runnable Script</h2>
+<h3 id="example-script-find_all_pdf.sh">Example script: <code>find_all_pdf.sh</code></h3>
+<pre class="bash"><code>#!/bin/sh
+
+echo &quot;This is a list of all PDFs on my computer:&quot;
+locate -i /home/*.pdf</code></pre>
+<ul>
+<li>file with suffix <code>.sh</code>
+<ul>
+<li>one command per row</li>
+<li><code>#</code> precedes comments</li>
+</ul></li>
+<li>start script with Shebang <code>#!/bin/sh</code></li>
+<li>execute with <code>bash SCRIPTNAME.sh</code></li>
+</ul>
+<p>The beauty of scripting is automation. <span class="emoji" data-emoji="zap">⚡</span></p>
+<aside class="notes">
+<ul>
+<li>Automation = Ablauf von Instruktionen</li>
+<li>Vorteil: nicht nötig Befehlsabfolge zu merken</li>
+<li>Übung ebenfalls als Skript abgeben</li>
+<li>no prompt, just commands</li>
+</ul>
+</aside>
+</section>
+<section id="conventions" class="slide level2">
+<h2>Conventions <span class="emoji" data-emoji="pray">🙏</span></h2>
+<ul>
+<li>no spaces/umlauts in names
+<ul>
+<li>alphanumeric, underscore, hyphen, dot</li>
+</ul></li>
+<li>files have a suffix, folders not
+<ul>
+<li><code>text_1.txt</code> vs. <code>texts</code></li>
+</ul></li>
+<li>descriptive file organization
+<ul>
+<li><code>SOURCE/YEAR/speech_party_X.txt</code></li>
+</ul></li>
+<li>separate data from scripts</li>
+<li>never change the raw data</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Konventionen helfen Fehler vermindern, Verständnis verbessern</li>
+</ul>
+</aside>
+</section>
+<section id="organizing-code" class="slide level2">
+<h2>Organizing Code</h2>
+<ul>
+<li>Git to track file changes</li>
+<li>GitHub hosting platform</li>
+</ul>
+<p><br></p>
+<h4 id="get-course-repository">Get course repository</h4>
+<pre class="bash"><code># get an initial copy of the course material
+git clone https://github.com/aflueckiger/KED2022.git
+
+# update your local copy continuously
+cd KED2022
+git pull</code></pre>
+<aside class="notes">
+<ul>
+<li>Version Managment Software
+<ul>
+<li>ähnlich Änderungsmodus in Word</li>
+</ul></li>
+<li>für moderne Software-Entwicklung</li>
+<li>neuerdings für Tracking wissenschaftlicher Arbeiten</li>
+<li>Repository = Ablage</li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="assignment-1" class="slide level2">
+<h2>Assignment #1 <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<ul>
+<li>get/submit via OLAT
+<ul>
+<li>starting tonight</li>
+<li>deadline: 25 March 2022, 23:59</li>
+</ul></li>
+<li>discuss issues on OLAT forum</li>
+<li>ask friends for support, not solutions</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>kleine Übung</li>
+<li>Vertrauen entwickeln</li>
+<li>nicht bis zum Schluss warten</li>
+</ul>
+</aside>
+</section>
+<section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises I</h2>
+<ol type="1">
+<li><p>If you have not cloned the course repository from Github yet, do this now.</p></li>
+<li><p>Create a new directory called <code>tmp</code> in the course directory <code>KED2022</code>.</p></li>
+<li><p>Check out the <code>touch</code> command. The <code>man</code> command is your friend.</p></li>
+<li><p>Use <code>touch</code> to create a new file called <code>advice_for_programmers.txt</code> in <code>tmp</code>.</p></li>
+<li><p>Write the following content into that file, one line at a time using operators:</p>
+<pre class="bash"><code>How about making programming a little more accessible? Like:
+from human_knowledge import solution</code></pre></li>
+<li><p>Make sure that the content was written into that file with <code>more</code>.</p></li>
+</ol>
+</section>
+<section id="in-class-exercises-ii" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises II</h2>
+<ol type="1">
+<li><p>Navigate up and down in in your filesystem using <code>cd</code> and list the respective files per directory with <code>ls</code>. Where can you find your personal documents? Print the absolute path with <code>pwd</code>.<br />
+A hint to Windows users as they are working in a Ubuntu subsystem, have a look at: <code>/mnt/c/Users</code></p></li>
+<li><p>Read <code>man ls</code> and write an <code>ls</code> command that lists your documents ordered</p>
+<ul>
+<li>by recency (time)</li>
+<li>by size</li>
+</ul></li>
+<li><p>Use the <code>|</code> and <code>&gt;</code> operators to write the 3 “last modified” files in your documents folder into a file called <code>last-modified.txt</code> on your desktop (desktop is also a directory). It is a single command performing multiple operations, one after another.</p></li>
+</ol>
+</section>
+<section id="additional-resources" class="slide level2">
+<h2>Additional Resources</h2>
+<h3 id="useful-primers-on-bash">useful primers on Bash</h3>
+<ul>
+<li><a href="https://programminghistorian.org/en/lessons/intro-to-bash">The Programming Historian</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-the-linux-terminal">DigitalOcean</a></li>
+</ul>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,10 +1,12 @@
 <style type='text/css'>
-
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
 
 /*********************************************
 * CUSTOM COLORS
 
 https://colorate.azurewebsites.net/Color/0A66B4
+https://www.color-hex.com/color-palette/1294
 *********************************************/
 
 :root {
@@ -12,21 +14,27 @@ https://colorate.azurewebsites.net/Color/0A66B4
     --blue: #3c70b5;
     --red: #b5533c;
     --black: #1d1e1f;
+    --grey: #4a4a4b;
+    --color-control: #6497b1;
+    --color-headers: #03396c;
+    --color-marker: #b3cde0;
+
 }
+
 
 /*********************************************
 * GLOBAL STYLES
 *********************************************/
 
 .reveal-viewport {
-    background: #f7f6f7;
-    background-color: #f7f6f7;
+    background: var(--bs-white);
+    background-color: var(--bs-white);
   }
 
 .reveal {
    font-size: 2.4em;
    font-weight: normal;
-   color: #1d1e1f;
+   color: var(--black);
 }
 
 .reveal ::selection {
@@ -42,29 +50,30 @@ https://colorate.azurewebsites.net/Color/0A66B4
 }
 
 .reveal ::marker {
-    color: rgb(10, 102, 180);
+    color: var(--color-marker)
 }
 section.has-dark-background ::marker {
     color: white;
 }
 
 .reveal .controls {
-    font-size: 8px;
-    bottom: 16px;
+    font-size: 12px;
+    bottom: 24px;
     right: 2px;
-    color: rgb(10, 102, 180);
+    color: var(--color-control);
 }
 
 .reveal .progress {
-    color: rgb(10, 102, 180);
+    height: 5px;
+    color: var(--color-headers);
 }
 
 .reveal .slide-number {
-    right: 18px;
+    right: 30px;
     bottom: 4px;
-    font-size: 14px;
+    font-size: 22px;
     background-color: transparent;
-    color: #1d1e1f;
+    color: var(--black);
 }
 
 
@@ -72,42 +81,44 @@ section.has-dark-background ::marker {
 * HEADERS
 *********************************************/
 
-h1.title {
+.reveal h1.title {
     font-size: 3em;
     font-weight: bold;
-    color: rgb(10, 102, 180);
+    color: var(--black);
 }
 
-.subtitle{
+p.subtitle{
+    color: var(--color-headers);
+    font-family: 'Permanent Marker', cursive;
     font-size: 1.5em;
     padding-top: 1em;
-    padding-bottom: 3em;
-    color: rgb(4, 43, 77);
+    padding-bottom: 5em;
 }
 
 p.author,
 p.date,
-.institute{
+p.institute{
     text-align: left;
     font-size: 0.7em;
     margin-top: -0.7em;
     margin-left: 2.5%;
 }
 
-.institute{
+p.institute{
     font-size: 0.5em
 }
 
-.reveal h1,
-.reveal h2 {
-    color: rgb(10, 102, 180);
+p.date {
+    margin-top: 1em;
 }
 
+.reveal h1,
+.reveal h2,
 .reveal h3,
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-    color: rgb(7, 72, 128);
+    color: var(--color-headers);
 }
 
 .reveal h2 {
@@ -154,11 +165,10 @@ ul li {
 
 ol li li,
 ul li li {
- margin-top: 0.2em;
- list-style-type: None;
- font-style: italic;
- font-size: 0.8em;
- font-family: Georgia;
+    font-style: italic;
+    margin-top: 0.2em;
+    list-style-type: None;
+    font-size: 0.8em;
 }
 
 /*********************************************
@@ -166,7 +176,7 @@ ul li li {
 *********************************************/
 section:not(.has-dark-background) strong,
 section:not(.has-dark-background) b {
-  color: rgb(170, 180, 10);
+  color: #005b96;
 }
 
 .reveal a {
@@ -185,8 +195,9 @@ section:not(.has-dark-background) b {
 }
 
 .reveal figure figcaption {
-  font-style: italic;
-  font-size: 75%; }
+  color: var(--grey);
+  font-size: 75%;
+}
 
 section:not(.has-dark-background) span.citation{
     font-size: 60%;
@@ -222,7 +233,7 @@ section:not(.has-dark-background) span.citation{
 
 .reveal blockquote  {
   font-family: Georgia;
-  color: #1d1e1f;
+  color: var(--black);
   max-width: 80%;
   text-align: left;
   box-shadow: none;
@@ -308,6 +319,20 @@ section:not(.has-dark-background) span.citation{
     margin-bottom: 0.4em;
 }
 
+
+.funky {
+    font-family: Caveat;
+    font-size: 1.5em;
+}
+
+.green {
+    color: #386C03;
+}
+
+.red {
+    color: #B40A22;
+}
+
 /*********************************************
 * CUSTOM LAYOUT CLASSES
 *********************************************/
@@ -336,5 +361,10 @@ section:not(.has-dark-background) span.citation{
 .l-left-align {
   text-align: left;
 }
+
+
+
+
+
 
 </style>

@@ -1,7 +1,7 @@
 ---
 title: 'Assignments'
 layout: page
-date: "2021-05-20"
+date: "2022-05-20"
 ---
 
 
@@ -10,9 +10,9 @@ You have to submit three assignments to complete the seminar successfully. The p
 
 | #    | Topic                                                        | Published     | Deadline (by midnight)      | Solution                                                     |
 | -- | --------------------------------- | ------------------------- | ----------------------------------------------- | --------------------------------------------- |
-| 1    | [Data Wrangling](https://aflueckiger.github.io/KED2021/assignments/assignment_1/KED2021_assignment_1.pdf) | 18 March 2021 | 25 March 2021 | [Example Submission](https://aflueckiger.github.io/KED2021/assignments/assignment_1/flueckiger_KED2021_1_solutions.sh) |
-| 2    | [Regex NLP](https://aflueckiger.github.io/KED2021/assignments/assignment_2/KED2021_assignment_2.pdf) | 02 April 2021 | 09 April 2021 | [Example Submission](https://aflueckiger.github.io/KED2021/assignments/assignment_2/flueckiger_KED2021_2_solutions.sh) |
-| 3    | [Python NLP](https://aflueckiger.github.io/KED2021/assignments/assignment_3/KED2021_assignment_3.pdf) | 06 May 2021   | 14 May 2021   | [Example Submission](https://aflueckiger.github.io/KED2021/assignments/assignment_3/flueckiger_KED2021_3_solutions.ipynb) |
+| 1    | [Data Wrangling](https://aflueckiger.github.io/KED2022/assignments/assignment_1/KED2022_assignment_1.pdf) | 25 March 2022 | 1 April 2022 | - |
+| 2    | [Regex NLP](https://aflueckiger.github.io/KED2022/assignments/assignment_2/KED2022_assignment_2.pdf) | 08 April 2022 | 15 April 2022 | - |
+| 3    | [Python NLP](https://aflueckiger.github.io/KED2022/assignments/assignment_3/KED2022_assignment_3.pdf) | 13 May 2022  | 20 May 2022 | - |
 
 
 
@@ -20,8 +20,8 @@ You have to submit three assignments to complete the seminar successfully. The p
 
 Your submission is a single script, meaning that is readily executable, and is named as follows:
 
-- Bash scripts: `SURNAME_KED2021_NR.sh`
-- Python scripts: `SURNAME_KED2021_NR.py` 
+- Bash scripts: `SURNAME_KED2022_NR.sh`
+- Python scripts: `SURNAME_KED2022_NR.py` 
 
 The script follows the order of the tasks in the assignment. In addition to the commands you have used in your solution, you also provide a short, yet concise explanation to your solution.   You should include these comments directly in the script by starting the line with `#`.
 
@@ -81,7 +81,7 @@ The only requirement is to complement your claims with some quantitative facts a
 
 ## Inspiring Student Projects
 
-- [Josias Bruderer, 2021](https://git.makersphere.ch/josias/jason-scotts-favorite-100/raw/master/README.pdf)
+- [Josias Bruderer, 2022](https://git.makersphere.ch/josias/jason-scotts-favorite-100/raw/master/README.pdf)
 
 # Optional Seminar Paper
 
@@ -89,7 +89,7 @@ You are welcomed to write an optional seminar paper (Hauptseminararbeit) for whi
 
 Due to the practical foundation of this seminar, you are well-prepared to subsequently apply computational text methods in a personal project. Although this is not a requirement, you may want to turn your mini-project into a seminar paper by deepening your empirical inquiry. 
 
-Students planning to write a seminar paper should send me an email with a short outline of their research idea until **10 May 2021** at the latest. When you would like to discuss your idea in person, feel free to do so any time after the seminar.
+Students planning to write a seminar paper should send me an email with a short outline of their research idea until **10 May 2022** at the latest. When you would like to discuss your idea in person, feel free to do so any time after the seminar.
 
 Requirements for the seminar paper (Hauptseminararbeit):
 
@@ -97,4 +97,4 @@ Requirements for the seminar paper (Hauptseminararbeit):
 * Use any computational methods to analyze your data.
 * Your paper has a theoretical question guiding your methodical approach. In other words, methods are a means, not an end in themselves.
 * Formal: 15 pages (A4), 12 pt Times New Roman, 3cm margin, 1.5 line spacing.
-* Deadline for submitting the final paper: **31 August 2021**.
+* Deadline for submitting the final paper: **31 August 2022**.

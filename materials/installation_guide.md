@@ -1,7 +1,7 @@
 ---
 title: Setting up your Development Environment
 author: Alex Flückiger
-date: 2021
+date: 2022
 toc: True
 toc-depth: 2
 ---

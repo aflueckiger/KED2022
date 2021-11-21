@@ -1,27 +1,22 @@
-**THIS COURSE IS OUTDATED: 
-Please see the updated course [KED2022](https://github.com/aflueckiger/KED2022/)**.
-
-# KED2021
-
-
+# KED2022
 This repository contains all the material for the following course that I teach at the University of Lucerne:
 
-*Seminar Kleines Einmaleins des Digitalen - Computergestützte Textanalyse: Universität Luzern, 2021*
+*Seminar Kleines Einmaleins des Digitalen - Computergestützte Textanalyse: Universität Luzern, 2022*
 
 The course is a gentle introduction to computational methods with a focus on text analysis. The audience are BA students of social sciences with backgrounds in various disciplines (sociology, political science, cultural studies, etc.)
 
 Check out the official course website:
-[https://aflueckiger.github.io/KED2021/](https://aflueckiger.github.io/KED2021/).
+[https://aflueckiger.github.io/KED2022/](https://aflueckiger.github.io/KED2022/).
 
 # If you're in the class
 
 To get a local copy of the slides and material used in this course, you can simply clone this repository:
 
-`git clone https://github.com/aflueckiger/KED2021.git`
+`git clone https://github.com/aflueckiger/KED2022.git`
 
 # For anyone else
 
-I'm open-sourcing the course material as an inspiration to other people, but this isn't under a CC license or anything. If you would like to use any of the content, please let me know. Moreover, I am also interested how you are using the content.
+I'm open-sourcing the course material as I deeply believe in sharing ideas to come up with new and better ones. Feel free to reuse any of the content since the repository has a CC license. If you do so, however, please let me know. I am genuinely interested in which context you are using the material. 
 
 # Acknowledgements
 
