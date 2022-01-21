@@ -2,10 +2,8 @@
 title: The ABC of Computational Text Analysis
 subtitle: "Supplements"
 author: "Alex Flückiger"
-institute: |
-  | Faculty of Humanities and Social Sciences
-  | University of Lucerne
-date: "25 February 2022<br></br><div class='institute'>Faculty of Humanities and Social Sciences<br>University of Lucerne</div>"
+institute: "Faculty of Humanities and Social Sciences<br>University of Lucerne" 
+date: "14 April 2022"
 lang: en-US
 ---
 
