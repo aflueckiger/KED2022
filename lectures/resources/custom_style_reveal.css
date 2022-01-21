@@ -18,6 +18,7 @@ https://www.color-hex.com/color-palette/1294
     --color-control: #6497b1;
     --color-headers: #03396c;
     --color-marker: #b3cde0;
+    --color-strong: #005b96;
 
 }
 
@@ -57,9 +58,7 @@ section.has-dark-background ::marker {
 }
 
 .reveal .controls {
-    font-size: 12px;
     bottom: 24px;
-    right: 2px;
     color: var(--color-control);
 }
 
@@ -69,9 +68,6 @@ section.has-dark-background ::marker {
 }
 
 .reveal .slide-number {
-    right: 30px;
-    bottom: 4px;
-    font-size: 22px;
     background-color: transparent;
     color: var(--black);
 }
@@ -88,7 +84,7 @@ section.has-dark-background ::marker {
 }
 
 p.subtitle{
-    color: var(--color-headers);
+    color: var(--color-strong);
     font-family: 'Permanent Marker', cursive;
     font-size: 1.5em;
     padding-top: 1em;
@@ -174,9 +170,13 @@ ul li li {
 /*********************************************
 * OTHER TEXT
 *********************************************/
-section:not(.has-dark-background) strong,
-section:not(.has-dark-background) b {
-  color: #005b96;
+section.has-dark-background strong,
+section.has-dark-background b {
+  color: white
+}
+
+strong, b {
+    color: var(--color-strong)
 }
 
 .reveal a {
