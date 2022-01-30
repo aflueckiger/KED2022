@@ -1,5 +1,6 @@
 ---
 title: Setting up your Development Environment
+subtitle: Seminar KED2022
 author: Alex Flückiger
 date: 2022
 toc: True
@@ -10,61 +11,58 @@ toc-depth: 2
 
 # Introduction
 
-This guide aims to ease a correct set up of the development environment for Windows 10 and macOS. Depending on your operating system, you have to install additional components to be able to program in Python and perform common data wrangling tasks in the command-line. Moreover, the proposed installation strikes a good balance between cross-platform usage of the tools and relative simplicity (e.g., no virtual environments in Python). The instructions cover the installation of the following components:
+This guide aims to ease setting up your development environment for Windows 10 and macOS. Depending on your operating system, you have to install additional components to program in Python and perform common data wrangling tasks in the command-line. The instructions cover the installation of the following components:
 
-- Python 3.8 with Anaconda Platform (programming language)
+- Python 3.8
+- VS Code Editor
+- various Bash tools 
 - Tesseract (Optical Character Recognition)
-- various Bash tools
-- Text editor Atom
 
-Be aware that the installation and setup of software is sometimes more difficult and poorer documented than its usage. Beyond potential problems during the installation, there are also different ways to set up the development environment. 
+The proposed installation strikes a good balance between relative simplicity (e.g., no virtual environments in Python) and cross-platform usage of the tools. Be aware that the installation and setup of software are sometimes more difficult and poorer documented than its usage. Beyond potential problems during the installation, there are also different ways to set up the development environment. 
 
-The easiest way to install Python 3 is via the Anaconda platform, which provides common packages used in Data Science out of the box. We write Python code using the [JupyterLab](https://jupyter.org/)[^jupyter] which runs as a web-application in any browser. It is a lightweight editor commonly used in research as it allows for an immediate execution of code and showing the output next to the code that created it. 
+We write Python code using the VS Code. Although lightweight, it is a fully-fledged integrated development environment (IDE) supporting all major operating systems and many programming languages. Other than competing editors, it doesn't require much configuration and, out-of-the-box, it comes with indispensable features like auto-completion, code formatting, linting (error flagging) and debugging. In VS Code, you can even open and run [Jupyter Notebooks](https://jupyter.org/) to perform interactive data science showing the output next to the code that created it. 
 
-Before you proceed with the installation, back up your files[^backup] and make sure that your computer fulfill the following two requirements:
+Before you proceed with the installation, back up your files[^backup] and make sure that your computer fulfils the following two requirements:
 
-- run the most current version of your operating system (Win10, macOS). If not, update your system.
-- has at least 15 GB free disk space.
+- runs the most current version of your operating system (Windows, macOS). If not, update your system.
+- has at least 15 GB of free disk space.
 
-Keep in mind that there is *no* feedback in the command-line unless there is an issue. At first, the lack of feedback after a successful action may be confusing as it counters the general experience when working with graphical interfaces. Nevertheless, the lack of feedback just means the command was executed accordingly; thus, there is no need to bother you with further messages.
+Keep in mind that you will not get *any* feedback in the command-line unless there is an issue. At first, the lack of feedback after a successful action may be confusing as it runs counter the general experience when working with graphical interfaces. However, the lack of feedback just means the command was executed as expected; thus, there is no need to bother you with further messages.
 
 Let me know if you are struggling with any of the steps. 
 
 
 
-[^jupyter]: JupyterLab is the success of the well-established Jupyter Notebook providing additional features
-[^backup]: "Better save than sorry." Backing up files is a must and may save you tears as a computer is a delicate piece of hardware that does not live forever and sometimes its user are messing up files or software. In these cases, you just want go back one step.
+[^backup]: "Better save than sorry." Backing up files is a must and may save you tears as a computer is a delicate piece of hardware that does not live forever. Moreover, users are also prone to mess up files or software at any point. In these cases, you just want to go back one step and restore your data.
 
 # Installation Guide for macOS
 
-## Text Editor
-
-- When you are still using the standard text editor on your system (or none editor at all), install the `Atom` editor. Download and install the installation files from the official website https://atom.io/.
-
 ## Install Development Environment Xcode
 
-Xcode is an integrated development environment (IDE) comprising various software development tools for macOS. Among other things, the installation of Xcode is a requirement for the subsequent installation of the package manager Homebrew. To check if you have Xcode already installed, you need the command-line.
+Xcode is an integrated development environment (IDE) comprising various software development tools for macOS. The installation of Xcode is a requirement for the subsequent installation of the package manager Homebrew. To check if you have Xcode already installed, you need the command-line called Terminal on your macOS.
 
-1. Open a Terminal to get a command-line interface. When you cannot find the application in your system tray, press the `command` and `spacebar` keys to search and type  `Terminal` to search for it.
-2. To check if you have installed Xcode already, type your in the Terminal window:  
+1. Open a Terminal to get a command-line interface. When you cannot find the application in your system tray, press the `command` and `spacebar` keys to search and type `Terminal` to search for it.
+2. To check if you have installed Xcode already, type the following in the Terminal window: 
    ```bash
     xcode-select -p
    ```
    
-3. If you receive the following output, then Xcode is installed:  
+3. When you get the following output, Xcode is already installed: 
     `/Library/Developer/CommandLineTools`.
-   If you see an error, then install [Xcode from the App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2) via your web browser and accept the default options. 
-4. Once Xcode is installed, return to your Terminal window. Next, you’ll need to install Xcode’s separate Command Line Tools app, which you can do by typing:  
+   If you see an error, then install [Xcode from the App Store](https://apps.apple.com/us/app/xcode/id497799835?ign-mpt=uo%3D2&mt=12) via your web browser and accept the default options. 
+4. Once Xcode is installed, return to your Terminal window. Next, you’ll need to install Xcode's separate Command Line Tools app, which you can do by running: 
    ```bash
     xcode-select --install
    ```
-5. At this point, Xcode and its Command Line Tools app are fully installed, and we are ready to install the package manager Homebrew. 
+5. At this point, Xcode and its Command Line Tools app are fully installed, and we are ready to install the package manager Homebrew.
 
 Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos)
 
 ## Install Package Manager Homebrew
 
-1. To install Homebrew, type the following command into your Terminal window. 
+Homebrew is a powerful package manager for macOS systems. With Homebrew, you can easily install programms using the Terminal.
+
+1. To install Homebrew, type the following command into your Terminal window: 
    
    ```bash
    /bin/bash -c "$(curl -fsSL \ 
@@ -83,40 +81,43 @@ Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-
    ```bash
    brew update
    ```
+
 4. Although it is not needed for now, you can upgrade outdated packages altogether with: 
    ```bash
    brew upgrade
    ```
 
+5. Once you’ve installed Homebrew, make Homebrew's Python the primary environment by setting the `PATH` variable. In a Terminal, run the following command to add a new `PATH` variable to the  `~/.profile` file:
+
+   ```bash
+   echo "export PATH="/usr/local/opt/python/libexec/bin:$PATH" >> ~/.profile
+   source ~/.profile
+   ```
+   
+
+
+
 Source: [Homebrew](https://docs.brew.sh/FAQ)
 
-## Install Anaconda Platform (Python 3)
+## Install Python 3 with Homebrew
 
-Please note that the following instructions are for macOS Big Sur `11.x`. Update your system if you still run macOS Catalina `10.15`.
+Homebrew makes it easy to install Python 3. 
 
-1. Download the 64-bit command-line installer for Python 3.8 for macOS  from [here](https://repo.anaconda.com/archive/Anaconda3-2020.11-MacOSX-x86_64.sh). 
+1. Run the following command in a Terminal:
 
-2. Open a Terminal window (command-line). The following command requires that the installer is located in the folder `Downloads` and has its original name. If you have changed its location or name, then adapt  the file path in the following command before execution:
-   ```bash
-   bash ~/Downloads/Anaconda3-2020.11-MacOSX-x86_64.sh
-   ```
-   
-3. In the subsequent installation dialogue, you can follow the suggestions by pressing `Enter` multiple times.  
-   
-4. The installer may prompt `Do you wish the installer to initialize Anaconda3 by running conda init?`. Accept by typing `yes`.
+    ```bash
+    brew install python
+    ```
 
-7. After the initialization, you can close and reopen the Terminal to activate the modification.
+2. When Python 3 has been installed correctly on your system, you should see version 3.x after issuing the following command:
 
-8. Finally, you can check the installation by entering `conda list` in the Terminal. If you see a list of modules, you have successfully installed the Anaconda environment. You are ready to run Python programs.
+    ```bash
+    python --version
+    ```
 
-9. To enable community-driven packages within Anaconda distribution, you also need to add a new channel: 
-   ```bash
-   conda config --append channels conda-forge
-   ```
+Source: [The Hitchhiker’s Guide to Python](https://docs.python-guide.org/starting/install3/osx/)
 
-Source: [Anaconda](https://docs.anaconda.com/anaconda/install/mac-os/), [conda-forge](https://conda-forge.org/docs/user/introduction.html)
-
-## Install command-line Tools
+## Install additional command-line tools
 
 ### Tesseract
 
@@ -145,106 +146,91 @@ Source: [Tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
 
 <!--macOS Catalina introduced Zsh as the new default shell instead of Bash. To enable Zsh as new default on your system, type: chsh -s /bin/zsh -->
 
-## Install Kite
+## Install VS Code
 
-Install Kite from the [official website](https://www.kite.com/download/). Kite assists you with smart recommendations while programming.
+Unless you have another favourite coding editor, install and customize VS Code editor.
+
+1. Download and install VS Code from the official website: [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download). You may want to add a shortcut icon to the desktop.
+
+2. Open VS Code. You can skip the initial configuration of VS Code by clicking *Next Section*.
+
+3. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch the *VS Code Quick Open* again by pressing `CTRL`+`P`, paste the command, and press enter:
+
+   ```
+   ext install ms-python.python
+   ```
+
+   Similarly, install the extension Tabnine using the following command:
+
+   ```
+   ext install tabnine.tabnine-vscode
+   ```
+
+\pagebreak
 
 # Installation Guide for Windows
 
-## Text Editor
-
-- When you are still using the standard text editor on your system (or none editor at all), install the `Atom` editor. Download and install the installation files from the official website https://atom.io/.
-
 ## Install Ubuntu in a Windows Subsystem
 
-To use the powerful bash tools on Windows, we install Linux Ubuntu system within the Windows environment using WSL1.
+To use the powerful Bash tools on your Windows computer, we install a Ubuntu Linux system within the Windows environment using WSL1.
 
-1. Before installing any Linux distribution, you must ensure that the "Windows Subsystem for Linux" optional feature is enabled. Open `PowerShell` as administrator by right-clicking on the application icon in the start menu and run the following command in the shell:
-``` powershell
-dism.exe /online /enable-feature `
-/featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-```
-2. Restart your computer after completing step above.
+1. Open `PowerShell` as administrator by right-clicking on the application icon in the start menu and run the following command in the shell:
 
-3. Install `Linux Ubuntu 20.04 LTS` via the [Microsoft Store](https://www.microsoft.com/de-de/p/ubuntu-2004-lts/9n6svws3rx71).
-
-4. On the distribution's page, select `Get`. You can safely decline to create an account when you are asked in the confirmation dialogue. Ubuntu will be downloaded in the background. You can check the progress after clicking the corresponding icon located at the top-right.
-
-5. After downloading, you can launch Ubuntu by clicking the `Launch` button in the Microsoft Store app, or launching the Ubuntu from the start menu.
-
-6. The first time you launch a newly installed Linux distribution, a console window will open and you will be asked to wait for a minute or two for files to decompress and be stored on your PC. All future launches should take less than a second.
-
-7. Once the installation is complete, you will be prompted to create a new user account (and its password).  
-   **IMPORTANT**: Remember these credentials as they are used to switch to the administrator mode on your Linux system. You may choose the same account name and password as in your hosting Windows system.
+   ```powershell
+   wsl --set-default-version 1
+   wsl --install -d Ubuntu
+   ```
    
-8. Update your freshly installed Ubuntu system:
+2. Reboot your computer to complete the installation of WSL and Ubuntu.
+
+2. The installation should be completed automatically after the reboot. If not, you can launch Ubuntu from your Windows start menu. When you have any problems, let me know and I will gladly assist. It may require [additional configuration](https://askubuntu.com/questions/1264102/wsl-2-wont-run-ubuntu-error-0x80370102) of your BIOS.
+
+2. Once the installation is complete, you will be prompted to create a new user account and set a password. 
+   **IMPORTANT**: Remember these credentials as they are used to switch to the administrator mode on your Linux system. You may choose the same account name and password as on your hosting Windows system.
+   
+5. After the login, update your freshly installed Ubuntu system with the following commands:
 
    ```bash
-    sudo apt update && sudo apt upgrade
+   sudo apt update && sudo apt upgrade
    ```
 
-9. Create a symbolic link in the Bash to easily access your files on Windows. For example, you may want to link the folder `Documents` on Windows to the symbolic folder  `documents` on Ubuntu. To do this, replace the `<YOUR_USERNAME>` with the actual one and run the following commands:
+6. Create a symbolic link in the Bash to easily access your files on Windows. For example, you may want to link the folder `Documents` on Windows to the symbolic folder `documents` on Ubuntu. To do this, replace the `<YOUR_USERNAME>` with the actual one and run the following commands:
 
    ```bash
-    cd ~
-    ln -s /mnt/c/Users/<YOUR_WINDOWS_USERNAME>/Documents documents
+   cd ~
+   ln -s /mnt/c/Users/<YOUR_WINDOWS_USERNAME>/Documents documents
    ```
 
-10. Annoyingly, the copy/paste behavior is different in command lines on Windows. Any selected text is copied automatically and to paste it, you have to right-click on your mouse. You may want to reassign the shortcuts to `Ctrl+Shift+C` and `Ctrl+Shift+V` in the menu (`right-click` on the windows title bar &rarr; `Properties` &rarr; `Options` ). Using `Ctrl+C` is not possible as it is used to cancel a running program.
+   Your `Documents` on Windows can be accessed like this:
 
-Source: [Microsoft](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+   ```bash
+   ls documents
+   ```
+
+8. Annoyingly, the copy/paste behaviour is different in command lines on Windows. Any selected text is copied automatically, and to paste it, you have to right-click on your mouse. You may want to reassign the shortcuts to `Ctrl+Shift+C` and `Ctrl+Shift+V` in the menu (`right-click` on the windows title bar &rarr; `Properties` &rarr; `Options` ). Using `Ctrl+C` is not possible as it is used to cancel a running program.
+
+
+Source: [Microsoft](https://docs.microsoft.com/en-us/windows/wsl/install)
 
 <!--- Credentials on the Ubuntu system in the virtual machine: user: ked password: start --->
 
 
 
-## Install Anaconda Platform (Python 3) within Windows Subsystem
+## Install additional command-line tools
 
-For the best user experience, we are installing Anaconda on the Ubuntu Subsystem on Windows. This comes with the advantage that you can use Bash as a single entry point for any application using Python or the command line.
+1. Open Ubuntu from your start menu in Windows.
 
-1. Open the Ubuntu that you have installed in the previous step.
-2. Download the Anaconda Platform installer for Linux using the command line:
-
-    ```bash
-    wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh
-    ```
-2. Run the installation script: 
-
-    ```bash
-    bash Anaconda3-2020.11-Linux-x86_64.sh
-    ```
-
-3. Scroll down the license agreement by pressing the space bar on your keyboard and follow the prompts to accept. 
-4. When being asked if you'd like the installer to prepend it to the path, say yes.
-5. Initialize conda when being prompted to finalize the installation
-6. Close the window and reopen the Ubuntu Bash to reload .bash configs.
-7. To test that Anaconda is set up correctly worked, run the command below. It should print a path that has `anaconda` in it (e.g., `/home/<YOUR_USERNAME>/anaconda3/bin/python`). If it doesn't have `anaconda` in the path, do the next step. Otherwise, the installation was successful.
-
-    ```bash
-    which python
-    ```
-8. **IMPORTANT**: Proceed only if indicated at the previous step. Add manually the Anaconda `bin` folder to your `PATH` variable. To do this, replace the `<YOUR_USERNAME>` with the actual one and run the following command:
-   
-    ```bash
-    echo "export PATH=/home/<YOUR_USERNAME>/anaconda3/bin:$PATH" >> ~/.bashrc
-    ```
-
-2. To enable community-driven packages within Anaconda distribution, you also need to add a new channel. Open a Anaconda Prompt from your application list and execute:
+2. Install essential tools via the command-line:
 
    ```bash
-    conda config --append channels conda-forge
+   sudo apt-get install build-essential
    ```
 
+3. Install the Python package manager PIP:
 
-Source: [Anaconda](https://docs.anaconda.com/anaconda/install/windows/), [conda-forge](https://conda-forge.org/docs/user/introduction.html)
-
-## Install command-line tools
-
-- Open Ubuntu and install essential tools via the command-line:
-
-  ```bash
-   sudo apt-get install build-essential
-  ```
+   ```bash
+   sudo apt install python3-pip
+   ```
 
 
 ### Tesseract
@@ -263,83 +249,92 @@ Source: [Anaconda](https://docs.anaconda.com/anaconda/install/windows/), [conda-
 
 Source: [Tesseract](https://github.com/tesseract-ocr/tesseract/wiki)
 
-## Install Kite
+## Install the editor VS Code
 
-Install Kite that assist you with smart recommendations when programming.
+Unless you have another favourite coding editor, install and customize VS Code editor.
 
-```bash
-bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
-```
+1. Download and install VS Code from the official website: [https://code.visualstudio.com/Download](https://code.visualstudio.com/Download). You may want to add a shortcut icon to the desktop.
+
+2. Open VS Code. You can skip all the configuration of VS Code by clicking *Next Section*.
+
+3. We want to execute all the Python code within the Ubuntu subsystem. For this, we need to install a particular extension. Launch the *VS Code Quick Open* by pressing `CTRL`+`P`, paste the following command, and press enter:
+
+   ```bash
+   ext install ms-vscode-remote.vscode-remote-extensionpack
+   ```
+
+4. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch again the *VS Code Quick Open* by pressing `CTRL`+`P`, paste the command, and press enter:
+
+   ```
+   ext install ms-python.python
+   ```
+
+   Similarly, install the extension Tabnine using the following command:
+
+   ```
+   ext install tabnine.tabnine-vscode
+   ```
+
+5. In the left lower corner, you should now see a green label with `WSL: Ubuntu`. If not, press `F1`, select *Remote-WSL: New Window* to connect the subsystem.
+
+Source: [Microsoft](https://code.visualstudio.com/docs/remote/wsl)
+
+![WSL Ubuntu is successfully connected](images/vs_code_wsl.png){ width=4cm }
+
+
 
 
 
 # Installation Guide for Linux
 
-You presumably have installed some of the required tools already or you have the necessary knowledge to do so. Otherwise, ask me anytime or just Google for a manual. Anyways, you are lucky as it is simpler than on the other platforms. Linux rules them all when it comes to development.
+You presumably have installed some of the required tools already or you have the necessary knowledge to do so. Otherwise, ask me anytime or just google for a manual. Anyways, you are lucky as it is simpler than on the other platforms. Linux rules them all when it comes to development.
 
-## Install Kite
+\pagebreak
 
-Even when you are a pro, Kite is worth a shot. It assists you with smart recommendations while programming. Install Kite before you proceed with the setup of JupyterLab as described in the next chapter.
+# Getting started with Python (all Systems)
 
-```bash
-bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
-```
+## Install Python packages
 
+We need to install some additional packages that are not included in the Python standard library.
 
+A common and easy way to install everything needed in a project is by using a provided `requirements.txt` file that lists all the used Python packages. You find such a file in the [repository of this seminar](https://github.com/aflueckiger/KED2022/), available on GitHub. We will learn more about GitHub and the installed packages later in the course. For now, you can think of a GitHub repository as a publicly available project folder that is versioned.
 
-# Install Python packages (all Systems)
-
-In this step, you install a few additional Python packages using the Anaconda Package Manager conda (alternative to pip). Confirm when you are asked to install the packages. 
+1. Open a command-line and download the GitHub repository of this course. 
 
    ```bash
-conda install flake8
-conda install -c anaconda nodejs 
-conda install -c anaconda spacy
-conda install -c conda-forge textacy
-conda install -c conda-forge plotnine
+   # Windows user only:
+   # Change into the `Documents` folder 
+   # to make is easily accessible from Windows
+   cd /mnt/c/Users/<YOUR_WINDOWS_USERNAME>/Documents
+   
+   # everyone
+   git clone https://github.com/aflueckiger/KED2022.git
+   cd KED2022
    ```
 
-Additionally, we install some extensions for the JupyterLab that make programming easier. If you run into issues, skip these steps and let me know:
+2. Now, you can install the necessary packages listed in the `requirements.txt` with a single command: 
 
-   ```bash
-# set up Kite for jupyterlab
-pip install "jupyter-kite<2.0.0"
-jupyter labextension install "@kiteco/jupyterlab-kite"
+    ```bash
+    pip3 install -r requirements.txt
+    ```
 
-# Flake8
-jupyter labextension install jupyterlab-flake8
-   ```
+## First Steps in Python
 
-<!-- on WSL Kite may be started manually with: /home/ked/.local/share/kite/current/kited -->
+As a kind of initiation ritual, say hello to the programming world in Python. 
 
+1. Open the VS Code editor and create a new file called `hello_world.py`.
+2. Write the following code in that file:
 
+    ```python
+    msg = "Hello World!"
+    print(msg)
+    ```
 
-# First Steps in Python (all Systems)
+3. Execute the code by right-clicking in the window and choosing `Run Python File in Terminal`.
 
-![Write your first Python script within JupyterLab](materials/images/jupyterlab.png)
-
-Start the JupyterLab, an editor for Python, which you have installed together with Anaconda. For this, open your command line and run the following command:
-
-``` bash
-jupyter lab --no-browser
-```
-Copy the the provided link and paste it into your browser to enter the web-application. Mac and Linux User can run the command above without the `--no-browser` flag get redirected to the appropriate browser window directly. Example:
-
-```html
-http://localhost:8888/lab?token=bf39883d2d5b637352e1cf56656c4a59f
-```
-
-As a kind of initiation ritual, say hello to the world in Python by issuing the following code lines and press the `Enter` button:
-
-```python
-print("Hello, World!")
-```
-
-Congrats, you wrote your first little program in Python. It may not be as impressive, but you can go along and will learn by practicing. The list of tutorials below provides a great starting point to learn the basics of Python by solving little exercises interactively.
+Congrats, you wrote your first little program in Python. It may not be as impressive as you would have imagined, but you can go along and will learn by practising. The list of tutorials below provides a great starting point to learn the basics of Python by solving little exercises interactively:
 
 - [Python Principles](https://pythonprinciples.com)
-
 - [LearnPython](https://www.learnpython.org/en/Welcome)
 
-
-
+![Write your first Python script in VS Code](images/vs_code_hello_world.png){ width=6cm }

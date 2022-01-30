@@ -8,6 +8,7 @@ CSS = lectures/resources/custom_style_reveal.css
 BIB = /home/alex/drive/zotero/references.bib
 
 TITLE?= "BA Seminar: The ABC of Computational Text Analysis"
+AUTHOR?= "Alex Flückiger"
 
 # LECTURES
 LECTURES_DIR?= lectures
@@ -79,7 +80,7 @@ $(NOTES_DIR)/%.notes.pdf: $(LECTURES_DIR)/%.md lib/extract_notes.py
 	python lib/extract_notes.py < $< | pandoc -o $@ -f markdown
 
 $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
-	decktape --load-pause 500 $< $@
+	decktape --load-pause 500 --pdf-author $(AUTHOR) --pdf-title $(TITLE) $< $@
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/prepress -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$@.temp $@
 	mv $@.temp $@
 
@@ -87,7 +88,7 @@ $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
 KED2022_syllabus.pdf: index.md schedule.md lectures.md assignments.md
 	cat index.md <(echo "[Go to Course Website](https://aflueckiger.github.io/KED2022/)" ) | grep -v "Go to UniLu website" | sed '/<div/,/div>/d'	> index.md.tmp
 	sed '5 a # Schedule' schedule.md | sed 's/.lectures//' > schedule.md.tmp
-	sed '5 a # Lectures' lectures.md | sed 's/!.*\.svg)/Binder/' > lectures.md.tmp
+	sed '5 a # Lectures' lectures.md | sed 's/!.*\.svg)/Binder/' | grep -v "{%" > lectures.md.tmp
 	sed '5 a # Assignments' assignments.md > assignments.md.tmp
 	pandoc -o $@ index.md.tmp schedule.md.tmp lectures.md.tmp assignments.md.tmp \
 	--from markdown \
@@ -103,10 +104,11 @@ KED2022_syllabus.pdf: index.md schedule.md lectures.md assignments.md
 	rm *.tmp
 
 %.pdf: %.md
-	pandoc -o $@ $< \
+	pandoc -f  markdown+rebase_relative_paths -o $@ $< \
 	-V urlcolor='[HTML]{111bab}' \
 	-V linkcolor='[HTML]{111bab}' \
 	-V filecolor='[HTML]{111bab}' \
+	-V geometry:margin=2.5cm \
 	--number-sections \
 	--metadata date="`date -u '+%d %B %Y'`"
 
