@@ -19,7 +19,13 @@ body {
 h1 {
     font-size: 42px;
     letter-spacing: -1px;
-    line-height: 1;
+}
+h2 {
+    line-height: 1.15em;
+    margin-top: 1em
+}
+h3, h4 {
+    font-style: italic;
 }
 
 i {
