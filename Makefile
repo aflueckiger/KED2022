@@ -75,9 +75,8 @@ $(LECTURES_HTML_DIR)/%.html: $(LECTURES_MD_DIR)/%.md $(CSS)
     --citeproc \
     --bibliography /home/alex/drive/zotero/references.bib
 
-
-$(NOTES_DIR)/%.notes.pdf: $(LECTURES_DIR)/%.md lib/extract_notes.py
-	python lib/extract_notes.py < $< | pandoc -o $@ -f markdown
+$(NOTES_DIR)/%.notes.pdf: $(LECTURES_MD_DIR)/%.md lib/extract_notes.py
+	python lib/extract_notes.py < $< | pandoc -o $@ -f markdown --pdf-engine=xelatex -V geometry:margin=2.5cm
 
 $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
 	decktape --load-pause 500 --pdf-author $(AUTHOR) --pdf-title $(TITLE) $< $@
