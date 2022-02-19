@@ -238,7 +238,8 @@ Source: [Microsoft](https://docs.microsoft.com/en-us/windows/wsl/install)
 1. Install the text recognition engine Tesseract, which allows extracting text from images, with:
 
    ```bash
-   sudo apt install tesseract-ocr
+   sudo add-apt-repository -y ppa:alex-p/tesseract-ocr5
+   sudo apt install -y tesseract-ocr
    ```
 
 2. Install the German language model for Tesseract with:
