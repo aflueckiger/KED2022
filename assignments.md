@@ -81,7 +81,7 @@ The only requirement is to complement your claims with some quantitative facts a
 
 ## Inspiring Student Projects
 
-- [Josias Bruderer, 2022](https://git.makersphere.ch/josias/jason-scotts-favorite-100/raw/master/README.pdf)
+- [Analysis of Bulletin Board Systeme (BBS)](https://git.makersphere.ch/josias/jason-scotts-favorite-100/raw/master/README.pdf), Josias Bruderer, 2021
 
 # Optional Seminar Paper
 
@@ -89,7 +89,7 @@ You are welcomed to write an optional seminar paper (Hauptseminararbeit) for whi
 
 Due to the practical foundation of this seminar, you are well-prepared to subsequently apply computational text methods in a personal project. Although this is not a requirement, you may want to turn your mini-project into a seminar paper by deepening your empirical inquiry. 
 
-Students planning to write a seminar paper should send me an email with a short outline of their research idea until **10 May 2022** at the latest. When you would like to discuss your idea in person, feel free to do so any time after the seminar.
+Students planning to write a seminar paper should send me an email with a short outline of their research idea until **15 May 2022** at the latest. When you would like to discuss your idea in person, feel free to do so any time after the seminar.
 
 Requirements for the seminar paper (Hauptseminararbeit):
 
