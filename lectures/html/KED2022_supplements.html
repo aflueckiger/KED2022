@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  https://www.color-hex.com/color-palette/1294
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+      --grey: #4a4a4b;
+      --color-control: #6497b1;
+      --color-headers: #03396c;
+      --color-marker: #b3cde0;
+
+  }
+
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: var(--bs-white);
+      background-color: var(--bs-white);
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: var(--black);
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: var(--color-marker)
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 12px;
+      bottom: 24px;
+      right: 2px;
+      color: var(--color-control);
+  }
+
+  .reveal .progress {
+      height: 5px;
+      color: var(--color-headers);
+  }
+
+  .reveal .slide-number {
+      right: 30px;
+      bottom: 4px;
+      font-size: 22px;
+      background-color: transparent;
+      color: var(--black);
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  .reveal h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--black);
+  }
+
+  p.subtitle{
+      color: var(--color-headers);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 5em;
+  }
+
+  p.author,
+  p.date,
+  p.institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  p.institute{
+      font-size: 0.5em
+  }
+
+  p.date {
+      margin-top: 1em;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: var(--color-headers);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+      font-style: italic;
+      margin-top: 0.2em;
+      list-style-type: None;
+      font-size: 0.8em;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: #005b96;
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    color: var(--grey);
+    font-size: 75%;
+  }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: var(--black);
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+
+  .funky {
+      font-family: Caveat;
+      font-size: 1.5em;
+  }
+
+  .green {
+      color: #386C03;
+  }
+
+  .red {
+      color: #B40A22;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">Supplements</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">25 February 2022<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="purpose" class="slide level2">
+<h2>Purpose</h2>
+<p>Here I present some stuff that we did not cover in class.</p>
+</section>
+<section id="tasks" class="slide level2">
+<h2>Tasks</h2>
+<ul>
+<li>find various ngrams with wildcards</li>
+<li>check gender specific language
+<ul>
+<li>what follows <code>she/he</code> or <code>her/his</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="forms-of-data" class="slide level2">
+<h2>Forms of Data</h2>
+<ul>
+<li>content data
+<ul>
+<li>clean, plain text data</li>
+<li>preferable as <code>.txt</code></li>
+</ul></li>
+<li>metadata ~ information about the actual data
+<ul>
+<li>publishing date, authors, source, version</li>
+<li>preferable as <code>.csv</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="key-word-in-context-kwic" class="slide level2">
+<h2>Key Word in Context (KWIC)</h2>
+<pre class="bash"><code>ptx -f -w 50 */*.txt &gt; ptx.txt
+egrep -i &quot;[a-z]  word&quot; ptx.txt</code></pre>
+</section>
+<section id="select-column-in-dataset" class="slide level2">
+<h2>Select Column in Dataset</h2>
+<pre class="bash"><code>cut -d\t -f1    # extract the 2nd column from a tab-separated file</code></pre>
+</section>
+<section id="extract-texts-from-tsv" class="slide level2">
+<h2>Extract texts from tsv:</h2>
+<ul>
+<li>http://www.theunixschool.com/2012/05/shell-read-text-or-csv-file-and-extract.html</li>
+</ul>
+</section>
+<section id="variables" class="slide level2">
+<h2>Variables</h2>
+<pre class="bash"><code>echo &quot;Starting program at $(date)&quot; </code></pre>
+</section>
+<section id="better-tokenization" class="slide level2">
+<h2>Better Tokenization</h2>
+<ul>
+<li>tokenization ~ splitting into words</li>
+</ul>
+<pre class="bash"><code># new, improved approach
+cat text.txt | tr -sc &quot;[a-zäöüA-ZÄÖÜ0-9-]&quot; &quot;\n&quot;
+
+# old approach
+cat text.txt | tr &#39; &#39; &#39;\n&#39;  </code></pre>
+<aside class="notes">
+<ul>
+<li>Tokenisierung = in Wörter splitten</li>
+<li>Interpunktion “klebt nicht mehr an Wörtern”</li>
+<li>-s = beliebig viele Zeichen</li>
+<li>-c = Komplement (also nicht diese Zeichen)</li>
+<li>angegebene Zeichen werden NICHT ersetzt</li>
+</ul>
+</aside>
+</section>
+<section id="batch-processing" class="slide level2">
+<h2>Batch Processing</h2>
+<pre class="bash"><code>for file in *.txt; do           # loop over all text files
+ cat &quot;$file&quot; | pipe commands &gt; &quot;proc_$file&quot;
+done</code></pre>
+</section>
+<section id="batch-renaming" class="slide level2">
+<h2>Batch Renaming</h2>
+<pre class="bash"><code>rename  &quot; &quot; &quot;_&quot; *.txt   # replace spaces with underscores
+# since there are different versions, if this doesn&#39;t work try:
+# rename &#39;s/ /_/&#39; *.txt
+</code></pre>
+<pre class="bash"><code>i=1
+for file in *.txt; do           # loop over all text files
+ mv -- &quot;$file&quot; &quot;text_$i.txt&quot;    # rename each file with a sequential number
+ i=$((i+1))
+done</code></pre>
+</section>
+<section id="data-cleaning" class="slide level2">
+<h2>Data Cleaning</h2>
+</section>
+<section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises I</h2>
+</section>
+<section id="grid-example" class="slide level2">
+<h2>Grid Example</h2>
+<div class="l-double">
+<p>:::</p>
+<p><strong>COL 1</strong></p>
+<ul>
+<li>text processing</li>
+</ul>
+<p>:::</p>
+<p>:::</p>
+<p><strong>COL 2</strong></p>
+<ul>
+<li>existing resources</li>
+<li>creating new resources</li>
+</ul>
+<p>:::</p>
+</div>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

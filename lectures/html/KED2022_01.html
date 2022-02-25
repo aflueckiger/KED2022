@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-02-25">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  https://www.color-hex.com/color-palette/1294
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+      --grey: #4a4a4b;
+      --color-control: #6497b1;
+      --color-headers: #03396c;
+      --color-marker: #b3cde0;
+
+  }
+
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: var(--bs-white);
+      background-color: var(--bs-white);
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: var(--black);
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: var(--color-marker)
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 12px;
+      bottom: 24px;
+      right: 2px;
+      color: var(--color-control);
+  }
+
+  .reveal .progress {
+      height: 5px;
+      color: var(--color-headers);
+  }
+
+  .reveal .slide-number {
+      right: 30px;
+      bottom: 4px;
+      font-size: 22px;
+      background-color: transparent;
+      color: var(--black);
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  .reveal h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--black);
+  }
+
+  p.subtitle{
+      color: var(--color-headers);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 5em;
+  }
+
+  p.author,
+  p.date,
+  p.institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  p.institute{
+      font-size: 0.5em
+  }
+
+  p.date {
+      margin-top: 1em;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: var(--color-headers);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+      font-style: italic;
+      margin-top: 0.2em;
+      list-style-type: None;
+      font-size: 0.8em;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: #005b96;
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    color: var(--grey);
+    font-size: 75%;
+  }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: var(--black);
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+
+  .funky {
+      font-family: Caveat;
+      font-size: 1.5em;
+  }
+
+  .green {
+      color: #386C03;
+  }
+
+  .red {
+      color: #B40A22;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#1 Introduction +<br>Where is the digital revolution?</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="date">25 February 2022</p>
+</section>
+
+<section id="lectures-covid-19" class="slide level2">
+<h2>Lectures #COVID-19</h2>
+<p><strong>Virtual lectures are not optimal, so …</strong></p>
+<ul>
+<li>interrupt me anytime!</li>
+<li>use all channels for interaction
+<ul>
+<li>chat + audio + video + emoji</li>
+</ul></li>
+<li>mute mic unless you speak</li>
+</ul>
+<p><br></p>
+<p><strong>We are here together!</strong> <span class="emoji" data-emoji="mask">😷</span></p>
+<aside class="notes">
+<ul>
+<li>Vergleich FS2020: Start vor Ort
+<ul>
+<li>Studis haben mehr Erfahrung durch HS2022</li>
+<li>Kurs übers Digitale kann auch digital stattfinden!</li>
+</ul></li>
+<li>alle Kommunikationskanäle
+<ul>
+<li>Fragen helfen allen &amp; machen Seminar interessanter</li>
+<li>alle Chat öffnen, um Fragen zu sehen</li>
+<li>Video wäre toll</li>
+</ul></li>
+<li>melden bei technischen Problemen</li>
+<li>Slides + Unterlagen online</li>
+<li>Live-Lektionen zwecks Interaktion + Recording</li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ol type="1">
+<li>digital revolution or hype?</li>
+<li>about us</li>
+<li>goals of this course</li>
+</ol>
+<aside class="notes">
+<ul>
+<li>Dreiteilig
+<ul>
+<li>Heranführung, Austausch, Kursorganisation</li>
+</ul></li>
+<li>brandaktuelles Thema, öffentlicher Diskurs</li>
+<li>Exkurs: Computer als Zaubermaschine vs. Werkzeug
+<ul>
+<li>Was ist künstliche Intelligenz?</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="ai-a-non-standard-introduction" class="title-slide slide level1">
+<h1>AI: A non-standard Introduction</h1>
+
+</section>
+<section id="the-world-has-changed-hasnt-it" class="slide level2">
+<h2>The world has changed, hasn’t it?</h2>
+<figure>
+<img data-src="../images/ai_illustration_new.jpg" alt="A symbolic image of artificial intelligence (HWZ)" /><figcaption aria-hidden="true">A symbolic image of artificial intelligence (<a href="https://www.hwzdigital.ch/artificial-intelligence-part-1/">HWZ</a>)</figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>Welt im Wandel</li>
+<li>Wer kennt solche Bilder nicht?
+<ul>
+<li>Roboter, Hybride, Hirne</li>
+<li>Blauton</li>
+</ul></li>
+<li>populärwissenschaftliche Bild transportiert</li>
+<li>AI ist hip: Technologiefirmen, Forschung, Konsumenten</li>
+</ul>
+</aside>
+</section>
+<section id="an-era-of-big-data-ai" class="slide level2">
+<h2>An Era of Big Data + AI</h2>
+<aside class="notes">
+<ul>
+<li>Big Data discredited due privacy concerns (NSA, Facebook etc.)</li>
+<li>Daten sind nicht wie Gold/Öl. Analogie unpassend, weil wieder verwendbar und rekombinierbar. Wert durch Teilen statt Besitzen.</li>
+</ul>
+</aside>
+</section>
+<section id="group-discussion" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">Group Discussion</h2>
+<h3 id="what-makes-a-computer-looking-intelligent">What makes a computer looking intelligent?</h3>
+<div class="fragment">
+<div class="answer">
+<p>AI is a moving target with respect to …</p>
+<ul>
+<li>human capabilities</li>
+<li>technological abilities</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>Vorstellung von Studis?</li>
+<li>Altersdifferenz spielt wohl eine Rolle in IT</li>
+<li>“AI is whatever hasn’t been done yet.” D. Hofstadter</li>
+<li>nachfolgend Beispiele künstlicher Intelligenz anschauen</li>
+</ul>
+</aside>
+</div>
+</section>
+<section id="transfer-human-intelligence" class="slide level2">
+<h2>Transfer Human Intelligence</h2>
+<h3 id="from-static-machines-to-more-flexible-devices">from static machines to more flexible devices</h3>
+<ul>
+<li>mimicking intelligent behavior
+<ul>
+<li>speaking + seeing</li>
+</ul></li>
+<li>a sense of contextual perception</li>
+<li>many degrees of freedom</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Referenzfolie Mensch
+<ul>
+<li>Imitieren von menschlichen Sinnen</li>
+<li>Sprechen/Sehen/Hören</li>
+<li>Statische maschine
+<ul>
+<li>if this then that</li>
+</ul></li>
+<li>Kontextabhängiges Handeln
+<ul>
+<li>Interaktion initieren</li>
+<li>Situationsangepasstheit</li>
+</ul></li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="seeing-like-a-human" class="slide level2">
+<h2>Seeing like a Human?</h2>
+<figure>
+<img data-src="../images/facebook_detectron2.png" class="center" style="width:60.0%" alt="An image segmentation with Facebook’s Detectron2" /><figcaption aria-hidden="true">An image segmentation with <a href="https://ai.facebook.com/blog/-detectron2-a-pytorch-based-modular-object-detection-library-/">Facebook’s Detectron2</a></figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>Unbeschriftete Dinge? → ontologische Frage
+<ul>
+<li>Mensch nur als Ganzes, ohne Erkennung von Kleidern</li>
+<li>Person ohne Geschlecht?</li>
+<li>Teekanne falsch/nicht erkannt</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="speaking-like-a-human" class="slide level2">
+<h2>Speaking like a Human?</h2>
+<figure>
+<img data-src="../images/meena.png" style="height:20cm" alt="Chatting with Google’s Meena" /><figcaption aria-hidden="true">Chatting with <a href="https://ai.googleblog.com/2020/01/towards-conversational-agent-that-can.html">Google’s Meena</a></figcaption>
+</figure>
+<div class="fragment">
+<div class="funky red">
+<p><span class="emoji" data-emoji="see_no_evil">🙈</span> Not really, Arizona is not by the sea.</p>
+</div>
+<aside class="notes">
+<ul>
+<li><p>POS: Gesprächsfluss, mehrere Turns, Slang, Humor</p></li>
+<li><p>NEG: Übernahme fremde Identität, Faktencheck Arizona</p></li>
+</ul>
+</aside>
+</div>
+</section>
+<section id="beyond-perception" class="slide level2">
+<h2>Beyond Perception</h2>
+<aside class="notes">
+<ul>
+<li>Chat verbindet Wahrnehmen + Generieren</li>
+<li>intensive Forschung Generieren von Text, Bild, Video</li>
+<li>Auswirkung auf Sozialwelt
+<ul>
+<li>Bald kein Medium mehr das “manipulationssicher” ist. Es kann alles generiert werden: Bilder, Video, Texte</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="section" class="slide level2" data-background-iframe="https://thispersondoesnotexist.com/">
+<h2 data-background-iframe="https://thispersondoesnotexist.com/"></h2>
+<div class="fragment">
+<div class="highlight">
+<p>Generated Images by a Neural Network</p>
+<p><a href="https://thisxdoesnotexist.com/" class="uri">https://thisxdoesnotexist.com/</a></p>
+<p>Give me <a href="https://github.com/rosasalberto/StyleGAN2-TensorFlow-2.x"><em>more!</em></a></p>
+</div>
+<aside class="notes">
+<ul>
+<li>Problem: bald gibt es kein medium mehr das manipulationssicher ist. Es kann alles generiert werden: Bilder, Video, Texte</li>
+</ul>
+</aside>
+</div>
+</section>
+<section id="ai-hype-in-a-nutshell" class="slide level2">
+<h2>AI Hype in a Nutshell</h2>
+<pre class="python"><code>AI = from human_knowledge import solution</code></pre>
+<aside class="notes">
+<ul>
+<li>manche Dinge für Computer schwierig, für Menschen einfach (und umgekehrt)</li>
+<li>Schach einfach für Computer, Unterschied Katze/Hund lange schwierig</li>
+<li>Algo für Katze/Hund-Bestimmung erkennt kein Auto, weil zu spezifisch
+<ul>
+<li>keine Angst vor Computer, die Welt übernehmen</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="artificial-intelligence" class="slide level2">
+<h2>Artificial Intelligence</h2>
+<h3 id="subfields">Subfields</h3>
+<ul>
+<li>Natural Language Processing (NLP)</li>
+<li>Computer Vision (CV)</li>
+<li>Robotics</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>in Wissenschaft primär drei Felder</li>
+<li>sehr viel gemeinsam in Methodik: Lernen von Daten</li>
+</ul>
+</aside>
+</section>
+<section id="how-does-computer-intelligence-work" class="slide level2">
+<h2>How does Computer Intelligence work?</h2>
+<ul>
+<li>interchangeably (?) used concepts
+<ul>
+<li>Artificial Intelligence (AI), Machine Learning (ML), <strong>Deep Learning</strong> (DL)</li>
+</ul></li>
+<li>generalize <strong>patterns</strong> from lots of data
+<ul>
+<li>more recycling than genuine intelligence</li>
+<li>theory agnostically</li>
+</ul></li>
+<li>supervised <strong>training</strong>
+<ul>
+<li>input-output pairs</li>
+</ul></li>
+</ul>
+<p><img data-src="../images/concepts_ai.png" class="l-image-corner" style="height:90.0%" /></p>
+<aside class="notes">
+<ul>
+<li>Hinter diesen Systemen steht…</li>
+<li>Wie funktionieren diese Systeme?</li>
+<li>AI-Paradigma: Logik vs. Lernen</li>
+<li>DL = dominantes ML-Modell
+<ul>
+<li>schichtweise Abstraktion</li>
+<li>Metapher Hirn</li>
+</ul></li>
+<li>Lernen von Unmengen Daten
+<ul>
+<li>Input-Antwort-Beziehung</li>
+</ul></li>
+<li>Regression = ML</li>
+</ul>
+<p>Related concepts (<a href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/difference-between-ai-machine-learning-deep-learning.html">src</a>)</p>
+</aside>
+</section>
+<section id="demos-of-intelligent-text-processing" class="slide level2">
+<h2>Demos of <em>intelligent</em> Text Processing</h2>
+<h3 id="can-you-disenchant-them">Can you disenchant them?</h3>
+<ul>
+<li><a href="https://demo.allennlp.org/sentiment-analysis/roberta-sentiment-analysis">sentiment analysis</a></li>
+<li><a href="https://demo.deeppavlov.ai/#/en/textqa">question answering</a></li>
+<li><a href="https://openai.com/blog/dall-e/">creating images from text</a></li>
+<li><a href="https://talktotransformer.com/">text generation</a></li>
+<li><a href="https://www.pandorabots.com/mitsuku/">chat bot</a></li>
+<li><a href="https://www.deepl.com/translator">machine translation</a></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Eindrückliche Beispiele, Stand Forschung</li>
+<li>Generieren: “The Coronavirus is dangerous” (Spielerei)</li>
+<li>Sentiment: Aspekte Airline (Auswertung Feedback)</li>
+<li>QA: When has the University of Lucerne been founded? What are the 5 biggest Swiss companies? (Suche)</li>
+<li>Caption: Medienwechsel von Sehen zu Sprache (Werkzeug für Blinde)</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="why-this-matters-for-social-science" class="title-slide slide level1">
+<h1>Why this matters for<br>Social Science</h1>
+
+</section>
+<section id="computational-social-science" class="slide level2">
+<h2>Computational Social Science</h2>
+<h3 id="data-driven-research">data-driven research</h3>
+<ul>
+<li>computational social science <span class="citation" data-cites="Lazer2009">(Lazer et al. 2009)</span>
+<ul>
+<li>Digital Humanities, Computational History, Data Science</li>
+</ul></li>
+<li>highly interdisciplinary</li>
+<li>early computational history already in 1960s <span class="citation" data-cites="Graham2015">(Graham, Milligan, and Weingart 2015)</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Wieso zeige ich all das in sozialwissenschaftlichem Kurs?
+<ul>
+<li>AI Spitze von Eisberg</li>
+<li>Pointe: Data-driven research</li>
+<li>Paper CSS Manifesto</li>
+</ul></li>
+<li>Daten
+<ul>
+<li>Modelle sind nur die halbe Miete, Daten sind der Zauberstoff. nicht das neuste ML</li>
+<li>sorgfältiges aggregieren</li>
+</ul></li>
+<li>Sozialwissenschaften müssen sich bewegen
+<ul>
+<li>CSS löst Problem sinkender response-rate in Survey</li>
+<li>alternative Datenquellen</li>
+<li>Auswirkungen Forschung, Fragestellung, Ausbildung</li>
+</ul></li>
+<li>CSS mit langer Vorgeschichte, nie Mainstream</li>
+</ul>
+</aside>
+</section>
+<section id="group-discussion-1" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">Group Discussion</h2>
+<h3 id="what-kind-of-data-are-there">What kind of data are there?</h3>
+<h3 id="what-data-is-relevant-for-social-science">What data is relevant for social science?</h3>
+<div class="fragment">
+<div class="answer">
+<ul>
+<li>data as traces of social behaviour
+<ul>
+<li>tabular, text, image</li>
+</ul></li>
+<li>datafication
+<ul>
+<li>sensors of smartphone, digital communication</li>
+</ul></li>
+<li>much of human knowledge compiled as text</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>alles sind Daten</li>
+<li>je mehr digital, desto einfacher für Wissenschaft</li>
+</ul>
+</aside>
+</div>
+</section>
+<section id="about-the-mystery-of-coding" class="slide level2">
+<h2>About the Mystery of Coding</h2>
+<h3 id="coding-is-like">coding is like…</h3>
+<ul>
+<li>cooking with recipes</li>
+<li>superpowers</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>moderne Datenauswertung braucht Coding-Skills</li>
+<li>2 Metapher für Abarbeiten von Befehlen</li>
+<li>Kochrezepte</li>
+</ul>
+</aside>
+</section>
+<section id="women-have-coding-powers-too" class="slide level2" data-background="https://media1.tenor.com/../images/93c9eb756df19748e4fb50f04c4a451c/tenor.gif?itemid=11586724">
+<h2 data-background="https://media1.tenor.com/../images/93c9eb756df19748e4fb50f04c4a451c/tenor.gif?itemid=11586724">Women have coding powers too!</h2>
+<aside class="notes">
+<ul>
+<li>Bild von Superman im Kopf</li>
+<li>weniger Frauen in IT ist trauriger Fakt</li>
+<li>gewachsen auf historischen Stereotypen</li>
+</ul>
+</aside>
+</section>
+<section id="where-the-actual-revolution-is" class="slide level2">
+<h2>Where the actual Revolution is</h2>
+<p>Coding is a <strong>superpower</strong> …</p>
+<ul>
+<li>flexible</li>
+<li>reusable</li>
+<li>reproducible</li>
+<li>inspectable</li>
+<li>collaborative</li>
+</ul>
+<p>… to tackle complex problems</p>
+<aside class="notes">
+<ul>
+<li>Coding ermöglicht Verarbeitung von komplexen, nicht standardisierten Daten</li>
+<li>Vorteil: Fehler im Code möglich → beheben → erneut ausführen (Fortschritt)</li>
+<li><strong>Pause</strong></li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="about-us" class="title-slide slide level1">
+<h1>About us</h1>
+
+</section>
+<section id="personal-example" class="slide level2" data-background="../images/ma_flueckiger_country_mentions_black.png">
+<h2 data-background="../images/ma_flueckiger_country_mentions_black.png">Personal Example</h2>
+<p><span style="color:silver">directed country mentions in UN speeches</span></p>
+<aside class="notes">
+<ul>
+<li>UN-Debatte: Wer erwähnt wen in Rede?
+<ul>
+<li>Aufmerksamkeiten</li>
+<li>Extrahiert aus Texten</li>
+</ul></li>
+<li>Farben/Ordnung nach Kontinent</li>
+<li>Rolle der USA (Regenbogen)</li>
+<li>Regionale Aufmerksamkeit statt Globalität</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="goals-of-this-course" class="title-slide slide level1">
+<h1>Goals of this Course</h1>
+
+</section>
+<section id="what-you-learn" class="slide level2">
+<h2>What you learn</h2>
+<ul>
+<li><strong>computationally analyze</strong>, interpret, and visualize <strong>texts</strong>
+<ul>
+<li>command line + Python</li>
+</ul></li>
+<li><strong>digital literacy</strong> + scholarship</li>
+<li>problem-<strong>solving</strong> capacity</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Text als Datenform → Textanalyse</li>
+<li>technisch: CL + Python Sprachen</li>
+<li>Tools/Arbeitsweisen für Alltag/Forschen/Arbeit
+<ul>
+<li>Leben vereinfachen</li>
+<li>Dinge, die ich spät gelernt habe</li>
+</ul></li>
+<li>Problemlöseverhalten
+<ul>
+<li>Nachlesen &amp; Ausprobieren</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="learnings-from-previous-courses" class="slide level2">
+<h2>Learnings from previous Courses</h2>
+<ul>
+<li>too much content, too little <strong>practice</strong></li>
+<li>programming can be overwhelming</li>
+<li><strong>learning</strong> by <strong>doing</strong>, doing by <strong>googling</strong></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Zu ambitioniert + an Bedürfnissen vorbei</li>
+<li>zu einseitig Programmieren</li>
+<li>braucht viel Übung</li>
+<li>Kein Einzelfallwissen, sondern Selbsthilfe</li>
+<li>learnbyexample
+<ul>
+<li>Doing is often better than thinking of doing</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="levels-of-proficiency" class="slide level2">
+<h2>Levels of Proficiency</h2>
+<ol type="1">
+<li><strong>awareness</strong> of today’s computational potential</li>
+<li><strong>analyzing</strong> existing datasets</li>
+<li><strong>creating</strong> + analyzing new datasets</li>
+<li>applying advanced <strong>machine learning</strong></li>
+</ol>
+<aside class="notes">
+<ul>
+<li>Kompetenzstufen</li>
+<li>Computer nicht nur Word + Youtube, sondern auch Werkzeug</li>
+<li>Ziel: Stufe 3</li>
+</ul>
+</aside>
+</section>
+<section id="what-i-teach" class="slide level2">
+<h2>What I teach</h2>
+<ul>
+<li>computational <strong>practises</strong></li>
+<li><strong>critical perspective</strong> on technology</li>
+<li>lecture-style introductions</li>
+<li>hands-on coding sessions</li>
+<li>discussions + experiments in groups</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Aufbau Unterricht</li>
+<li>Seminar heisst interaktiv</li>
+<li>Mix zwischen Vorlesung, Diskutieren &amp; Experimentieren</li>
+</ul>
+</aside>
+</section>
+<section id="topics" class="slide level2">
+<h2>Topics</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="techniques">techniques</h3>
+<ul>
+<li>text processing</li>
+<li>extracting and aggregating information</li>
+<li>creating simple visualizations</li>
+<li>optical character recognition (OCR)</li>
+<li>scraping files</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="data">data</h3>
+<ul>
+<li>existing resources</li>
+<li>creating new resources</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<div class="funky green">
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> inputs are more than welcome!</p>
+</div>
+<aside class="notes">
+<ul>
+<li>Techniken &amp; Resourcen</li>
+<li>Text zu Daten machen</li>
+<li>Inputs</li>
+</ul>
+</aside>
+</section>
+<section id="provisional-schedule" class="slide level2">
+<h2>Provisional Schedule</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>03 March 2022</td>
+<td>Introduction + Where is the digital revolution?</td>
+</tr>
+<tr class="even">
+<td>10 March 2022</td>
+<td>Text as Data</td>
+</tr>
+<tr class="odd">
+<td>17 March 2022</td>
+<td>Setting up your Development Environment</td>
+</tr>
+<tr class="even">
+<td>24 March 2022</td>
+<td>Introduction to the Command-line</td>
+</tr>
+<tr class="odd">
+<td>31 March 2022</td>
+<td>Basic NLP with Command-line</td>
+</tr>
+<tr class="even">
+<td>07 April 2022</td>
+<td>Learning Regular Expressions</td>
+</tr>
+<tr class="odd">
+<td>14 April 2022</td>
+<td>Working with (your own) Data</td>
+</tr>
+<tr class="even">
+<td>21 April 2022</td>
+<td>no lecture (Osterpause)</td>
+</tr>
+<tr class="odd">
+<td>28 April 2022</td>
+<td>Ethics and the Evolution of NLP</td>
+</tr>
+<tr class="even">
+<td>05 May 2022</td>
+<td>Introduction to Python</td>
+</tr>
+<tr class="odd">
+<td>12 May 2022</td>
+<td>NLP with Python</td>
+</tr>
+<tr class="even">
+<td>19 May 2022</td>
+<td>NLP with Python + Working Session</td>
+</tr>
+<tr class="odd">
+<td>26 May 2022</td>
+<td>no lecture (Christi Himmelfahrt)</td>
+</tr>
+<tr class="even">
+<td>02 June 2022</td>
+<td>Mini-Project Presentations + Discussion</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<ul>
+<li>12 Sitzungen, vorläufiger Plan</li>
+<li>Überblicksitzungen</li>
+<li>Gemeinsame Installation → immer wieder Probleme</li>
+<li>Kommandozeile</li>
+<li>Daten</li>
+<li>Python</li>
+<li>Mini-Projekt</li>
+</ul>
+</aside>
+</section>
+<section id="tldr" class="slide level2" data-background="var(--green)">
+<h2 data-background="var(--green)">TL;DR <span class="emoji" data-emoji="rocket">🚀</span></h2>
+<p>You will be tech-savvy…</p>
+<p>…yet no programmer applying fancy machine learning</p>
+<aside class="notes">
+<ul>
+<li>Nicht ML, aber solide Analyse</li>
+<li>Empirische Arbeiten schreiben</li>
+<li>bereits toll</li>
+</ul>
+</aside>
+</section>
+<section id="requirements" class="slide level2">
+<h2>Requirements</h2>
+<ul>
+<li>no technical skills required <span class="emoji" data-emoji="white_check_mark">✅</span>
+<ul>
+<li>self-contained course</li>
+</ul></li>
+<li>laptop (macOS, Win10, Linux) <span class="emoji" data-emoji="computer">💻</span>
+<ul>
+<li>update system</li>
+<li>free up at least 15GB storage</li>
+<li>backup files</li>
+</ul></li>
+</ul>
+</section>
+<section id="grading" class="slide level2">
+<h2>Grading <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<ul>
+<li>3 exercises during semester
+<ul>
+<li>no grades (pass/fail)</li>
+</ul></li>
+<li>mini-project with presentation
+<ul>
+<li>backup claims with numbers</li>
+<li>work in teams</li>
+<li>data of your interest</li>
+</ul></li>
+<li>optional: writing a seminar paper
+<ul>
+<li>in cooperation with Prof. Sophie Mützel</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Seminar üblicherweise mit Vorträgen
+<ul>
+<li>Hier: 3 Übungen + Mini-Projekt</li>
+</ul></li>
+<li>Denkt über Daten nach → mehr Spass, wenn Interesse daran</li>
+<li>Auseinandersetzung fördern, keine harte Beurteilung</li>
+<li>Teamarbeit</li>
+<li>Kollaboration Mützel</li>
+</ul>
+</aside>
+</section>
+<section id="organization" class="slide level2">
+<h2>Organization</h2>
+<ul>
+<li>Seminar on Thursday from 2.15pm - 4.00pm
+<ul>
+<li>weekly virtual live-lectures</li>
+<li>recorded sessions on <a href="https://tube.switch.ch/channels/25968add">SWITCHtube</a></li>
+</ul></li>
+<li>slides + data on GitHub: <a href="https://aflueckiger.github.io/KED2022/">KED2022</a></li>
+<li>readings on <a href="https://lms.uzh.ch/url/RepositoryEntry/16940630771/CourseNode/79952613783583">OLAT</a></li>
+<li>communication on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16940630771/CourseNode/91271815676815">OLAT Forum</a>
+<ul>
+<li>forum for everything except personal</li>
+<li>direct: <a href="mailto:alex.flueckiger@doz.unilu.ch">alex.flueckiger@doz.unilu.ch</a></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>online bis Ostern</li>
+<li>Präsentation/Daten über Kurs-Website
+<ul>
+<li>zeigen</li>
+</ul></li>
+<li>Forum für Fragen, Post-Benachrichtigung einrichten</li>
+<li>Papers OLAT</li>
+</ul>
+</aside>
+</section>
+<section id="who-are-you" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">Who are you?</h2>
+<p>Please fill out this <a href="https://forms.gle/8c449uw2QXkymhte6">questionnaire</a></p>
+<p><span class="emoji" data-emoji="memo">📝</span></p>
+<aside class="notes">
+<ul>
+<li>Link zu Survey senden</li>
+<li>Website lesen</li>
+<li>Reading</li>
+<li>Fragen</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="reading" class="slide level2 reading">
+<h2 class="reading">Reading</h2>
+<h3 id="required">Required</h3>
+<p>Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László Barabási, Devon Brewer, Nicholas Christakis, Noshir Contractor, James Fowler, Myron Gutmann, Tony Jebara, Gary King, Michael Macy, Deb Roy, and Marshall Van Alstyne. 2009. “Computational Social Science.” <em>Science</em> 323(5915):721–23.</p>
+<p>(via OLAT)</p>
+<h3 id="optional">Optional</h3>
+<p>Graham, Shawn, Ian Milligan, and Scott Weingart. 2015. <em>Exploring Big Historical Data: The Historian’s Macroscope</em>. Open Draft Version. Under contract with Imperial College Press.</p>
+<p><a href="http://www.themacroscope.org/?page_id=584">online</a></p>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Graham2015" class="csl-entry" role="doc-biblioentry">
+Graham, Shawn, Ian Milligan, and Scott Weingart. 2015. <em>Exploring <span>Big Historical Data</span>: The <span>Historian</span>’s <span>Macroscope</span></em>. Open Draft Version. <span>Under contract with Imperial College Press</span>. <a href="http://themacroscope.org">http://themacroscope.org</a>.
+</div>
+<div id="ref-Lazer2009" class="csl-entry" role="doc-biblioentry">
+Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László Barabási, Devon Brewer, Nicholas Christakis, et al. 2009. <span>“Computational <span>Social Science</span>.”</span> <em>Science</em> 323 (5915): 721–23. <a href="https://doi.org/10.1126/science.1167742">https://doi.org/10.1126/science.1167742</a>.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,11 +1,15 @@
 import sys
+import re
 
-n_chapter = 0
+n_chapter = 1
 n_slide = 0
 notes = False
 
 
 for line in sys.stdin:
+    # strip formatting
+    line = re.sub("\{.+\}", "", line)
+
     headline = line.startswith("## ") or line.startswith("# ")
 
     if line.startswith("# "):
@@ -20,7 +24,8 @@ for line in sys.stdin:
         notes = False
 
     if headline:
-        print("<br>")
+        # line-break in LaTeX
+        print("\\")
         print(f'**{n_chapter}.{n_slide}{line.replace("#","").rstrip()}**')
     elif notes:
         print(line)

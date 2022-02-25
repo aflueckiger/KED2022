@@ -1,10 +1,12 @@
 <style type='text/css'>
-
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
 
 /*********************************************
 * CUSTOM COLORS
 
 https://colorate.azurewebsites.net/Color/0A66B4
+https://www.color-hex.com/color-palette/1294
 *********************************************/
 
 :root {
@@ -12,21 +14,29 @@ https://colorate.azurewebsites.net/Color/0A66B4
     --blue: #3c70b5;
     --red: #b5533c;
     --black: #1d1e1f;
+    --grey: #4a4a4b;
+    --color-subtitle: #00008B;
+    --color-headings: #00003F;
+    --color-small-headings: #5D5D9A;
+    --color-strong: #206C46;
+    --color-control: var(--color-small-headings);
+    --color-marker: #B6B6C8;
 }
+
 
 /*********************************************
 * GLOBAL STYLES
 *********************************************/
 
 .reveal-viewport {
-    background: #f7f6f7;
-    background-color: #f7f6f7;
+    background: var(--bs-white);
+    background-color: var(--bs-white);
   }
 
 .reveal {
    font-size: 2.4em;
    font-weight: normal;
-   color: #1d1e1f;
+   color: var(--black);
 }
 
 .reveal ::selection {
@@ -42,29 +52,25 @@ https://colorate.azurewebsites.net/Color/0A66B4
 }
 
 .reveal ::marker {
-    color: rgb(10, 102, 180);
+    color: var(--color-marker)
 }
 section.has-dark-background ::marker {
     color: white;
 }
 
 .reveal .controls {
-    font-size: 8px;
-    bottom: 16px;
-    right: 2px;
-    color: rgb(10, 102, 180);
+    bottom: 24px;
+    color: var(--color-control);
 }
 
 .reveal .progress {
-    color: rgb(10, 102, 180);
+    height: 5px;
+    color: var(--color-headings);
 }
 
 .reveal .slide-number {
-    right: 18px;
-    bottom: 4px;
-    font-size: 14px;
     background-color: transparent;
-    color: #1d1e1f;
+    color: var(--black);
 }
 
 
@@ -72,42 +78,44 @@ section.has-dark-background ::marker {
 * HEADERS
 *********************************************/
 
-h1.title {
+.reveal h1.title {
     font-size: 3em;
     font-weight: bold;
-    color: rgb(10, 102, 180);
+    color: var(--black);
 }
 
-.subtitle{
+p.subtitle{
+    color: var(--color-subtitle);
+    font-family: 'Permanent Marker', cursive;
     font-size: 1.5em;
     padding-top: 1em;
-    padding-bottom: 3em;
-    color: rgb(4, 43, 77);
+    padding-bottom: 5em;
 }
 
 p.author,
 p.date,
-.institute{
+p.institute{
     text-align: left;
     font-size: 0.7em;
     margin-top: -0.7em;
     margin-left: 2.5%;
 }
 
-.institute{
+p.institute{
     font-size: 0.5em
 }
 
-.reveal h1,
-.reveal h2 {
-    color: rgb(10, 102, 180);
+p.date {
+    margin-top: 1em;
 }
 
+.reveal h1,
+.reveal h2,
 .reveal h3,
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-    color: rgb(7, 72, 128);
+    color: var(--color-headings)
 }
 
 .reveal h2 {
@@ -115,6 +123,8 @@ p.date,
 }
 
 .reveal h3 {
+    color: var(--color-small-headings);
+    font-weight: bold;
     font-size: 1.3em;
 }
 
@@ -154,27 +164,30 @@ ul li {
 
 ol li li,
 ul li li {
- margin-top: 0.2em;
- list-style-type: None;
- font-style: italic;
- font-size: 0.8em;
- font-family: Georgia;
+    margin-top: 0.2em;
+    list-style-type: None;
+    font-size: 0.8em;
+    font-weight: 300;
 }
 
 /*********************************************
 * OTHER TEXT
 *********************************************/
-section:not(.has-dark-background) strong,
-section:not(.has-dark-background) b {
-  color: rgb(170, 180, 10);
+section.has-dark-background strong,
+section.has-dark-background b {
+  color: white
+}
+
+strong, b {
+    color: var(--color-strong)
 }
 
 .reveal a {
-    color: rgb(84, 151, 207);
+    color: var(--color-subtitle)
 }
 
 .reveal a:hover {
-  color: rgb(180, 10, 34);
+  color: #8B0000;
   text-shadow: none;
   border: none;
 }
@@ -185,12 +198,14 @@ section:not(.has-dark-background) b {
 }
 
 .reveal figure figcaption {
-  font-style: italic;
-  font-size: 75%; }
+    font-style: italic;
+  color: var(--grey);
+  font-size: 75%;
+}
 
 section:not(.has-dark-background) span.citation{
     font-size: 60%;
-    font-style: italic;
+    font-weight:300;
     color: gray;
     vertical-align: bottom;
 }
@@ -222,7 +237,7 @@ section:not(.has-dark-background) span.citation{
 
 .reveal blockquote  {
   font-family: Georgia;
-  color: #1d1e1f;
+  color: var(--black);
   max-width: 80%;
   text-align: left;
   box-shadow: none;
@@ -268,7 +283,7 @@ section:not(.has-dark-background) span.citation{
 }
 
 .answer {
-    font-style: italic;
+    
     background-color: rgba(00, 00, 00, .2);
     padding: 0.8em;
     margin-top: 0.3em;
@@ -308,6 +323,20 @@ section:not(.has-dark-background) span.citation{
     margin-bottom: 0.4em;
 }
 
+
+.funky {
+    font-family: Caveat;
+    font-size: 1.5em;
+}
+
+.green {
+    color: #206C46;
+}
+
+.red {
+    color: #B40A22;
+}
+
 /*********************************************
 * CUSTOM LAYOUT CLASSES
 *********************************************/
@@ -324,7 +353,6 @@ section:not(.has-dark-background) span.citation{
 
 .l-double strong {
   font-size: 1.3em;
-  color: #4b729e;
 }
 
 .l-image-corner {
@@ -336,5 +364,10 @@ section:not(.has-dark-background) span.citation{
 .l-left-align {
   text-align: left;
 }
+
+
+
+
+
 
 </style>

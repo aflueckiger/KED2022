@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  https://www.color-hex.com/color-palette/1294
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+      --grey: #4a4a4b;
+      --color-control: #6497b1;
+      --color-headers: #03396c;
+      --color-marker: #b3cde0;
+
+  }
+
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: var(--bs-white);
+      background-color: var(--bs-white);
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: var(--black);
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: var(--color-marker)
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 12px;
+      bottom: 24px;
+      right: 2px;
+      color: var(--color-control);
+  }
+
+  .reveal .progress {
+      height: 5px;
+      color: var(--color-headers);
+  }
+
+  .reveal .slide-number {
+      right: 30px;
+      bottom: 4px;
+      font-size: 22px;
+      background-color: transparent;
+      color: var(--black);
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  .reveal h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--black);
+  }
+
+  p.subtitle{
+      color: var(--color-headers);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 5em;
+  }
+
+  p.author,
+  p.date,
+  p.institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  p.institute{
+      font-size: 0.5em
+  }
+
+  p.date {
+      margin-top: 1em;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: var(--color-headers);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+      font-style: italic;
+      margin-top: 0.2em;
+      list-style-type: None;
+      font-size: 0.8em;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: #005b96;
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    color: var(--grey);
+    font-size: 75%;
+  }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: var(--black);
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+
+  .funky {
+      font-family: Caveat;
+      font-size: 1.5em;
+  }
+
+  .green {
+      color: #386C03;
+  }
+
+  .red {
+      color: #B40A22;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#10 NLP with Python</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">06 May 2022<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<h4 id="introduce-python">introduce Python <span class="emoji" data-emoji="snake">🐍</span></h4>
+<ul>
+<li><p>JupyterLab editor</p></li>
+<li><p>syntax</p></li>
+<li><p>data types</p></li>
+</ul>
+<aside class="notes">
+
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>organizational
+<ul>
+<li>evaluation, mini-project, assignment #3</li>
+</ul></li>
+<li>Let’s getting to serious NLP! <span class="emoji" data-emoji="sparkles">✨</span></li>
+<li>interactive coding
+<ul>
+<li>interrupt, ask, complement</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Fragen sehr wichtig, da gewaltiger Sprung zu letzter Session</li>
+<li>Stellschrauben kennen lernen, Gefühl für die Sprache entwickeln
+<ul>
+<li>Details vorerst unwichtig</li>
+</ul></li>
+</ul>
+</aside>
+<!-- https://towardsdatascience.com/building-a-text-normalizer-using-nltk-ft-pos-tagger-e713e611db8 -->
+</section>
+<section>
+<section id="organizational" class="title-slide slide level1">
+<h1>Organizational</h1>
+
+</section>
+<section id="course-evaluation" class="slide level2" data-background="../images/speech_bubbles.gif">
+<h2 data-background="../images/speech_bubbles.gif">Course Evaluation</h2>
+</section>
+<section id="tell-me" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">Tell me… <span class="emoji" data-emoji="mega">📣</span></h2>
+<h3 id="please-follow-the-link-in-the-email">Please follow the link in the email</h3>
+<ul>
+<li>by the University of Lucerne, Faculty of Humanities and Social Sciences</li>
+<li>received on 3 May 2020 (or similar)</li>
+</ul>
+<p><br></p>
+<h4 id="thanks-for-any-constructive-feedback-be-it-sweet-or-sour">Thanks for any constructive feedback, <br> be it sweet or sour!</h4>
+<aside class="notes">
+<ul>
+<li>offene Kommentare nutzen, statt nur Kreuze</li>
+<li>5min Zeit zum ausfüllen</li>
+<li>andere Code anschauen</li>
+<li>Tell me…
+<ul>
+<li>… what you disliked</li>
+<li>… what you missed</li>
+<li>… what you learned</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="assignment-3" class="slide level2">
+<h2>Assignment #3 <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<ul>
+<li>get/submit via OLAT
+<ul>
+<li>starting tomorrow</li>
+<li>deadline 14 May 2022, 23:59</li>
+</ul></li>
+<li>use forum on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16703095856">OLAT</a>
+<ul>
+<li>subscribe to get notifications</li>
+</ul></li>
+<li>ask friends for support, not solutions</li>
+</ul>
+</section>
+<section id="requirements-mini-project" class="slide level2">
+<h2>Requirements Mini-Project</h2>
+<h4 id="present-project-on-27-may-2022">present project on 27 May 2022</h4>
+<ul>
+<li>executable script</li>
+<li>multiple documents</li>
+<li>compare …
+<ul>
+<li>historically</li>
+<li>across actors</li>
+</ul></li>
+<li>quantitative measures + interpretation</li>
+</ul>
+<p><span class="emoji" data-emoji="exclamation">❗</span> share your project idea <a href="https://docs.google.com/spreadsheets/d/1Z_eZei8PIXt-_OBH8-FZVZCMANWBmsdBfLMaLcsURUo/edit?usp=sharing">here</a> by 14 May 2022</p>
+<aside class="notes">
+<ul>
+<li>mini project online stellen?</li>
+<li>noch nicht alle in Liste?</li>
+<li>“Forschungsfrage” überlegen</li>
+<li>script ist gemachte arbeit zur wiederverwendung</li>
+<li>relative frequency <span class="emoji" data-emoji="thumbsup">👍</span></li>
+<li>absolute frequency <span class="emoji" data-emoji="thumbsdown">👎</span></li>
+</ul>
+</aside>
+</section>
+<section id="optional-seminar-paper" class="slide level2">
+<h2>Optional Seminar Paper</h2>
+<ul>
+<li>writing a seminar paper (6 ECTS)</li>
+<li>get in touch to discuss your idea</li>
+</ul>
+</section></section>
+<section>
+<section id="a-primer-on-old-school-nlp" class="title-slide slide level1" data-background="../images/words.jpg">
+<h1 data-background="../images/words.jpg"><span style="color:#ffffff">A Primer on <br>old school NLP</span></h1>
+
+</section>
+<section id="what-is-a-word" class="slide level2">
+<h2>What is a Word?</h2>
+<ul>
+<li>word ~ segments between whitespace</li>
+<li>yet, there are …
+<ul>
+<li>contractions: <code>U.S.</code>, <code>don't</code></li>
+<li>collocations: <code>New York</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="token" class="slide level2">
+<h2>Token</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>token ~ computational unit
+<ul>
+<li>representation of words</li>
+</ul></li>
+<li>lemma ~ base form of a word
+<ul>
+<li><code>texts</code> → <code>text</code></li>
+<li><code>goes</code> → <code>go</code></li>
+</ul></li>
+<li>stop words ~ functional words
+<ul>
+<li>lacking deeper meaning</li>
+<li><code>the</code>, <code>a</code>, <code>on</code>, <code>and</code> …</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<figure>
+<img data-src="../images/tokenization.jpeg" alt="tokenization (Medium)" /><figcaption aria-hidden="true">tokenization (<a href="https://medium.com/data-science-in-your-pocket/tokenization-algorithms-in-natural-language-processing-nlp-1fceab8454af">Medium</a>)</figcaption>
+</figure>
+</div>
+</div>
+<p><br></p>
+<p><code>Let's tokenize this sentence! Isn't is easy?</code> <span class="emoji" data-emoji="nerd_face">🤓</span></p>
+<aside class="notes">
+<ul>
+<li>Text wird in seine Teile gesplittet</li>
+<li>Lemma ~ Form in Duden</li>
+</ul>
+</aside>
+</section>
+<section id="nlp-processing-steps" class="slide level2">
+<h2>NLP Processing Steps</h2>
+<p><img data-src="../images/spacy_parse.png" style="height:10cm" /></p>
+<ol type="1">
+<li>Tokenizing
+<ul>
+<li>segmenting text into words, punctuations etc.</li>
+</ul></li>
+<li>Tagging part-of-speech (POS)
+<ul>
+<li>assigning word types (e.g. verb, noun)</li>
+</ul></li>
+<li>Parsing
+<ul>
+<li>describing syntactic relations</li>
+</ul></li>
+<li>Named Entity Recognition (NER)
+<ul>
+<li><em>organizations, persons, locations, time etc.</em></li>
+</ul></li>
+</ol>
+<p>Catch up on NLP with <span class="citation" data-cites="Jurafskyforthcominga">Jurafsky and Martin (forthcoming)</span></p>
+<aside class="notes">
+<ul>
+<li>Abfolge von Prozessierungsschritten</li>
+<li>alles sprachabhängig</li>
+<li>Tagging: ca. 20-30 POS tags</li>
+<li>Parsing
+<ul>
+<li>Verb ist Head von Satz</li>
+<li>Subjekt-Verb-Objekt</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="outlook-nlp-is-on-fire" class="slide level2">
+<h2>Outlook: NLP is on Fire 🔥</h2>
+<ul>
+<li><p>supervised machine learning</p></li>
+<li><p>you can do basically anything with modern NLP</p>
+<ul>
+<li>train on human-annotated data</li>
+</ul></li>
+<li><p>effort, insights and quality may differ</p>
+<ul>
+<li>for better or worse</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>die meisten haben ihr Schulwissen wieder vergessen, wieso kann das der Computer</li>
+<li>Intuition einfach, genaue technische Funktionsweise egal
+<ul>
+<li>Genauigkeit wichtig, aber noch zu advanced</li>
+<li>best-practice</li>
+</ul></li>
+<li>viel genauer dank Embeddings (self-supervised)</li>
+</ul>
+</aside>
+</section>
+<section id="deep-dive-into-nlp-for-social-science" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">Deep Dive into NLP for Social Science​​</h2>
+<ul>
+<li>check <a href="https://github.com/aflueckiger/KED2022/blob/master/materials/code/KED2022_10.ipynb">code</a> on GitHub</li>
+<li>run code on Binder <a href="https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?filepath=materials%2Fcode%2FKED2022_10.ipynb"><img data-src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
+</ul>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
+<h4 id="tutorials-on-spacy">tutorials on spaCy</h4>
+<ul>
+<li><a href="https://spacy.io/usage/spacy-101">official spaCy 101</a></li>
+<li><a href="https://course.spacy.io/en/">official online course spaCy</a></li>
+<li><a href="https://www.kaggle.com/nirant/hitchhiker-s-guide-to-nlp-in-spacy">Hitchhiker’s Guide to NLP in spaCy</a></li>
+</ul>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Jurafskyforthcominga" class="csl-entry" role="doc-biblioentry">
+Jurafsky, Dan, and James H. Martin. forthcoming. <em>Speech and <span>Language Processing</span></em>. 3rd (Draft of December 30, 2020). <span>London</span>: <span>Prentice Hall</span>. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

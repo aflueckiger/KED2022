@@ -1,7 +1,8 @@
 ---
 title: Cheatsheet Shell Commands
+subtitle: Seminar KED2022
 author: Alex Flückiger
-date: 2020
+date: 2022
 toc: True
 toc-depth: 1
 geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
@@ -48,7 +49,7 @@ This cheatsheet is based on [this resource](https://melaniewalsh.github.io/Intro
 - `>>`: This operator redirects and append the output to an *existing* file: Example:
 
    ```bash
-echo "line following existing content of file1" >> file1
+   echo "line following existing content of file1" >> file1
    ```
 
 

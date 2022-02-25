@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <title>The ABC of Computational Text Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
+  <style type='text/css'>
+  @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Caveat+Brush&family=Caveat:wght@600&family=Permanent+Marker&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Source+Sans+Pro&display=swap');
+
+  /*********************************************
+  * CUSTOM COLORS
+
+  https://colorate.azurewebsites.net/Color/0A66B4
+  https://www.color-hex.com/color-palette/1294
+  *********************************************/
+
+  :root {
+      --green: #4d7e65;
+      --blue: #3c70b5;
+      --red: #b5533c;
+      --black: #1d1e1f;
+      --grey: #4a4a4b;
+      --color-control: #6497b1;
+      --color-headers: #03396c;
+      --color-marker: #b3cde0;
+
+  }
+
+
+  /*********************************************
+  * GLOBAL STYLES
+  *********************************************/
+
+  .reveal-viewport {
+      background: var(--bs-white);
+      background-color: var(--bs-white);
+    }
+
+  .reveal {
+     font-size: 2.4em;
+     font-weight: normal;
+     color: var(--black);
+  }
+
+  .reveal ::selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::-moz-selection {
+     color: #f7f6f7;
+     background: rgb(10, 102, 180);
+     text-shadow: none;
+  }
+
+  .reveal ::marker {
+      color: var(--color-marker)
+  }
+  section.has-dark-background ::marker {
+      color: white;
+  }
+
+  .reveal .controls {
+      font-size: 12px;
+      bottom: 24px;
+      right: 2px;
+      color: var(--color-control);
+  }
+
+  .reveal .progress {
+      height: 5px;
+      color: var(--color-headers);
+  }
+
+  .reveal .slide-number {
+      right: 30px;
+      bottom: 4px;
+      font-size: 22px;
+      background-color: transparent;
+      color: var(--black);
+  }
+
+
+  /*********************************************
+  * HEADERS
+  *********************************************/
+
+  .reveal h1.title {
+      font-size: 3em;
+      font-weight: bold;
+      color: var(--black);
+  }
+
+  p.subtitle{
+      color: var(--color-headers);
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.5em;
+      padding-top: 1em;
+      padding-bottom: 5em;
+  }
+
+  p.author,
+  p.date,
+  p.institute{
+      text-align: left;
+      font-size: 0.7em;
+      margin-top: -0.7em;
+      margin-left: 2.5%;
+  }
+
+  p.institute{
+      font-size: 0.5em
+  }
+
+  p.date {
+      margin-top: 1em;
+  }
+
+  .reveal h1,
+  .reveal h2,
+  .reveal h3,
+  .reveal h4,
+  .reveal h5,
+  .reveal h6 {
+      color: var(--color-headers);
+  }
+
+  .reveal h2 {
+      margin-bottom: +50px;
+  }
+
+  .reveal h3 {
+      font-size: 1.3em;
+  }
+
+
+  /*********************************************
+  * FULL SCREEN SLIDES
+  *********************************************/
+
+  .reveal section[data-background*="images"] {
+      font-size: 1.2em;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 1em;
+      width: 80% !important;
+      left: 10%;
+      margin: auto;
+      /* border-bottom: 30px solid orange; */
+  }
+  .reveal h2[data-background*="images"] {
+      color: white;
+      font-family: Lato;
+      font-weight: bold;
+  }
+
+
+  /*********************************************
+  * LISTS
+  *********************************************/
+  .reveal ul,
+  .reveal ol {
+      margin-bottom: 0.6em;
+  }
+
+  ol li,
+  ul li {
+    margin-top: 0.6em;
+  }
+
+  ol li li,
+  ul li li {
+      font-style: italic;
+      margin-top: 0.2em;
+      list-style-type: None;
+      font-size: 0.8em;
+  }
+
+  /*********************************************
+  * OTHER TEXT
+  *********************************************/
+  section:not(.has-dark-background) strong,
+  section:not(.has-dark-background) b {
+    color: #005b96;
+  }
+
+  .reveal a {
+      color: rgb(84, 151, 207);
+  }
+
+  .reveal a:hover {
+    color: rgb(180, 10, 34);
+    text-shadow: none;
+    border: none;
+  }
+
+  .reveal section.has-dark-background a {
+      color: white;
+      text-decoration: underline;
+  }
+
+  .reveal figure figcaption {
+    color: var(--grey);
+    font-size: 75%;
+  }
+
+  section:not(.has-dark-background) span.citation{
+      font-size: 60%;
+      font-style: italic;
+      color: gray;
+      vertical-align: bottom;
+  }
+
+  .reveal pre {
+      margin-top: 2em;
+      margin-bottom: 4em;
+  }
+
+  .reveal pre code {
+      font-size: 1.5em;
+      padding: 1.5em;
+      line-height: 1.2em;
+      max-height: 600px;
+  }
+
+
+  .reveal table {
+      font-size: 0.8em;
+  }
+
+  .emoji {
+      font-size: 1.2em
+  }
+
+  /*********************************************
+  * QUOTES
+  *********************************************/
+
+  .reveal blockquote  {
+    font-family: Georgia;
+    color: var(--black);
+    max-width: 80%;
+    text-align: left;
+    box-shadow: none;
+    font-size: 130%;
+    position: relative; }
+    .reveal blockquote p{
+        line-height: 1.15em;
+    }
+    .reveal blockquote p:first-child::before {
+      font-size: 1.5em;
+      font-family: Georgia, serif;
+      color: rgb(10, 102, 180);
+      content: '«'; }
+  .reveal blockquote p:first-child::after {
+    font-size: 1.5em;
+    font-family: Georgia, serif;
+    color: rgb(10, 102, 180);
+    content: '»'; }
+
+
+  .reveal blockquote cite{
+      color: rgb(10, 102, 180);
+      text-align: right;
+      font-style: normal;
+      font-size: 0.75em;
+      font-weight: bold;
+      margin-top:1em;
+  }
+
+  .reveal blockquote cite:before {
+      content: "\2014";
+  }
+
+  /*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+  .white-text {
+      color:#f9f9ff !important;
+  }
+  .dark-text {
+      color:#0c0c0c !important;
+      font-weight: bold;
+  }
+
+  .answer {
+      font-style: italic;
+      background-color: rgba(00, 00, 00, .2);
+      padding: 0.8em;
+      margin-top: 0.3em;
+      width: 70%;
+      margin: auto;
+      margin-top: 1em;
+  }
+
+  .highlight {
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      font-size: 2em;
+      background: rgba(255, 255, 255, .5);
+      width: 80%;
+      margin:auto;
+      padding:1em;
+  }
+
+  .reading p,
+  .reading h3,
+  .csl-entry {
+      text-align: left;
+      width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+
+  }
+  .reading p,
+  .references {
+      font-size: 0.7em;
+
+  }
+
+  .references > div{
+      margin-bottom: 0.4em;
+  }
+
+
+  .funky {
+      font-family: Caveat;
+      font-size: 1.5em;
+  }
+
+  .green {
+      color: #386C03;
+  }
+
+  .red {
+      color: #B40A22;
+  }
+
+  /*********************************************
+  * CUSTOM LAYOUT CLASSES
+  *********************************************/
+
+  .l-double {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .l-multiple {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .l-double strong {
+    font-size: 1.3em;
+    color: #4b729e;
+  }
+
+  .l-image-corner {
+      position: absolute;
+      right: 0;
+      transform: translate(0%,-55%);
+  }
+
+  .l-left-align {
+    text-align: left;
+  }
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">The ABC of Computational Text Analysis</h1>
+  <p class="subtitle">#5 Basic NLP with Command-line</p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
+University of Lucerne</div></p>
+  <p class="date">25 March 2022<br></br>
+<div class="institute">
+Faculty of Humanities and Social Sciences<br>University of Lucerne
+</div></p>
+</section>
+
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
+<ul>
+<li>perform shell commands <span class="emoji" data-emoji="joystick">🕹️</span>
+<ul>
+<li>navigate, create files</li>
+</ul></li>
+<li>complete assignment <span class="emoji" data-emoji="writing_hand">✍️</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Einstieg in Shell
+<ul>
+<li>Verzeichnisbaum, Erstellen von Files/Ordner</li>
+<li>Piping für komplexere Operationen</li>
+</ul></li>
+<li>Übungen ok? technische Fragen?</li>
+<li>letztes Mal inhaltliche Zumutung, heute erste inhaltlich interessante Analysen</li>
+<li>ähnliches Tempo, dafür mehr Zeit zum Üben</li>
+</ul>
+</aside>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>corpus linguistic using the shell​ <span class="emoji" data-emoji="knife">🔪</span>
+<ul>
+<li>counting, finding, comparing​​</li>
+</ul></li>
+<li>analyzing programmes of Swiss parties <span class="emoji" data-emoji="bar_chart">📊</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Frequenzanalysen = Schweizer Taschenmesser</li>
+<li>Ziel: mehr Übungszeit</li>
+<li>Syntax nicht merken, Wichtiges werdet ihr schlussendlich erinnern</li>
+</ul>
+</aside>
+</section>
+<section id="when-politics-changes-language-changes." class="slide level2">
+<h2>When politics changes, <br>language changes.</h2>
+<figure>
+<img data-src="../images/swiss_party_politics.gif" alt="historical development of Swiss party politics (Tagesanzeiger)" /><figcaption aria-hidden="true">historical development of Swiss party politics (<a href="https://blog.tagesanzeiger.ch/datenblog/index.php/1791/wie-sich-die-svp-aus-dem-buergerblock-verabschiedet-hat">Tagesanzeiger</a>)</figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>Gleiche Parteien, neue Ziele. Also doch nicht so gleich!</li>
+<li>Wie erkenne ich semantische Veränderungen?
+<ul>
+<li>hier: Wahlempfehlungen von Parteien</li>
+<li>Welche Ziele/Ideologien stehen dahinter? –&gt; Texte fundamental</li>
+</ul></li>
+<li>Wenn Politik ändert, ändert sich Sprache
+<ul>
+<li>oder gerade umgekehrtes zeitliches Verhältnis</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="processing-a-text-collection" class="slide level2">
+<h2>Processing a Text Collection</h2>
+<ul>
+<li>each document as individual file ​(​<code>​.​t​x​t​</code>​)​
+<ul>
+<li>use shell for quick analysis</li>
+</ul></li>
+<li>a dataset of documents (<code>.csv</code>, <code>.tsv</code>, <code>.xml</code>)
+<ul>
+<li>more effectively using Python?</li>
+</ul></li>
+</ul>
+<figure>
+<img data-src="../images/pile_books_unsplash.jpg" alt="Processing a collection of documents (src)" /><figcaption aria-hidden="true">Processing a collection of documents (<a href="https://unsplash.com/photos/5cFwQ-WMcJU">src</a>)</figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>txt-files erste Stufe bei Datensatzerstellung</li>
+<li>Daten existieren viele, Datensätze eher wenige</li>
+<li>bei Datensatz
+<ul>
+<li>Python praktischer</li>
+<li>Dokument in Zelle in tsv/csv-file</li>
+</ul></li>
+<li>vorerst arbeiten wir nur mit txt files</li>
+</ul>
+</aside>
+</section>
+<section>
+<section id="counting-things" class="title-slide slide level1" data-background="../images/counting_blackboard.jpg">
+<h1 data-background="../images/counting_blackboard.jpg">Counting Things</h1>
+
+</section>
+<section id="frequency-analysis" class="slide level2">
+<h2>Frequency Analysis</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li>frequency ~ measure of relevance</li>
+<li>bag of words approach</li>
+<li>simple</li>
+<li>powerful</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<figure>
+<img data-src="../images/word_magnets.jpg" alt="text as a bag of words (src)" /><figcaption aria-hidden="true">text as a bag of words (<a href="https://cdn02.plentymarkets.com/r3pmentklgg2/item/../images/1716/full/Magnetwoerter.jpg">src</a>)</figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Häufigkeit indiziert Form von Relevanz</li>
+<li>in Häufigkeitsanalyse sind Worte kontextlos
+<ul>
+<li>BoW = Sack mit Wörtern</li>
+<li>radikale Vereinfachung (einfaches Zählen) = grösster Vorteil (Verlust Ambiguitäten) = Nachteil</li>
+</ul></li>
+<li>theoetische Übersicht von Approaches später im Seminar
+<ul>
+<li>Kontrolle, was dahinter steht</li>
+</ul></li>
+<li>ähnlich wie Google Ngram, aber eigene Daten</li>
+</ul>
+</aside>
+</section>
+<section id="key-figures-of-texts" class="slide level2">
+<h2>Key Figures of Texts</h2>
+<pre class="bash"><code>wc *.txt    # count number of lines, words, characters</code></pre>
+<aside class="notes">
+<ul>
+<li>zuerst Charakterisierung Datenquelle, nicht nur Inhalt</li>
+<li>Zahlen für einzelne Dokumente und aggregiert auf Sammlung</li>
+</ul>
+</aside>
+</section>
+<section id="word-occurrences" class="slide level2">
+<h2>Word Occurrences</h2>
+<h4 id="show-in-context">show in context</h4>
+<pre class="bash"><code>grep -ir &#39;data&#39; folder/     # search in all files in folder, ignore case
+
+# other grep options:
+# --colour      highlight pattern
+# --context 2   show 2 lines above/below match</code></pre>
+<h4 id="count-words">count words</h4>
+<pre class="bash"><code>grep -ic &#39;data&#39; */*.txt     # count across all txt-files, ignore case</code></pre>
+<aside class="notes">
+<ul>
+<li>options
+<ul>
+<li>ignore case</li>
+<li>recursive / specific files</li>
+</ul></li>
+<li>Dateinamen als Filter benutzen
+<ul>
+<li>Quelle/Jahr</li>
+<li>grep -ir ’ daten’ <code>*svp*.txt</code></li>
+</ul></li>
+<li>wc als Alternative</li>
+<li>zeige in Kurs-Repo
+<ul>
+<li>grep -irc –colour –context 3 ‘data’ lectures/*md | sort</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="word-frequencies" class="slide level2">
+<h2>Word Frequencies</h2>
+<h4 id="steps-of-algorithm">steps of algorithm</h4>
+<ol type="1">
+<li>split text into one word per line (tokenize)</li>
+<li>sort words</li>
+<li>count how often each word appears</li>
+</ol>
+<pre class="bash"><code># piping steps to get word frequencies
+cat text.txt | tr &#39; &#39; &#39;\n&#39; | sort | uniq -c | sort -h &gt; wordfreq.txt
+
+# explanation of individual steps:
+tr &#39; &#39; &#39;\n&#39;     # replace spaces with newline 
+sort -h         # sort lines alphanumerically
+uniq -c         # count repeated lines</code></pre>
+<aside class="notes">
+<ul>
+<li>Zweck: Häufigkeiten aller Wörter</li>
+<li>kein direkter Befehl -&gt; Kombinieren von Befehlen (modular)</li>
+<li>Befehle erklären
+<ul>
+<li>Zusammenfassen gleicher Zeilen mit uniq</li>
+</ul></li>
+<li>Aggregation extrem flexibel
+<ul>
+<li>anderer Text, alle Texte (*)</li>
+</ul></li>
+<li>Frage an Klasse: häufigstes Wort SVP?
+<ul>
+<li>Schweiz, Bürger etc.: national, männlich</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="word-frequencies-1" class="slide level2">
+<h2>Word Frequencies</h2>
+<ul>
+<li>absolute frequency</li>
+<li>relative frequency
+<ul>
+<li><code>= occurrences / total_words</code></li>
+<li>independent of size</li>
+</ul></li>
+<li>statistical validation of variation
+<ul>
+<li>significance tests between corpora</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Korpus = Textsammlung</li>
+<li>absolut nur, wenn grösserer Output (z.B. mehr Flyers) mitgemessen werden soll</li>
+</ul>
+</aside>
+</section>
+<section id="convert-stats-into-dataset" class="slide level2">
+<h2>Convert Stats into Dataset</h2>
+<ul>
+<li>convert to tsv</li>
+<li>useful for further processing
+<ul>
+<li>export to Excel</li>
+</ul></li>
+</ul>
+<pre class="bash"><code># convert word frequencies into tsv-file
+# additional step: replace a sequence of spaces with a tabulator
+cat text.txt | tr &#39; &#39; &#39;\n&#39; | sort | uniq -c  | sort -h | \
+tr -s &#39; &#39; &#39;\t&#39;  &gt; test.tsv  </code></pre>
+<aside class="notes">
+<ul>
+<li>-s alle Leerschläge durch Tabulator ersetzen</li>
+<li>relative frequency in Excel</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="preprocessing" class="title-slide slide level1">
+<h1>Preprocessing</h1>
+
+</section>
+<section id="common-preprocessing" class="slide level2">
+<h2>Common Preprocessing</h2>
+<h3 id="refining-results-with">Refining results with</h3>
+<ul>
+<li>lowercasing</li>
+<li>replace symbols</li>
+<li>join lines</li>
+<li>trimming header + footer</li>
+<li>splitting into multiple files</li>
+<li>using patterns to remove/extract parts <span class="emoji" data-emoji="date">📅</span></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>Preprocessing für bessere Resultate</p></li>
+<li><p>Regex nächste Woche</p></li>
+</ul>
+</aside>
+</section>
+<section id="lowercasing" class="slide level2">
+<h2>Lowercasing</h2>
+<h3 id="reduce-word-forms">reduce word forms</h3>
+<pre class="bash"><code>echo &#39;ÜBER&#39; | tr &quot;A-ZÄÖÜ&quot; &quot;a-zäöü&quot;  # fold text to lowercase</code></pre>
+<aside class="notes">
+<ul>
+<li>Grossschreibung Satzanfang</li>
+</ul>
+</aside>
+</section>
+<section id="removing-and-replacing-symbols" class="slide level2">
+<h2>Removing and Replacing Symbols</h2>
+<pre class="bash"><code>echo &quot;3x3&quot; | tr -d [:digit:]    # remove all digits 
+cat text.txt | tr -d [:punct:]  # remove punctuation like .,:; 
+
+tr &#39;Y&#39; &#39;Z&#39;                      # replace any Y with Z</code></pre>
+<aside class="notes">
+<ul>
+<li>löscht alle Einzelzeichen in Text (keine Sequenzen)</li>
+</ul>
+</aside>
+</section>
+<section id="standard-preprocessing" class="slide level2">
+<h2>Standard Preprocessing</h2>
+<h3 id="save-a-preprocessed-document">save a preprocessed document</h3>
+<pre class="bash"><code># lowercase, no punctuation, no digits
+cat speech.txt | tr A-ZÄÖÜ a-zäöü | \
+tr -d [:punct:] | tr -d [:digit:] &gt; speech_clean.txt</code></pre>
+<aside class="notes">
+<ul>
+<li>Kleinschreibung , keine Interpunktion, keine Zahlen</li>
+<li>standardmässige Repräsentation in BoW (hier noch mit Reihenfolge)</li>
+</ul>
+</aside>
+</section>
+<section id="join-lines" class="slide level2">
+<h2>Join Lines</h2>
+<pre class="bash"><code>cat test.txt | tr -s &#39;\n&#39; &#39; &#39;   # replace newlines with spaces</code></pre>
+<aside class="notes">
+<ul>
+<li>harte Zeilenumbrüche entfernen</li>
+</ul>
+</aside>
+</section>
+<section id="trim-lines" class="slide level2">
+<h2>Trim Lines</h2>
+<pre class="bash"><code>cat -n text.txt         # show line numbers
+sed &#39;1,10d&#39; text.txt    # remove the first 10 lines</code></pre>
+</section>
+<section id="splitting-files" class="slide level2">
+<h2>Splitting Files</h2>
+<pre class="bash"><code># splits file at every delimiter into a stand-alone file
+csplit huge_text.txt  &quot;/delimiter/&quot; {*}</code></pre>
+</section>
+<section id="check-differences-between-files" class="slide level2">
+<h2>Check Differences between Files</h2>
+<h4 id="sanity-check-after-modification">sanity check after modification</h4>
+<pre class="bash"><code># show differences side-by-side and only differing lines
+diff -y --suppress-common-lines text_raw.txt text_proc.txt</code></pre>
+</section>
+<section id="where-there-is-a-shell-there-is-a-way." class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Where there is a shell,<br>there is a way. <span class="emoji" data-emoji="thumbsup">👍</span></h2>
+<aside class="notes">
+<ul>
+<li>Zusammenfassung
+<ul>
+<li>Nach Filesystem, nun auch Bearbeiten, Zählen</li>
+</ul></li>
+<li>Shell = flexibles + mächtiges Werkzeug</li>
+</ul>
+</aside>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
+</section>
+<section id="in-class-getting-ready" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Getting ready</h2>
+<ol type="1">
+<li><p>Update your local copy of the GitHub repository KED2022 with <code>git pull</code>.</p>
+<p>You find some party programmes (Grüne, SP, SVP) in <code>materials/data/party_programmes</code>. The programmes are provided in plain text which I have extracted from the official PDFs.</p></li>
+<li><p>Fool around with individual commands to get a feeling of them before you proceed with the actual analysis.</p></li>
+</ol>
+</section>
+<section id="in-class-analyzing-swiss-party-programmes-i" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes I</h2>
+<ol type="1">
+<li><p>Compare the absolute frequencies of single terms or multi-word expressions …</p>
+<ul>
+<li>across parties</li>
+<li>historically within a party</li>
+</ul>
+<p>Use the file names as filter to get various aggregation of the word counts.</p></li>
+<li><p>Pick terms of your interest and look at their contextual use by extracting relevant passages. Does the usage differ across parties or time?</p></li>
+</ol>
+<p><strong>Share your insights with the class using <a href="https://etherpad.wikimedia.org/p/KED2022">Etherpad</a>.</strong></p>
+</section>
+<section id="in-class-analyzing-swiss-party-programmes-ii" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes II</h2>
+<ol type="1">
+<li>Convert the word frequencies per party into a <code>tsv</code> dataset. Compute the relative word frequency from the absolute frequency using any spreadsheet software (e.g. Excel). Are your conclusions still valid after accounting for the size?</li>
+<li>Can you refine the results with further preprocessing of the data?</li>
+<li>Get the number of unique words rather than the total number of words of a document (piping).</li>
+</ol>
+<p><strong>Pro Tip</strong> <span class="emoji" data-emoji="nerd_face">🤓</span>: Use <code>grep</code> to look up commands in the course slides</p>
+</section>
+<section id="additional-resources" class="slide level2">
+<h2>Additional Resources</h2>
+<p>When you look for useful primers on Bash, consider the following resources:</p>
+<ul>
+<li><a href="https://williamjturkel.net/2013/06/15/basic-text-analysis-with-command-line-tools-in-linux/">Tutorial Basic Text Analysis by W. Turkel</a></li>
+<li><a href="https://williamjturkel.net/2013/06/20/pattern-matching-and-permuted-term-indexing-with-command-line-tools-in-linux/">Tutorial Pattern Matching + KWIC by W. Turkel</a></li>
+</ul>
+<!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
+<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>
+$(function() {
+    $("pre > code").each(function(i, block) {
+        var codeClass = $(this).parent().attr("class");
+        if (codeClass == null || codeClass === "") {
+            $(this).addClass("hljs");
+        } else {
+            var map = {
+                js: "javascript"
+            };
+            if (map[codeClass]) {
+                codeClass = map[codeClass];
+            }
+            $(this).addClass(codeClass);
+            hljs.highlightBlock(this);
+        }
+    });
+});
+</script>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1920,
+
+        height: 1080,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

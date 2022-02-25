@@ -1,24 +1,24 @@
  
 
-G3 420 4
+G3 420 :GW
 
  
 
-gra A E
+gra A A
+
+ 
+
+n 3
 
  
 
  
 
- 
+H ...
+D LTE pa E
+ON b ;
 
  
-
-Z —_ 4
-ET3 / _
-- — n L LI7 M
-DE d
-E ran
 
 FREIHEIT
 FÜR UNSERE ZEIT
@@ -55,7 +55,17 @@ Zürich 1946
  
 
  
+
+ 
  
+
+ 
+
+ 
+
+ 
+
+ 
 
  
 
@@ -99,10 +109,22 @@ Parteileitung der Freisinnigen Partei des Kantons Zürich:
 
 Der Präsident: Dr. W. Ern st
 
-”
+-
+
+ 
  
 
-]. DIE LAGE
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+J. DIE LAGE
 
  
 
@@ -127,7 +149,7 @@ Volk in eine gänzlich veränderte Umwelt gestellt, zu der politische,
 geistige und wirtschaftliche Bezichungen hergestellt werden müs-
 sen.
 
-3. Der innerc Ausgleich und die äussere Örientierung werden für
+3. Der innerc Ausgleich und die äussere Orientierung werden für
 unser Volk ernste Kämpfe heraufbeschwören. In diesem Ringen
 muss die Stimme der Freiheit vernehmlich zur Geltung kommen.
 Denn die Freiheit ist ein unveräusserliches Gut des eidgenössischen
@@ -138,6 +160,8 @@ Freiheit, die sich mit Gerechtigkeit und Gemeinschaftssinn verbin-
 det, ist auch in dieser Zeit des Uebergangs die freisinnige Losung.
  
 
+ 
+
 ILlL. UNSER STAAT
 
  
@@ -146,7 +170,7 @@ Sicherung des Rechtsstaates
 
 1. In den letzten Jahrzehnten sind gefährliche Spannungen entstan-
 den zwischen dem geschriebenen Recht und der praktischen Poli-
-tik. Doch ist die Eidgenossenschaft nur als Rechtsstaat denkbar.
+tik, Doch ist die Eidgenossenschaft nur als Rechtsstaat denkbar.
 Daher drängt sich eine rasche Rückkehr zur verfassungsmässigen
 Regierung und zur gesetzmässigen Verwaltung auf.
 
@@ -161,13 +185,13 @@ nen mit den zwingenden Erfordernissen der Praxis in Einklang ge-
 bracht werden.
 
 3. Prinzipielle Fragen dürfen nicht mehr in provisorischen Be-
-schlüssen geregelt  werden. Dafür sind einzig Erlasse statthaft,
+schlüssen geregelt . werden. Dafür sind einzig Erlasse statthaft,
 welche dem Referendum unterstchen.
 
 Bund ujld Kantone
 
 4. Volksbegehren sind rascher als bisher dem Entscheid von Volk
-und Ständen zu unterstellen: *
+und Ständen zu unterstellen:
 
 5. Die Beziehungen zwischen Bund und Kantonen sind in Verwir-
 rung geraten. Einheitliche Grundsätze müssen ermittelt werden
@@ -218,6 +242,10 @@ Zweck unmittelbar im Interesse der Eidgenossenschaft liegt.
 einzelnen Kantons müssen Steuerabkommen bekämpft werden.
 
 -
+
+ 
+
+ 
  
 
  
@@ -242,7 +270,7 @@ zu stellen.
 ren, dass ganze Wirtschaftsgruppen praktisch keine direkten Steuern
 entrichten.
 
-12, Der bedrängten Lage der Kleinrentner ist angemessen Rech-
+12. Der bedrängten Lage der Kleinrentner ist angemessen Rech-
 nung zu Iragen.
 
 Öffentliche Ausgaben und Verwaltung
@@ -256,7 +284,7 @@ neuer Aufgaben grösste Zurückhaltung üben-
 Auch müssen sie die Wirtschaftlichkeit ihrer Ausgaben, besonders
 aber der Subventionen, regelmässig überprüfen. Konsequent ist
 darauf zu achten, ob einzelne Aufwendungen nicht gekürzt oder
-aufgehoben werden können,.weil die entsprechenden Aufgahen an
+aufgehoben werden können, .weil die entsprechenden Aufgahen an
 Bedeutung verloren haben, oder .weil andere Instanzen sie besser
 erfüllen können. .
 
@@ -314,6 +342,8 @@ gen und politischen Einfluss wiederholt dazu geführt, dass Par-
  
  
 
+ 
+
 lament oder Regierung Funktionen der anderen Gewalt ausübten.
 Daraus ergab sich eine gewisse Doppelspurigkeit und Rechtsunsi-
 cherheit. Die Befugnisse von Kantonsrat und Regierung müssen
@@ -324,6 +354,8 @@ zen, drängt sich heute im Kanton Zürich ein Ausbau der Verwal-
 tungsgerichtsbarkeit auf.
 
 10
+
+ 
 
 I1l DIE AUSSENPOLITIK
 
@@ -355,7 +387,7 @@ deren Entstehung er nicht beteiligt war.
 keit gegenüber den Leiden der am Krieg beteiligten Nationen oder
 gegenüber der Zukunft Europas. Noch stärker als bisher muss un-
 ser Volk sich zur Hilfe für die kriegsverschrien Gebiete bereit-
-finden, ;
+finden, .
 
 Ausserdem sollen unsere Behörden alle Bemühungen für ein
 besseres Einvernehmen zwischen den Völkern, für den geistigen
@@ -407,6 +439,8 @@ Daher sind die Gehälter in angemessener Weise zu erhöhen.
 
 12
 
+ 
+
 -8. Die angehenden Auslandvertreter sind auf ihre mannigfachen
 Aufgaben gründlich vorzubereiten. Das Ausbildungsprogramm muss
 bekanntgegeben werden.
@@ -446,6 +480,8 @@ genen Landsleute sollen von Volk und Behörden unterstützt
 werden.
 
 13
+
+ 
 
  
  
@@ -501,7 +537,7 @@ Wohnungsbau
 verschiedenen Volksgruppen, auch für den Mittelstand, stellt heute
 eine Aufgabe erster Ordnung dar.
 
--
+.
 
 15
  
@@ -539,7 +575,7 @@ plätze gesichert werden, die jedermann zugänglich sind.
 sich harmonisch in einen Gesamtplan einfügen und, wenn möglich,
 in grösseren Siedlungseinheiten errichtet werden. Zu diesem Zwecke
 sollen sie rechtzeitig Richtlinien für die Ortsgestaltung und Regio-
-nalplanung aufstellen.
+nalplanung aufstellen. ”
 
 Erzicher und Presse müssen mit. dem grössten Nachdruck eine gute
 Baugesinnung fördern. Denn Pläne und Paragraphen nützen wenig,
@@ -574,7 +610,7 @@ werbe bei Aufträgen des Staates und der Grossindustrie;
 — durch die Dezentralisierung der bestehenden oder aufstre-
 benden Grossbetriebe und
 — durch die Ansiedlung städtischer Arbeitnehmer in stadt-
-nahen Ortschaften: Grösste Bedeutung kommt in diesem
+nahen OÖrtschaften: Grösste Bedeutung kommt in diesem
 Zusammenhang einer raschen und preiswerten Verbindung
 zwischen Wohnort und Arbeitsplatz zu.
 
@@ -582,7 +618,7 @@ Entvölkerung abgelegener Gebiete
 
 12. Die Entvölkerung abgelegener Gebiete lässt sich nur aufhal-
 
-ten ;
+ten |
 — wenn die bedrohten Volksgruppen selbst fest entschlossen
 sind, sich im angestammten Lebenskreis zu behaupten, und
 
@@ -602,15 +638,13 @@ lichen Selbsthilfe verdienen hier den Vorzug vor dem direkten
 Staatseingriff. Dagegen können die öffentlichen Gewalten die pri-
 vaten Bemühungen unterstützen
 —— durch die Bereinigung der Flurverhältnisse und durch die
-Kredithilfe an überschuldete,
+individucle Kredithilfe an überschuldete, aber sanie-
 rungswürdige Betriebe;
 — durch die Unterstützung der Schulen, der Fortbildung und
 des kulturellen Lebens im allgemeinen,
 — durch die Bereitstellung ausreichender Verkehrsmittel oder
 Verbindungen sowie durch die differenzierte Ermässigung
 der Transporttaxen, soweit dies nicht schon geschehen ist.
-
-individuelle aber sanie-
 
 Behauptung des Mittelstandes
 
@@ -620,17 +654,19 @@ betrieben und zur Industriearbeiterschaft hin verlagert. Darunter
 leiden Geltung und Auskommen des Mittelstandes. Und doch ist das
 Gedeihen des Gewerbes und der Landwirtschaft, der freien Berufe
 und der Angestellten eine wesentliche Voraussetzung für den Be-
-stand der Demokratie.. - i
+stand der Demokratie.. / |
 
 15. Zunächst liegt es an diesen Ständen selbst, durch ihre Lei-
-stung den Rückgang an Einkommen und Bedeutung auszugleichen.
+stung den Rückgang an Einkoinu_1eti und Bedeutung auszugleichen.
 Auch müssen sie alles daran setzen, den Berufsstolz und die Tra-
 dition ihres Standes aufrechtzuerhalten und auf. die Jugend zu
 übertragen.
 
 18
 
-   
+ 
+
+ 
 
 Ausserdem müssen. die Gesetzgebung und Verwaltung, die Parteien
 und die Presse den Mittelstand tatkräftig fördern. Die Wirtschafte-
@@ -638,6 +674,14 @@ politik und die Berufsberatung können viel dazu beitragen, ihm
 einen kräftigen und fähigen Nachwuchs zu erhalten.
 
 19
+
+ 
+
+ 
+
+ 
+
+ 
  
 
 V. UNSERE JUGEND
@@ -672,7 +716,7 @@ tische Einflüsse nicht verfälscht werden.
 
 3. Den entscheidenden Beitrag zu diesem Kampf hat die Familie
 zu leisten. Denn die Erziehung im Hause bestimmt darüber, was
-jeder Schweizer als Mensch 'ist und als Bürger leistet. Die Familie
+jeder Schweizer als Mensch ’ist und als Bürger leistet. Die Familie
 kann ihrem erzieherischen Auftrag umso besser entsprechen, als
 ihre soziale Stellung heute ja von Bund, Kantonen und Gemeinden
 
@@ -681,8 +725,6 @@ gesichert werden soll.
 4. Vor allem müssen die Eltern in der Jugend jene ernsten Tugen-
 
 20
-
- 
 
 den wecken, die unser Volk zur Selbstregierung und zur wirtschaft-
 lichen Behauptung befähigen:
@@ -727,6 +769,12 @@ Fortbildung nach der Schulpflicht
 ”
 
 21 '
+
+ 
+
+ 
+
+ 
  
 
  
@@ -768,7 +816,7 @@ mit ihrem Konkurrenten von entscheidender Bedeutung.
 13. Die Jugend muss über die Lehrzeit und die Anfänge der Berufs-
 Jlaufbahn hinaus jede Gelegenheit zur Erweiterung ihrer Kenntnisse
 ausnützen. Darin liegt eine wesentliche Vorbedingung für ein selb-
-ständiges Denken und ein selbstverantwortliches Leben.
+ständiges Denken und ein selbstverantwortliches Leben.,
 
 22
 
@@ -790,7 +838,7 @@ tüchtiger schweizerischer Nachwuchs,
 Mittelschüler möglichst früh davor warnen, dass sie aus äusserlichen
 oder wirtschaftlichen Erwägungen an die Hochschulen übertreten.
 Das Studium soll stärker als bisher eine Frage der inneren Berufung
-werden,
+werden.
 Dagegen ist alles daran zu setzen, dass wirklich Begabte nicht durch
 wirtschaftliche Schwierigkeiten von.der akademischen Ausbildung
 ausgeschlossen werden. Das Ziel lässt sich verwirklichen
@@ -900,7 +948,7 @@ lichen soll eine gründliche Ausheilung ermöglicht werden.
 behandelt werden. Vielmehr muss er von besonders geschulten Lehr-
 kräften gründlich und nach einheitlichen Regeln erteilt werden.
 
-29, Die Kantone und Gemeinden sollen den Jugendsport, die Ferien-
+29. Die Kantone und Gemeinden sollen den Jugendsport, die Ferien-
 kolonien, die Ferienwanderungen und eine gesunde Freizeitbeschäf-
 tigung fördern, besonders im Hinblick auf die Kinder städtischer
 und minderbemittelter Kreise,
@@ -915,10 +963,6 @@ Diese Anstrengungen sollen die Gemeinden unterstützen, indem sie
 die erforderlichen Sportplätze, Turnhallen und Geräte bereitstellen
 und indem sie Grünflächen, die sich für solche Anlagen eignen,
 rechtzeitig der Verwendung für andere Zwecke entziehen.
-
- 
-
- 
 
 VI. DIE WIRTSCHAFT
 
@@ -936,7 +980,7 @@ für die staatliche und kulturelle Behauptung der Nation.
 2. Eine Verstaatlichung im Sinn des sozialistischen Programmes
 «Neue Schweiz» wird der Wirtschaft die Erfüllung dieser Aufgabe
 verunmöglichen. Denn auf die Dauer gewährleistet die private Ini-
-tiative die Beschaffung und Verteilung der Güter sowie den allge- '
+tiative die Beschaffung und Verteilung der Güter sowie den allge- *
 meinen Wohlstand besser, als es einer öffentlichen Behörde je
 möglich wäre. Doch vor allem würde eine Verstaatlichung von Pro-
 duktion und Verteilung die bürgerlichen Freiheiten und die poli-
@@ -957,6 +1001,12 @@ antwortung gegenüber der Gemeinschaft sowie dem wirtschaftlich
 Schwächeren stets bewusst bleiben.
 
 -
+
+ 
+
+ 
+
+ 
 
  
  
@@ -1014,7 +1064,7 @@ ausgeglichen werden.
 3. Ein Ersatz für die Unterbindung des ausländischen Angebots
 wird der Inlandproduktion erwachsen aus der vom Export herrüh-
 renden Steigerung der inländischen Kaufkraft (Investitionen und
-Konsumgüter). i
+Konsumgüter). |
 
 Der Inlandindustrie und dem Gewerbe kann zudem Ersatz geboten
 werden durch die vermehrte Heranziehung zur Herstellung von
@@ -1023,7 +1073,7 @@ Exportgütern, ;
 4. Die Ausfuhr geeigneter gewerblicher Erzeugnisse soll angebahnt
 und gesteigert werden. Den besonderen organisatorischen und kom-
 merziellen Risiken des Exportgeschäftes ist angemessen Rechnung
-zu tragen,
+zu tragen.
 
 Kapitalexport
 
@@ -1045,12 +1095,16 @@ gemessenem Zinsfuss zur Verfügung steht und
 -
 
 29
+
+ 
+
+ 
  
 
 —- solange die Rückzahlung der Kredite auf dem Inlandmarkt
 keine Störungen auslöst.
 
-6. Banken und Finanzgesellschaften müssen die Gefahr ausser-.
+6. Banken und Finanzgesellschaften müssen die Gefahr ausser-
 ordentlicher Verluste herabsetzen.
 — durch die Schaffung angemessener Sicherheiten und
 — durch die strikte Einhaltung gemeinsamer Regeln, die sich
@@ -1120,11 +1174,11 @@ Ziel
 
 1. Seit den wirtschaftlichen Erschütterungen der Dreissigerjahre ist
 der Kampf gegen die Arbeitslosigkeit und ihre Folgen zu einem
-Prüfstein für jede staatliche Ordnung geworden. .
+Prüfstein für jede staatliche Ordnung geworden. |
 Die soziale Gerechtigkeit und die Sicherung der Demokratie fordern
 Gewähr dafür,
 
-— dass Wirtschaft und Staat ecine mögliche Arbeitslosigkeit
+— dass Wirtschaft und Staat eine mögliche Arbeitslosigkeit
 
 31
 
@@ -1139,7 +1193,7 @@ ständig in Rechnung stellen und ihre Ausbreitung wirksam
 bekämpfen, und
 — dass Schweizer, welche ohne eigenes Verschulden um Arbeit
 
-und Verdienst kommen, durch die Gemeinschaft des Volkes _
+und Verdienst kommen, durch die Gemeinschaft des Volkes .
 
 vor Not bewahrt werden.
 Der Würde des Menschen wird die Arbeitsbeschaffung eher gerecht
@@ -1165,7 +1219,7 @@ serven durch Steuererlass begünstigen. Auch sollen sie die Er-
 neuerung und Verbesserung des Produktionsapparats durch die Ge-
 währung vermehrter steuerfreier Abschreibungen fördern.
 
-Öffen_tiiché Arbeitsbeschaffung
+Öffenfliché Arbeitsbeschaffung
 
 5. Bund und Kantone müssen im Rahmen der allgemeinen Wirt-
 schafts- und Finanzpolitik die Arbeitslosigkeit bekämpfen.
@@ -1173,6 +1227,8 @@ Wirtschaftlich am günstigsten wirkt unter schweizerischen Voraus-
 setzungen die Förderung des Exports. Diesem Ziel sollen dienen:
 
 32
+
+ 
 
 — eine aktive Handelsvertragspolitik mit allen Ländern;
 
@@ -1188,7 +1244,7 @@ Die Errichtung einer gemischtwirtschaftlichen «Exportbank» emp-
 fiehlt sich nicht, denn ihre Risiken wären zu einseitig verteilt. Auch
 liesse sich ein langfristiges Engagement von Bundesmitteln nicht
 vermeiden, Schliesslich kann das Bankgewerbe bei annähernd nor-
-malen und freien Verbindungen mit dem Ausland dem Kreditbedarf
+malen und freien Verbindungen mit dem Ausland dem Kredithedarf
 der Exporteure vollauf genügen. (Vgl. hiezu VI, B, Ziffern 1 bis 12.)
 
 6. Wenn diese Massnahmen und die Bemühungen der Wirtschaft
@@ -1272,12 +1328,12 @@ Bedeutung
 geistig regen Mittelstand voraus, der positiv am öffentlichen und
 kulturellen Leben mitarbeitet.
 
-Das Gewerbe, als ein Teil des Mittelstandes, darf im Rahmen: des
+Das Gewerbe, als ein Teil des Mittelstandes, darf im Rahmen des
 Tragbaren auf die Unterstützung der anderen Volksgruppen rech-
 nen, wenn es durch die Marktentwicklung in seiner Existenz bedroht
 wird,
 
-Selbsthilfe des einzelnen
+Selbsthilj'e des einzelnen
 
 2. Handwerk und Detailhandel haben am meisten Aussicht, sich zu
 behaupten, wenn jeder Betriebsinhaber konsequent
@@ -1307,7 +1363,7 @@ Nachfrage, sowie
  
  
 
-— durch .die Zurückhaltung der öffentlichen Körperschaften
+— durch ‚.die Zurückhaltung der öffentlichen Körperschaften
 mit solchen Steuern und sozialen Auflagen, welche die
 Kaufkraft der Abnehmer gewerblicher Erzeugnisse beein-
 trächtigen.
@@ -1457,7 +1513,7 @@ Umgebung versiegt.
 3. Es wäre ein Irrtum, sozialc Gerechtigkeit einseitig für den Ar-
 beitnehmer oder gar bloss für den organisierten Arbeiter zu fordern.
 
-.
+-
 
 39
  
@@ -1497,9 +1553,9 @@ chen Respekt, zur sachlichen Verständigung, zur vertrauensvollen
 Zusammenarbeit.
 
 Leistungen des Arbeitnehmers
-8. Mit seiner Arbeit stellt jedéiAngestellte und Arbeiter dem Be-
+8. Mit seiner Arbeit stellt jedéx“Angestellte und Arbeiter dem Be-
 
-trieh seine ganze wirtschaftliche Kraft zur Verfügung. Mit seiner
+trieb seine ganze wirtschaftliche Kraft zur Verfügung. Mit seiner
 Bereitschaft, gute, werkgerechte Arbeit zu leisten, setzt er noch
 
 40
@@ -1577,11 +1633,11 @@ Betriebskommissionen
 ihrer Gesamtheit berühren, sollen im Kreise frei gewählter Betriebs-
 kommissionen frei erörtert weden. Die Angestellten sollen eine
 eigene Kommission wählen können oder in der gemeinsamen Be-
-tricbhskommission angemessen vertreten sein.
+tricbskommission angemessen vertreten sein,.
 
 42
 
-DE A A E S S N
+DE A A E W LU S N
 
 18. Die Aussprache soll sich in diesen Kommissionen erstrecken
 
@@ -1613,7 +1669,7 @@ Kommt keine Einigung zustande, dann soll der Entscheid einer
 Schlichtungsstelle, einer Schiedskommission oder eines kantonalen
 Einigungsamtes angerufen werden. Die Parteien sollen sich im vor-
 aus darauf einigen, dass dieser Entscheid für beide Teile verbindlich
-ast, i
+ast,. j
 
 Friedensabkommen und Gesamtarbeitsverträge
 
@@ -1626,6 +1682,10 @@ rat für den fraglichen Erwerbszweig verbindlich zu erklären.
 ”
 
 43
+
+ 
+
+ 
  
 
 22. Die Lohntarife in diesen Verträgen sollen nicht dazu führen,
@@ -1704,18 +1764,11 @@ Weltmarkt ausgeschaltet werden.
 45
  
 
-‚
+v
 
 INHALT
 
 Vorbemerkung .
-
-L
-M.
-H.
-IV.
-V.
-VI.
 
 VIZ.
 
@@ -1723,15 +1776,13 @@ VIZ.
 
 Die Lage .
 
-Unser Staat
+. Unser Staat
 
-Die Aussenpolitik
+. Die Aussenpolitik
+. Volk und Land
 
-Volk und Land
-
-Unsere Jugend .
-
-Die Wirtschaft .
+. Unsere Jugend .
+. Die Wirtschaft .
 
 A. Freiheit und Bindung .
 B. Der Aussenhandel
@@ -1742,16 +1793,8 @@ D. Das Gewerbe
 Soziale Gerechtigkeit
 (Arbeitsverhältnis und Sozialpolitik)
 
+ 
+
 Seite
 
-I
-15
-20
-27
-27
-28
-31
-35
-
-39
-
+ 
