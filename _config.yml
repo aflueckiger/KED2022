@@ -22,7 +22,7 @@ address: |
     Switzerland
 
 # Custom Variables
-syllabus: "https://github.com/aflueckiger/KED2022/raw/master/KED2022_syllabus.pdf"
+syllabus: "https://github.com/aflueckiger/KED2022/raw/main/KED2022_syllabus.pdf"
 githubdir: "aflueckiger/KED2022"
 lecture_type: BA Seminar
 semester: "Spring 2022"
