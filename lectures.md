@@ -6,10 +6,17 @@ date: "2022-03-01"
 
 Below you find a brief description of all the lectures. I make the slides available before the lecture starts. The slides are provided in the following formats and may be opened by clicking the icon: 
 
-- HTML to open in a browser <i class="fas fa-desktop"></i> 
-- PDF document <i class="fas fa-file-pdf"></i>
-- Markdown source <i class="fab fa-github"></i>
+- <i class="fas fa-desktop"></i> HTML to open in a browser 
+
+- <i class="fas fa-file-pdf"></i> PDF document 
+
+- <i class="fab fa-github"></i> Markdown source
+
+{% comment %}
+
 - recorded video of session  <i class="fas fa-video"></i>
+
+{% endcomment %}
 
 ## Week 1: Introduction + Where is the digital revolution?
 
@@ -18,7 +25,12 @@ On the one hand, I present the goals and organization of the seminar. On the oth
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_01.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_01.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_01.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/1d07f265)
+
+{% endcomment %}
 
 ### Required Reading
 
