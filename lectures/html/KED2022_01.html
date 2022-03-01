@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
-  <meta name="dcterms.date" content="2022-02-25">
+  <meta name="dcterms.date" content="2022-03-03">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -57,10 +57,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -99,21 +101,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -130,7 +127,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -160,7 +157,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -168,6 +165,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -207,26 +206,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -237,13 +240,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -321,7 +325,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -368,7 +372,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -391,7 +395,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -420,38 +423,27 @@
   <p class="subtitle">#1 Introduction +<br>Where is the digital revolution?</p>
   <p class="author">Alex Flückiger</p>
   <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
-  <p class="date">25 February 2022</p>
+  <p class="date">03 March 2022</p>
 </section>
 
-<section id="lectures-covid-19" class="slide level2">
-<h2>Lectures #COVID-19</h2>
-<p><strong>Virtual lectures are not optimal, so …</strong></p>
+<section id="covid-19" class="slide level2">
+<h2><del>#COVID-19</del> <span class="emoji" data-emoji="thinking">🤔</span></h2>
 <ul>
-<li>interrupt me anytime!</li>
-<li>use all channels for interaction
-<ul>
-<li>chat + audio + video + emoji</li>
-</ul></li>
-<li>mute mic unless you speak</li>
+<li>Back to normal? How was it, though?</li>
+<li>Let me know when you have some special needs</li>
 </ul>
-<p><br></p>
-<p><strong>We are here together!</strong> <span class="emoji" data-emoji="mask">😷</span></p>
 <aside class="notes">
 <ul>
-<li>Vergleich FS2020: Start vor Ort
+<li>Kurs-Durchführung
 <ul>
-<li>Studis haben mehr Erfahrung durch HS2022</li>
-<li>Kurs übers Digitale kann auch digital stattfinden!</li>
+<li>speziell nach zwei Jahren mehr/minder Ausnahmezustand</li>
+<li>zum dritten Mal, wohl erstes Mal alles vor Ort</li>
 </ul></li>
-<li>alle Kommunikationskanäle
+<li>Vergleich
 <ul>
-<li>Fragen helfen allen &amp; machen Seminar interessanter</li>
-<li>alle Chat öffnen, um Fragen zu sehen</li>
-<li>Video wäre toll</li>
+<li>Programmieren genuin digital funktionierte ganz gut</li>
+<li>Interaktivität/Feedback hat gelitten im Online-Format</li>
 </ul></li>
-<li>melden bei technischen Problemen</li>
-<li>Slides + Unterlagen online</li>
-<li>Live-Lektionen zwecks Interaktion + Recording</li>
 </ul>
 </aside>
 </section>
@@ -464,6 +456,7 @@
 </ol>
 <aside class="notes">
 <ul>
+<li><a href="https://www.srf.ch/play/tv/archivperlen/video/karussell-computer-1982?urn=urn:srf:video:9d4e7b02-1cc3-4372-9083-fca1e7f4823b">SRF-Archivperle Computer (1982)</a></li>
 <li>Dreiteilig
 <ul>
 <li>Heranführung, Austausch, Kursorganisation</li>
@@ -473,6 +466,7 @@
 <ul>
 <li>Was ist künstliche Intelligenz?</li>
 </ul></li>
+<li>Erst dann Textanalyse im eigentlichen Sinne</li>
 </ul>
 </aside>
 </section>
@@ -521,21 +515,31 @@
 </div>
 <aside class="notes">
 <ul>
+<li>Diskussion bevor ich meine Perspektive einführe (5min)
+<ul>
 <li>Vorstellung von Studis?</li>
+<li>Wer braucht Siri/Alexa &amp; Co.?</li>
+</ul></li>
 <li>Altersdifferenz spielt wohl eine Rolle in IT</li>
-<li>“AI is whatever hasn’t been done yet.” D. Hofstadter</li>
-<li>nachfolgend Beispiele künstlicher Intelligenz anschauen</li>
+<li>Intelligenz nichts Absolutes, relativ zu Menschen
+<ul>
+<li><p>von Schachspielen zu Lernen</p></li>
+<li><p>Generalisierbarkeit</p></li>
+</ul></li>
+<li>Gewöhnungseffekt: “AI is whatever hasn’t been done yet.” D. Hofstadter</li>
+<li>Eindrückliche Beispiele, Stand Forschung</li>
 </ul>
 </aside>
 </div>
 </section>
-<section id="transfer-human-intelligence" class="slide level2">
-<h2>Transfer Human Intelligence</h2>
+<section id="transfer-of-human-intelligence" class="slide level2">
+<h2>Transfer of Human Intelligence</h2>
 <h3 id="from-static-machines-to-more-flexible-devices">from static machines to more flexible devices</h3>
 <ul>
 <li>mimicking intelligent behavior
 <ul>
-<li>speaking + seeing</li>
+<li>reading + seeing + hearing</li>
+<li>speaking + writing + drawing</li>
 </ul></li>
 <li>a sense of contextual perception</li>
 <li>many degrees of freedom</li>
@@ -544,15 +548,15 @@
 <ul>
 <li>Referenzfolie Mensch
 <ul>
-<li>Imitieren von menschlichen Sinnen</li>
-<li>Sprechen/Sehen/Hören</li>
+<li>Imitieren von menschlichen Sinnen und Ausdrücken</li>
+<li>Sprechen/Sehen/Hören/Zeichnen</li>
 <li>Statische maschine
 <ul>
 <li>if this then that</li>
 </ul></li>
 <li>Kontextabhängiges Handeln
 <ul>
-<li>Interaktion initieren</li>
+<li>Interaktion initiieren</li>
 <li>Situationsangepasstheit</li>
 </ul></li>
 </ul></li>
@@ -562,7 +566,7 @@
 <section id="seeing-like-a-human" class="slide level2">
 <h2>Seeing like a Human?</h2>
 <figure>
-<img data-src="../images/facebook_detectron2.png" class="center" style="width:60.0%" alt="An image segmentation with Facebook’s Detectron2" /><figcaption aria-hidden="true">An image segmentation with <a href="https://ai.facebook.com/blog/-detectron2-a-pytorch-based-modular-object-detection-library-/">Facebook’s Detectron2</a></figcaption>
+<img data-src="../images/facebook_detectron2.png" class="center" style="width:60.0%" alt="An image segmentation with Facebook’s Detectron2 (Wu et al. 2019)" /><figcaption aria-hidden="true">An image segmentation with <a href="https://ai.facebook.com/blog/-detectron2-a-pytorch-based-modular-object-detection-library-/">Facebook’s Detectron2</a> <span class="citation" data-cites="Wu2019">(Wu et al. 2019)</span></figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -572,13 +576,14 @@
 <li>Person ohne Geschlecht?</li>
 <li>Teekanne falsch/nicht erkannt</li>
 </ul></li>
+<li>Keine naturgegebene Ordnung oder technologische Notwendigkeit, sondern in Code/Daten gegossene Entscheidungen</li>
 </ul>
 </aside>
 </section>
 <section id="speaking-like-a-human" class="slide level2">
 <h2>Speaking like a Human?</h2>
 <figure>
-<img data-src="../images/meena.png" style="height:20cm" alt="Chatting with Google’s Meena" /><figcaption aria-hidden="true">Chatting with <a href="https://ai.googleblog.com/2020/01/towards-conversational-agent-that-can.html">Google’s Meena</a></figcaption>
+<img data-src="../images/meena.png" style="height:18cm" alt="Chatting with Google’s Meena (Adiwardana et al. 2020)" /><figcaption aria-hidden="true">Chatting with <a href="https://ai.googleblog.com/2020/01/towards-conversational-agent-that-can.html">Google’s Meena</a> <span class="citation" data-cites="Adiwardana2020">(Adiwardana et al. 2020)</span></figcaption>
 </figure>
 <div class="fragment">
 <div class="funky red">
@@ -592,16 +597,15 @@
 </aside>
 </div>
 </section>
-<section id="beyond-perception" class="slide level2">
-<h2>Beyond Perception</h2>
+<section id="beyond-perception-and-unimodality" class="slide level2">
+<h2>Beyond Perception and Unimodality</h2>
 <aside class="notes">
 <ul>
+<li>passive vs. aktive Rolle von AI</li>
 <li>Chat verbindet Wahrnehmen + Generieren</li>
 <li>intensive Forschung Generieren von Text, Bild, Video</li>
-<li>Auswirkung auf Sozialwelt
-<ul>
-<li>Bald kein Medium mehr das “manipulationssicher” ist. Es kann alles generiert werden: Bilder, Video, Texte</li>
-</ul></li>
+<li>Zusammenbringen von mehreren Medien</li>
+<li>Auswirkung auf Sozialwelt</li>
 </ul>
 </aside>
 </section>
@@ -615,22 +619,74 @@
 </div>
 <aside class="notes">
 <ul>
-<li>Problem: bald gibt es kein medium mehr das manipulationssicher ist. Es kann alles generiert werden: Bilder, Video, Texte</li>
+<li>beliebiges Generieren photorealer Gesichter durch Computer</li>
+<li>Problem: Es gibt kein manipulationssicheres Medium mehr. Es kann alles generiert werden: Bilder, Video, Texte</li>
 </ul>
 </aside>
 </div>
 </section>
-<section id="ai-hype-in-a-nutshell" class="slide level2">
-<h2>AI Hype in a Nutshell</h2>
-<pre class="python"><code>AI = from human_knowledge import solution</code></pre>
+<section id="trend-towards-multimodality" class="slide level2">
+<h2>Trend towards Multimodality</h2>
+<figure>
+<img data-src="../images/glide_image_generation.png" style="height:20cm" alt="Breakthrough by combining language processing and image generation with GLIDE (Nichol et al. 2021)" /><figcaption aria-hidden="true">Breakthrough by combining language processing and image generation with GLIDE <span class="citation" data-cites="Nichol2021">(Nichol et al. 2021)</span></figcaption>
+</figure>
 <aside class="notes">
 <ul>
-<li>manche Dinge für Computer schwierig, für Menschen einfach (und umgekehrt)</li>
-<li>Schach einfach für Computer, Unterschied Katze/Hund lange schwierig</li>
-<li>Algo für Katze/Hund-Bestimmung erkennt kein Auto, weil zu spezifisch
+<li>zielgerichtete Generierung über Multimodalität
 <ul>
-<li>keine Angst vor Computer, die Welt übernehmen</li>
+<li>mit Sprache neue, sehr eigenwillige (!) Bild generieren lassen</li>
 </ul></li>
+<li>3 Monate altes Paper</li>
+</ul>
+</aside>
+</section>
+<section id="deepfakes-it-is-real" class="slide level2">
+<h2>Deepfakes? It is real!</h2>
+<p><img data-src="../images/glide_inpainting.png" style="height:10cm" /></p>
+<figure>
+<img data-src="../images/glide_inpainting_room.png" alt="Text-driven image editing with GLIDE (Nichol et al. 2021)" /><figcaption aria-hidden="true">Text-driven image editing with GLIDE <span class="citation" data-cites="Nichol2021">(Nichol et al. 2021)</span></figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li><p>Nicht nur generieren, sondern auch verändern</p></li>
+<li><p>Deepfakes</p>
+<ul>
+<li>Bildermanipulation gab es schon zu Zeiten Stalin, aber wird “Photoshop” wird einfacher</li>
+<li>nicht nur technologisch interessant, sondern auch gesellschaftliche Auswirkungen</li>
+</ul></li>
+<li><p>Problematisch für</p>
+<ul>
+<li><p>Persönlichkeitsrechte</p></li>
+<li><p>Journalismus und historische Forschung</p></li>
+</ul></li>
+<li><p>Business-Möglichkeiten</p>
+<ul>
+<li>Zalando-Kleider virtuell anprobieren</li>
+<li>virtueller Ikea Einrichtungskatalog</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="demos-of-intelligent-text-processing" class="slide level2">
+<h2>Demos of <em>intelligent</em> Text Processing</h2>
+<p><strong>Can you disenchant them?</strong></p>
+<ul>
+<li><a href="https://demo.allennlp.org/sentiment-analysis/roberta-sentiment-analysis">sentiment analysis</a></li>
+<li><a href="https://demo.deeppavlov.ai/#/en/textqa">question answering</a></li>
+<li><a href="https://openai.com/blog/dall-e/">creating images from text</a></li>
+<li><a href="https://6b.eleuther.ai/">text generation</a></li>
+<li><a href="https://www.pandorabots.com/mitsuku/">chat bot</a></li>
+<li><a href="https://www.deepl.com/translator">machine translation</a></li>
+<li><a href="https://huggingface.co/zero-shot/">zero-shot classification</a></li>
+<li><a href="https://huggingface.co/spaces/flax-community/image-captioning">image captioning</a></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Eindrückliche Beispiele, Stand Forschung</li>
+<li>Generieren: “The Coronavirus is dangerous” (Spielerei)</li>
+<li>Sentiment: Aspekte Airline (Auswertung Feedback)</li>
+<li>QA: When has the University of Lucerne been founded? What are the 5 biggest Swiss companies? (Suche)</li>
+<li>Caption: Medienwechsel von Sehen zu Sprache (Werkzeug für Blinde)</li>
 </ul>
 </aside>
 </section>
@@ -644,6 +700,7 @@
 </ul>
 <aside class="notes">
 <ul>
+<li>Von der Anwendungsseite zum technisch-wissenschaftlichen Teil</li>
 <li>in Wissenschaft primär drei Felder</li>
 <li>sehr viel gemeinsam in Methodik: Lernen von Daten</li>
 </ul>
@@ -661,21 +718,20 @@
 <li>more recycling than genuine intelligence</li>
 <li>theory agnostically</li>
 </ul></li>
-<li>supervised <strong>training</strong>
+<li>supervised <strong>training</strong> is the most popular
 <ul>
-<li>input-output pairs</li>
+<li>pairs of input data and outcome</li>
 </ul></li>
 </ul>
 <p><img data-src="../images/concepts_ai.png" class="l-image-corner" style="height:90.0%" /></p>
 <aside class="notes">
 <ul>
-<li>Hinter diesen Systemen steht…</li>
 <li>Wie funktionieren diese Systeme?</li>
 <li>AI-Paradigma: Logik vs. Lernen</li>
 <li>DL = dominantes ML-Modell
 <ul>
 <li>schichtweise Abstraktion</li>
-<li>Metapher Hirn</li>
+<li>unzureichende Metapher Hirn (Neuron trägt zur Konfusion bei)</li>
 </ul></li>
 <li>Lernen von Unmengen Daten
 <ul>
@@ -686,24 +742,25 @@
 <p>Related concepts (<a href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/difference-between-ai-machine-learning-deep-learning.html">src</a>)</p>
 </aside>
 </section>
-<section id="demos-of-intelligent-text-processing" class="slide level2">
-<h2>Demos of <em>intelligent</em> Text Processing</h2>
-<h3 id="can-you-disenchant-them">Can you disenchant them?</h3>
-<ul>
-<li><a href="https://demo.allennlp.org/sentiment-analysis/roberta-sentiment-analysis">sentiment analysis</a></li>
-<li><a href="https://demo.deeppavlov.ai/#/en/textqa">question answering</a></li>
-<li><a href="https://openai.com/blog/dall-e/">creating images from text</a></li>
-<li><a href="https://talktotransformer.com/">text generation</a></li>
-<li><a href="https://www.pandorabots.com/mitsuku/">chat bot</a></li>
-<li><a href="https://www.deepl.com/translator">machine translation</a></li>
-</ul>
+<section id="ai-hype-in-a-nutshell" class="slide level2">
+<h2>AI Hype in a Nutshell</h2>
+<pre class="python"><code>AI = from humankind import solution</code></pre>
 <aside class="notes">
 <ul>
-<li>Eindrückliche Beispiele, Stand Forschung</li>
-<li>Generieren: “The Coronavirus is dangerous” (Spielerei)</li>
-<li>Sentiment: Aspekte Airline (Auswertung Feedback)</li>
-<li>QA: When has the University of Lucerne been founded? What are the 5 biggest Swiss companies? (Suche)</li>
-<li>Caption: Medienwechsel von Sehen zu Sprache (Werkzeug für Blinde)</li>
+<li>manche Dinge für Computer schwierig, für Menschen einfach (und umgekehrt)</li>
+<li>Schach einfach für Computer, Unterschied Katze/Hund lange schwierig</li>
+<li>Algo für Katze/Hund-Bestimmung erkennt kein Auto, weil zu spezifisch
+<ul>
+<li>keine Angst vor Computer, die Welt übernehmen</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="this-is-how-current-ai-looks-like" class="slide level2" data-background="../images/array_of_numbers.png">
+<h2 data-background="../images/array_of_numbers.png">This is how current AI looks like</h2>
+<aside class="notes">
+<ul>
+<li>Falls jemand noch immer überzeugt ist von der Intelligenz dieser System, dies soll Zweifel hervorrufen</li>
 </ul>
 </aside>
 </section></section>
@@ -728,13 +785,13 @@
 <li>Wieso zeige ich all das in sozialwissenschaftlichem Kurs?
 <ul>
 <li>AI Spitze von Eisberg</li>
-<li>Pointe: Data-driven research</li>
+<li>Pointe: Data-driven applications + research (!)</li>
 <li>Paper CSS Manifesto</li>
 </ul></li>
 <li>Daten
 <ul>
-<li>Modelle sind nur die halbe Miete, Daten sind der Zauberstoff. nicht das neuste ML</li>
-<li>sorgfältiges aggregieren</li>
+<li>Modelle sind nur die halbe Miete, Daten sind der Zauberstoff.</li>
+<li>Research: Nicht neuste ML, sorgfältiges aggregieren</li>
 </ul></li>
 <li>Sozialwissenschaften müssen sich bewegen
 <ul>
@@ -748,7 +805,7 @@
 </section>
 <section id="group-discussion-1" class="slide level2" data-background="var(--blue)">
 <h2 data-background="var(--blue)">Group Discussion</h2>
-<h3 id="what-kind-of-data-are-there">What kind of data are there?</h3>
+<h3 id="what-kind-of-data-is-there">What kind of data is there?</h3>
 <h3 id="what-data-is-relevant-for-social-science">What data is relevant for social science?</h3>
 <div class="fragment">
 <div class="answer">
@@ -768,6 +825,7 @@
 <ul>
 <li>alles sind Daten</li>
 <li>je mehr digital, desto einfacher für Wissenschaft</li>
+<li>advent of cheap computational resources as well as the mass digitization of libraries and archives</li>
 </ul>
 </aside>
 </div>
@@ -782,8 +840,11 @@
 <aside class="notes">
 <ul>
 <li>moderne Datenauswertung braucht Coding-Skills</li>
-<li>2 Metapher für Abarbeiten von Befehlen</li>
-<li>Kochrezepte</li>
+<li>2 Metapher für Abarbeiten von Befehlen
+<ul>
+<li>Code wie Kochrezept</li>
+<li>Superkraft: Küchenmaschine kommt quasi gleich mit</li>
+</ul></li>
 </ul>
 </aside>
 </section>
@@ -807,11 +868,16 @@
 <li>inspectable</li>
 <li>collaborative</li>
 </ul>
-<p>… to tackle complex problems</p>
+<p>… to tackle complex problems on scale</p>
 <aside class="notes">
 <ul>
 <li>Coding ermöglicht Verarbeitung von komplexen, nicht standardisierten Daten</li>
-<li>Vorteil: Fehler im Code möglich → beheben → erneut ausführen (Fortschritt)</li>
+<li>Vorteile
+<ul>
+<li>alles explizit und nachvollziehbar, kritisier- und verbesserbar</li>
+<li>Fehler im Code möglich → beheben → erneut ausführen (Fortschritt)</li>
+<li>leicht andere Fragestellung → Code schnell adaptieren</li>
+</ul></li>
 <li><strong>Pause</strong></li>
 </ul>
 </aside>
@@ -833,7 +899,11 @@
 </ul></li>
 <li>Farben/Ordnung nach Kontinent</li>
 <li>Rolle der USA (Regenbogen)</li>
+<li>Erkenntnisse
+<ul>
 <li>Regionale Aufmerksamkeit statt Globalität</li>
+<li>Allianzen und Feindschaften</li>
+</ul></li>
 </ul>
 </aside>
 </section></section>
@@ -877,6 +947,7 @@
 </ul>
 <aside class="notes">
 <ul>
+<li>eigene Erfahrung als Studi und Tutor</li>
 <li>Zu ambitioniert + an Bedürfnissen vorbei</li>
 <li>zu einseitig Programmieren</li>
 <li>braucht viel Übung</li>
@@ -936,7 +1007,7 @@
 </div><div class="column" style="width:50%;">
 <h3 id="data">data</h3>
 <ul>
-<li>existing resources</li>
+<li>using existing resources</li>
 <li>creating new resources</li>
 </ul>
 </div>
@@ -948,7 +1019,10 @@
 <aside class="notes">
 <ul>
 <li>Techniken &amp; Resourcen</li>
-<li>Text zu Daten machen</li>
+<li>Text zu Daten machen und auswerten
+<ul>
+<li>ganzer Arbeitsprozess von PDF bis zur Visualisierung</li>
+</ul></li>
 <li>Inputs</li>
 </ul>
 </aside>
@@ -993,7 +1067,7 @@
 </tr>
 <tr class="even">
 <td>21 April 2022</td>
-<td>no lecture (Osterpause)</td>
+<td><em>no lecture (Osterpause)</em></td>
 </tr>
 <tr class="odd">
 <td>28 April 2022</td>
@@ -1013,7 +1087,7 @@
 </tr>
 <tr class="odd">
 <td>26 May 2022</td>
-<td>no lecture (Christi Himmelfahrt)</td>
+<td><em>no lecture (Christi Himmelfahrt)</em></td>
 </tr>
 <tr class="even">
 <td>02 June 2022</td>
@@ -1028,6 +1102,7 @@
 <li>Gemeinsame Installation → immer wieder Probleme</li>
 <li>Kommandozeile</li>
 <li>Daten</li>
+<li>Sitzung mit aktueller NLP und Ethik</li>
 <li>Python</li>
 <li>Mini-Projekt</li>
 </ul>
@@ -1041,7 +1116,7 @@
 <ul>
 <li>Nicht ML, aber solide Analyse</li>
 <li>Empirische Arbeiten schreiben</li>
-<li>bereits toll</li>
+<li>bereits sehr effektiv und toll</li>
 </ul>
 </aside>
 </section>
@@ -1094,38 +1169,34 @@
 <section id="organization" class="slide level2">
 <h2>Organization</h2>
 <ul>
-<li>Seminar on Thursday from 2.15pm - 4.00pm
-<ul>
-<li>weekly virtual live-lectures</li>
-<li>recorded sessions on <a href="https://tube.switch.ch/channels/25968add">SWITCHtube</a></li>
-</ul></li>
-<li>slides + data on GitHub: <a href="https://aflueckiger.github.io/KED2022/">KED2022</a></li>
+<li>seminar on Thursday from 2.15pm - 4.00pm</li>
+<li>course website <a href="https://aflueckiger.github.io/KED2022/">KED2022</a> with slides + information</li>
 <li>readings on <a href="https://lms.uzh.ch/url/RepositoryEntry/16940630771/CourseNode/79952613783583">OLAT</a></li>
 <li>communication on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16940630771/CourseNode/91271815676815">OLAT Forum</a>
 <ul>
 <li>forum for everything except personal</li>
+<li>subscribe to notifications</li>
 <li>direct: <a href="mailto:alex.flueckiger@doz.unilu.ch">alex.flueckiger@doz.unilu.ch</a></li>
 </ul></li>
 </ul>
 <aside class="notes">
 <ul>
-<li>online bis Ostern</li>
 <li>Präsentation/Daten über Kurs-Website
 <ul>
 <li>zeigen</li>
 </ul></li>
-<li>Forum für Fragen, Post-Benachrichtigung einrichten</li>
+<li>alte Sessions sind über noch verfügbar über <a href="https://tube.switch.ch/channels/25968add">SWITCHtube</a></li>
+<li>Forum für Fragen, Benachrichtigung einrichten</li>
 <li>Papers OLAT</li>
 </ul>
 </aside>
 </section>
 <section id="who-are-you" class="slide level2" data-background="var(--blue)">
 <h2 data-background="var(--blue)">Who are you?</h2>
-<p>Please fill out this <a href="https://forms.gle/8c449uw2QXkymhte6">questionnaire</a></p>
-<p><span class="emoji" data-emoji="memo">📝</span></p>
+<p>Please fill out this <a href="https://forms.gle/H3DnvHx1mcDgJr4B6">questionnaire</a></p>
+<h3 id="section-1"><span class="emoji" data-emoji="memo">📝</span></h3>
 <aside class="notes">
 <ul>
-<li>Link zu Survey senden</li>
 <li>Website lesen</li>
 <li>Reading</li>
 <li>Fragen</li>
@@ -1146,8 +1217,8 @@
 <p>Graham, Shawn, Ian Milligan, and Scott Weingart. 2015. <em>Exploring Big Historical Data: The Historian’s Macroscope</em>. Open Draft Version. Under contract with Imperial College Press.</p>
 <p><a href="http://www.themacroscope.org/?page_id=584">online</a></p>
 </section>
-<section id="references" class="slide level2">
-<h2>References</h2>
+<section id="references" class="slide level2 allowframebreaks">
+<h2 class="allowframebreaks">References</h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
@@ -1173,11 +1244,20 @@ $(function() {
 });
 </script>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Adiwardana2020" class="csl-entry" role="doc-biblioentry">
+Adiwardana, Daniel, Minh-Thang Luong, David R. So, Jamie Hall, Noah Fiedel, Romal Thoppilan, Zi Yang, et al. 2020. <span>“Towards a <span class="nocase">Human-like Open-Domain Chatbot</span>.”</span> February 27, 2020. <a href="http://arxiv.org/abs/2001.09977">http://arxiv.org/abs/2001.09977</a>.
+</div>
 <div id="ref-Graham2015" class="csl-entry" role="doc-biblioentry">
-Graham, Shawn, Ian Milligan, and Scott Weingart. 2015. <em>Exploring <span>Big Historical Data</span>: The <span>Historian</span>’s <span>Macroscope</span></em>. Open Draft Version. <span>Under contract with Imperial College Press</span>. <a href="http://themacroscope.org">http://themacroscope.org</a>.
+Graham, Shawn, Ian Milligan, and Scott Weingart. 2015. <em>Exploring <span>Big Historical Data</span>: <span>The Historian</span>’s <span>Macroscope</span></em>. Open Draft Version. <span>Under contract with Imperial College Press</span>. <a href="http://themacroscope.org">http://themacroscope.org</a>.
 </div>
 <div id="ref-Lazer2009" class="csl-entry" role="doc-biblioentry">
 Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László Barabási, Devon Brewer, Nicholas Christakis, et al. 2009. <span>“Computational <span>Social Science</span>.”</span> <em>Science</em> 323 (5915): 721–23. <a href="https://doi.org/10.1126/science.1167742">https://doi.org/10.1126/science.1167742</a>.
+</div>
+<div id="ref-Nichol2021" class="csl-entry" role="doc-biblioentry">
+Nichol, Alex, Prafulla Dhariwal, Aditya Ramesh, Pranav Shyam, Pamela Mishkin, Bob McGrew, Ilya Sutskever, and Mark Chen. 2021. <span>“<span>GLIDE</span>: <span>Towards Photorealistic Image Generation</span> and <span>Editing</span> with <span>Text-Guided Diffusion Models</span>.”</span> December 22, 2021. <a href="http://arxiv.org/abs/2112.10741">http://arxiv.org/abs/2112.10741</a>.
+</div>
+<div id="ref-Wu2019" class="csl-entry" role="doc-biblioentry">
+Wu, Yuxin, Alexander Kirillov, Francisco Massa, Wan-Yen Lo, and Ross Girshick. 2019. <em>Detectron2</em>. <span>Meta Research</span>. <a href="https://github.com/facebookresearch/detectron2">https://github.com/facebookresearch/detectron2</a>.
 </div>
 </div>
 </section></section>
