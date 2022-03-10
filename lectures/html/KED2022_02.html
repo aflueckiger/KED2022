@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-03-10">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -56,10 +57,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -98,21 +101,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -129,7 +127,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -159,7 +157,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -167,6 +165,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -206,26 +206,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -236,13 +240,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -320,7 +325,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -367,7 +372,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -390,7 +395,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -418,12 +422,8 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#2 Text as Data</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">04 March 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="date">10 March 2022</p>
 </section>
 
 <section id="outline" class="slide level2">
@@ -435,16 +435,20 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 <aside class="notes">
 <ul>
+<li>kurzfristige Umstellung auf Zoom</li>
 <li>Diskussion Survey Seminarerwartungen
 <ul>
-<li>R-Erfahrung, keine Inhaltsanalyse</li>
-<li>Einführungskurs, aber komplementäres Wissen und Pointers</li>
+<li>3/4 mit R-Erfahrung, wenige mit Python und Kommandozeile</li>
+<li>SoCom Leute mit Inhaltsanalyse, keine Daten in Aussicht</li>
+<li>Einführungskurs, aber komplementäres Wissen und Pointers für Fortgeschrittene</li>
+<li>Skills für Seminar/BA-Arbeiten</li>
+<li>allgemeine Programmier- und Computerkenntnisse</li>
 </ul></li>
 <li>Fragen zu Inhalt/Website?</li>
 <li>Diskussion letzte Sitzung + Paper</li>
 <li>Hauptteil: Bedeutung/Grundlage von Textanalyse
 <ul>
-<li>Auf welcher methodischen Grundlage steht Feld?</li>
+<li>Auf welcher methodischen Grundlage steht das Feld?</li>
 <li>Qualitativer Anteil gegenüber letzten Sitzung herausheben</li>
 </ul></li>
 <li>zweite Lektion: erste Textanalyse
@@ -456,23 +460,27 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
-<h4 id="computer-as">computer as …</h4>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="computer-as">computer as …</h3>
 <ul>
 <li>… an intelligent device</li>
-<li>… a tool for analysis</li>
+<li>… a tool for a <em>new</em> social science</li>
 </ul>
-<p><br></p>
-<h4 id="datafication">datafication</h4>
+</div><div class="column" style="width:50%;">
+<h3 id="datafication">datafication</h3>
 <ul>
 <li>abundance of data</li>
 <li>exploit new form of data</li>
 </ul>
+</div>
+</div>
 <aside class="notes">
 <ul>
 <li>Technologie verändert Welt. Seit immer, erneut grosser Schritt nach Industrialisierung.</li>
 <li>Computer als Werkzeug/interaktiver Partner
 <ol type="1">
-<li>nehmen an sozialen Prozessen teil -&gt; wie verändert sich das Soziale/Ökonomische (Arbeit, Jobmarkt, Benachteiligung)?</li>
+<li>nehmen an sozialen Prozessen teil -&gt; wie verändert sich das Soziale/Ökonomische (Wissenschaft, Arbeit, Jobmarkt, Benachteiligung)?</li>
 <li>für CSS: Daten wichtiger als ML</li>
 </ol></li>
 <li>Daten sind da -&gt; erst Programmieren ermöglicht Auswertung</li>
@@ -487,17 +495,17 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>data-driven</li>
 <li>network analysis + text analysis</li>
 <li>historical perspective vs. real-time dynamics</li>
-<li>issue: limited access to data</li>
+<li>issues: limited access to data and new methods</li>
 </ul>
 <aside class="notes">
 <ul>
+<li>hochaktuell: Einsichten in Pandemiegeschehen durch Netzwerkanalyse</li>
 <li>methodical focus because of Nature paper</li>
 <li>more than self-reported data (survey)</li>
-<li>Zugang
+<li>tlw. schwieriger Zugang
 <ul>
-<li>organisationsintern/kommerzielle Daten (Kundendaten)</li>
-<li>Datenschutz</li>
-<li>historische Daten einfacher zugänglich</li>
+<li>organisationsintern Daten und Datenschutz</li>
+<li>historische und textuelle Daten einfacher zugänglich</li>
 </ul></li>
 </ul>
 </aside>
@@ -536,7 +544,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>jede Ecke kann wechseln
 <ul>
-<li>Gleiches heisst anders, anderes heisst gleich,</li>
+<li>Gleiches heisst anders, anderes heisst gleich</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -550,10 +558,11 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </blockquote>
 <aside class="notes">
 <ul>
-<li>zweiteilige These umstritten
+<li>zweiteilige These umstritten (Sapir-Whorf-Hypothese)
 <ul>
 <li>Sprache formt das Denken</li>
 <li>unabhängig der Determination: überragende Bedeutung für das Soziale</li>
+<li>Inuit-Anekdote zu Schnee bedingt durch Grammatik</li>
 </ul></li>
 <li>Sprache ist das Soziale schlechthin
 <ul>
@@ -562,11 +571,14 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>wenn nicht kommuniziert, dann gesellschaftlich ohne Bedeutung (aber nicht unbedingt unvorstellbar)
 <ul>
-<li>Wörter</li>
-<li>Unterscheidungen</li>
+<li>Wörter sind Unterscheidungen</li>
 <li>Link zu Luhmann</li>
 </ul></li>
-<li>Inuit-Anekdote falsch</li>
+<li>Aktuelles Beispiel Ukraine-Krieg
+<ul>
+<li>Konflikt vs Krieg (Gewalt) vs Invasion (asymmetrisch), militärische Operation</li>
+<li>Definitionskampf ist gut erkennbar von Russland, aber auch allen anderen</li>
+</ul></li>
 </ul>
 </aside>
 </section>
@@ -581,11 +593,11 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <div class="columns">
 <div class="column">
 <figure>
-<img data-src="../images/close_reading.png" style="height:15cm" alt="close reading (source)" /><figcaption aria-hidden="true">close reading <a href="https://i1.wp.com/elevenews.com/wp-content/uploads/2018/03/golf-cart-repair-manuals.png">(source)</a></figcaption>
+<img data-src="../images/close_reading.png" style="height:15cm" alt="close reading (src)" /><figcaption aria-hidden="true">close reading <a href="https://i1.wp.com/elevenews.com/wp-content/uploads/2018/03/golf-cart-repair-manuals.png">(src)</a></figcaption>
 </figure>
 </div><div class="column">
 <figure>
-<img data-src="../images/nlp-natural-language-processing.jpg" style="height:15cm" alt="distant reading (source)" /><figcaption aria-hidden="true">distant reading <a href="https://www.100worte.de/wp-content/uploads/2019/08/nlp-natural-language-processing.jpg">(source)</a></figcaption>
+<img data-src="../images/nlp-natural-language-processing.jpg" style="height:15cm" alt="distant reading (src)" /><figcaption aria-hidden="true">distant reading <a href="https://www.100worte.de/wp-content/uploads/2019/08/nlp-natural-language-processing.jpg">(src)</a></figcaption>
 </figure>
 </div>
 </div>
@@ -604,9 +616,9 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>Textsammlungen</li>
 </ul></li>
 <li>Rauszoomen bringt mehr/neues Verständnis, nicht nur Reinzoomen</li>
-<li>Methodik ändert Fragestellung
+<li>Methodik ändert evtl. Fragestellung
 <ul>
-<li>NLP: nicht Individuum, sondern Gesellschaft/Gruppe</li>
+<li>NLP: nicht Individuum, sondern Diskurs/Gesellschaft/Gruppe</li>
 <li>strukturelle Beschreibungen und Kultur/Stimmung</li>
 </ul></li>
 </ul>
@@ -614,15 +626,15 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="a-micro-and-macro-perspective-ii" class="slide level2">
 <h2>A micro and macro perspective II</h2>
-<h3 id="non-scalability-vs.-abstraction">non-scalability vs. abstraction</h3>
+<h3 id="scalability-vs.-abstraction">scalability vs. abstraction</h3>
 <div class="columns">
 <div class="column">
 <figure>
-<img data-src="../images/newspapers-in-pile.jpg" style="height:15cm" alt="tons of text (source)" /><figcaption aria-hidden="true">tons of text <a href="https://independencedaily.co.uk/sunday-papers-12-august-2018/">(source)</a></figcaption>
+<img data-src="../images/newspapers-in-pile.jpg" style="height:15cm" alt="tons of text (src)" /><figcaption aria-hidden="true">tons of text <a href="https://independencedaily.co.uk/sunday-papers-12-august-2018/">(src)</a></figcaption>
 </figure>
 </div><div class="column">
 <figure>
-<img data-src="../images/numbers_unsplash.jpg" style="height:15cm" alt="meaning of numbers (source)" /><figcaption aria-hidden="true">meaning of numbers <a href="https://unsplash.com/photos/Wpnoqo2plFA">(source)</a></figcaption>
+<img data-src="../images/numbers_unsplash.jpg" style="height:15cm" alt="meaning of numbers (src)" /><figcaption aria-hidden="true">meaning of numbers <a href="https://unsplash.com/photos/Wpnoqo2plFA">(src)</a></figcaption>
 </figure>
 </div>
 </div>
@@ -647,7 +659,8 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h2 data-background="var(--green)">From micro to macro <span class="emoji" data-emoji="bar_chart">📊</span><br>…and back again <span class="emoji" data-emoji="bookmark_tabs">📑</span></h2>
 <aside class="notes">
 <ul>
-<li>Lösung: Vogelperspektive, dann Eintauchen</li>
+<li>Lösung: Vogelperspektive, dann Eintauchen und zurück</li>
+<li>Gute Data Science besteht aus guter Kenntnis von Daten</li>
 <li>Grösser nicht immer besser</li>
 </ul>
 </aside>
@@ -663,7 +676,10 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <aside class="notes">
 <ul>
 <li>genauere Einordnung: exaktere Epochenbestimmung</li>
-<li>Agnostik/Induktion ausnutzen für anderes Narrativ</li>
+<li>Agnostik/Induktion ausnutzen für anderes Narrativ
+<ul>
+<li>data-driven Diskurs ordnen</li>
+</ul></li>
 <li>Modelvorhersagen zu Kausalitätsaussagen
 <ul>
 <li>z.B. Klimawandel Berichterstattung -&gt; Erfolg grüne Partei?</li>
@@ -672,20 +688,22 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="numbers-do-not-talk-never." class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Numbers do not talk; never. <br><span class="emoji" data-emoji="no_mouth">😶</span></h2>
-<p>Quantification and qualitative analysis go well together.</p>
+<section id="numbers-do-not-talk" class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Numbers do not talk <span class="emoji" data-emoji="no_mouth">😶</span></h2>
+<div class="fragment">
+<p>Thus, quantification and qualitative analysis go well together.</p>
 <aside class="notes">
 <ul>
 <li>alter Konflikt Quali/Quanti
 <ul>
 <li>beide Lager kritisch gegenüber NLP</li>
-<li>zu wenig rigoros, zu naive mangels Kontext</li>
+<li>zu wenig rigoros, zu naiv mangels Kontext</li>
 </ul></li>
 <li>Zahlen sprechen nicht für sich selbst</li>
 <li>komplementär</li>
 </ul>
 </aside>
+</div>
 </section>
 <section id="text-as-data" class="slide level2">
 <h2>Text as Data</h2>
@@ -693,7 +711,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>synonymy</li>
 <li>ambiguities</li>
 <li>compositonality of meaning</li>
-<li>agnostic, discrete symbols</li>
+<li>discrete symbols</li>
 <li>unstructured, messy data</li>
 </ul>
 <p><span class="citation" data-cites="Grimmer2013">(see also Grimmer and Stewart 2013)</span></p>
@@ -708,21 +726,25 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>Wörter = diskrete Symbole
 <ul>
 <li>nominales Skalenniveau</li>
-<li>agnostik tokens</li>
 </ul></li>
 <li>compositional
 <ul>
-<li>letters, morphems, phrases, sentences</li>
-<li>grosse Fliegen, kleine Elefanten</li>
+<li>grosse Mäuse, kleine Elefanten</li>
 </ul></li>
 <li>unstrukturiert
 <ul>
 <li>anders als Tabelle/Datenbank</li>
 <li>unterschiedliche Datenformate</li>
-<li>Inhalt nicht von Metadaten separiert</li>
 </ul></li>
 </ul>
 </aside>
+</section>
+<section id="unstructured-text" class="slide level2">
+<h2>Unstructured Text? <span class="emoji" data-emoji="thinking">🤔</span></h2>
+<h3 id="collection-documents-paragraphs-sentences-words">collection &gt; documents &gt; paragraphs &gt; sentences &gt; words</h3>
+<figure>
+<img data-src="../images/alphabet_pasta.png" alt="Texts carry more meaning than a soup (=set) of words (Wikimedia)" /><figcaption aria-hidden="true">Texts carry more meaning than a soup (=set) of words <a href="https://commons.wikimedia.org/wiki/File:AlphabetPasta.jpg">(Wikimedia)</a></figcaption>
+</figure>
 </section></section>
 <section>
 <section id="data-formats" class="title-slide slide level1">
@@ -730,7 +752,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 
 </section>
 <section id="in-class-task-file-types" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-class task: File types</h2>
+<h2 data-background="#3c70b5">In-class Task: File Types</h2>
 <div class="columns blockstyle">
 <ul>
 <li>What file formats do you know?</li>
@@ -739,6 +761,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </div>
 <aside class="notes">
 <ul>
+<li>Problem ist nicht wirklich der Text, sondern das Format</li>
 <li>alle möglichen Filetypen, nicht nur Text
 <ul>
 <li>zip/tar, exe, dmg/iso, jpg/png/gif</li>
@@ -749,7 +772,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </aside>
 </section>
 <section id="file-formats" class="slide level2">
-<h2>File formats</h2>
+<h2>File Formats</h2>
 <ul>
 <li>machine-readability
 <ul>
@@ -769,33 +792,36 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section></section>
 <section>
 <section id="lets-dive-into-it" class="title-slide slide level1">
-<h1>Let’s dive into it! <span class="emoji" data-emoji="sweat_drops">💦</span></h1>
+<h1>Let’s Dive into it! <span class="emoji" data-emoji="sweat_drops">💦</span></h1>
 
 </section>
 <section id="counting-ngrams" class="slide level2">
 <h2>Counting ngrams</h2>
-<p><a href="https://books.google.com/ngrams">Google Ngram Viewer</a></p>
+<h3 id="google-ngram-viewer-michel2011"><a href="https://books.google.com/ngrams">Google Ngram Viewer</a> <span class="citation" data-cites="Michel2011">(Michel et al. 2011)</span></h3>
 <ul>
 <li>historical perspective with ngrams</li>
-<li>&gt; 5.2 million books</li>
+<li>&gt;5.2 million books</li>
 <li>rise and fall of cultural ideas and phenomena</li>
 </ul>
-<p><a href="http://www.culturomics.org/Resources/faq">learn more</a></p>
 <aside class="notes">
 <ul>
 <li>Google Books
 <ul>
 <li>indexiert ganze (Uni-)Bibliotheken</li>
+<li>in 2009 mehr als 4% aller veröffentlichter Bücher</li>
 </ul></li>
 <li>See how ideas evolve/change over time</li>
 <li>y: relative Worthäufigkeiten</li>
 <li>x: Bücher indexiert nach Publikationsjahr</li>
+<li>publiziert in Science, kein klassiches SoWi Journal
+<ul>
+<li>disziplinare Grenzen brechen auf</li>
+</ul></li>
 </ul>
 </aside>
 </section>
-<section id="in-class-task-environmental-discourse" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-Class Task: Environmental Discourse</h2>
-<h3 id="questions-about-the-environmental-discourse"><strong>questions about the environmental discourse</strong></h3>
+<section id="in-class-task-investigate-the-environmental-discourse" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-Class Task: Investigate the Environmental Discourse</h2>
 <ul>
 <li><p>What other terms have been used to describe nature?</p>
 <ul>
@@ -810,7 +836,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>i.e. similar words with non-equivalent curves over time</li>
 </ul></li>
 </ul>
-<p><span class="emoji" data-emoji="dart">🎯</span> What do you conclude from your observation?</p>
+<h3 id="what-do-you-conclude-from-your-observations"><span class="emoji" data-emoji="dart">🎯</span> What do you conclude from your observations?</h3>
 <aside class="notes">
 <ul>
 <li>Dauer: 20 Minuten</li>
@@ -855,16 +881,16 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </table>
 </section>
 <section id="ngram-pay-attention" class="slide level2">
-<h2>Ngram “pay attention”</h2>
+<h2>Ngram ‘pay attention’</h2>
 <figure>
-<img data-src="../images/google_ngram_pay_attention.jpeg" alt="Google Ngram Viewer: Evolution of the phrase “attention”" /><figcaption aria-hidden="true">Google Ngram Viewer: Evolution of the phrase “attention”</figcaption>
+<img data-src="../images/google_ngram_pay_attention.jpeg" alt="Google Ngram Viewer: Evolution of the phrase ‘attention’" /><figcaption aria-hidden="true">Google Ngram Viewer: Evolution of the phrase ‘attention’</figcaption>
 </figure>
 <aside class="notes">
 <ul>
 <li>major shift: “call attention” -&gt; “pay attention”</li>
 <li>externer Faktor (call) vs. aktives Verhalten (pay)</li>
 <li>pay attention as a form of currency</li>
-<li>Aufmerksamkeitsökonomie</li>
+<li>Zusammenhang? Aufmerksamkeitsökonomie, Individualismus</li>
 <li>“if you don’t want to call attention to yourself by giving an incorrect answer, then you should probably pay attention in class.”</li>
 </ul>
 </aside>
@@ -875,11 +901,16 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <div class="fragment">
 <p><br></p>
 <p><strong>Both, most likely.</strong></p>
+<p><br></p>
 <p>Similarly, language may vary across regions and communities.</p>
 <aside class="notes">
 <ul>
+<li>Grosse Frage ist
+<ul>
+<li>Wird das gleiche anders benannt?</li>
+<li>Geht es um was anderes?</li>
+</ul></li>
 <li>Link zu Odgen Dreieck von nicht fixer Beziehungen</li>
-<li>Link zu Whorf-Hypothese</li>
 </ul>
 </aside>
 </div>
@@ -888,14 +919,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h2>No Culturomics but Meaning-Making</h2>
 <h3 id="phenomena-in-collective-memory">phenomena in collective memory</h3>
 <ul>
-<li>semantic drifts</li>
-<li>lexical shifts</li>
+<li>semantic drifts (meaning)</li>
+<li>lexical shifts (frequency)</li>
 </ul>
-<p><strong>Read, read, read</strong> to complement stats with context!</p>
+<p><strong>Read, read, read</strong> to complement <strong>stats</strong> with context!</p>
 <aside class="notes">
 <ul>
-<li><p>Änderung von Verwendung oder Frequenz</p></li>
-<li><p>Kontextuelle Verwendung von Wort kann sich völlig verändern</p></li>
+<li><p>Änderung von kontextueller Verwendung oder Wortfrequenz</p></li>
 <li><p>Eigentum hat sich etabliert, Religion degeneriert</p></li>
 <li><p>Patterns EN</p>
 <ul>
@@ -920,12 +950,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>becoming an established fact</li>
 <li>new reference
 <ul>
-<li>The Great War → World War I</li>
+<li><code>The Great War</code> → <code>World War I</code></li>
 </ul></li>
 <li>selection of data sources</li>
 </ul>
 <aside class="notes">
 <ul>
+<li>numbers don’t talk</li>
 <li>Kommunikation
 <ul>
 <li>Weisse Schafe nicht erwähnenswert, nur schwarze</li>
@@ -937,26 +968,30 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </aside>
 </section>
 <section id="a-word-of-caution" class="slide level2" data-background="#b5533c">
-<h2 data-background="#b5533c">A word of caution</h2>
+<h2 data-background="#b5533c">A Word of Caution</h2>
 <p>The unknowns of Google Ngram Viewer</p>
 <ul>
-<li>indexed books
+<li>index of books
 <ul>
 <li>genre, authors, quantity</li>
 </ul></li>
 <li>artifacts of digitalization</li>
 </ul>
-<p>use better alternative: <a href="https://bookworm.htrc.illinois.edu/develop/">bookworm HathiTrust</a></p>
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> use better alternative: <a href="https://bookworm.htrc.illinois.edu/develop/">bookworm HathiTrust</a></p>
 <aside class="notes">
 <ul>
 <li>Google: ~4% of all books ever published</li>
 <li>Compared to the 2009 versions, the 2012 and 2019 versions:
 <ul>
 <li>more books, improved OCR, improved library and publisher metadata.</li>
-<li>but ngrams across page boundaries</li>
+<li>ngrams across page boundaries, no ngrams across sentence boundaries</li>
 <li>rule-based tokenization</li>
 </ul></li>
+<li>wissenschaftlicher Standard
+<ul>
+<li>Ziel: nicht Unfehlbarkeit, sondern methodisch nachvollziehbar und kritisierbar</li>
 <li>zitierfähig</li>
+</ul></li>
 <li>HathiTrust
 <ul>
 <li>curated collection</li>
@@ -965,8 +1000,8 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="interacting-instead-of-mapping" class="slide level2">
-<h2>Interacting instead of mapping</h2>
+<section id="interacting-with-data" class="slide level2">
+<h2>Interacting with Data</h2>
 <h3 id="it-is-a-lense-not-a-map.">It is a lense, not a map.</h3>
 <figure>
 <img data-src="../images/dikw_pyramid.svg" alt="DIKW pyramid (Wikipedia)" /><figcaption aria-hidden="true">DIKW pyramid <a href="https://en.wikipedia.org/wiki/DIKW_pyramid#/media/File:DIKW_Pyramid.svg">(Wikipedia)</a></figcaption>
@@ -988,9 +1023,23 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="prepare-your-system" class="slide level2">
 <h2>Prepare your System</h2>
+<ol type="1">
+<li>backup files + update system <span class="emoji" data-emoji="construction">🚧</span></li>
+<li>start installation with this <a href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">guide</a> <span class="emoji" data-emoji="construction_worker">👷</span></li>
+</ol>
+<aside class="notes">
 <ul>
-<li>backup files + update system</li>
-<li>start installation (guide coming soon!)</li>
+<li>Nicht riskanter als anderes. Ein Backup gehört dazu, ein Datenverlust sicher nicht.</li>
+<li>Unklarheiten/Probleme unbedingt zurückmelden</li>
+<li>Wer hat Python schon installiert? Welches OS/Installer?</li>
+</ul>
+</aside>
+</section>
+<section id="new-room" class="slide level2">
+<h2>New room <span class="emoji" data-emoji="classical_building">🏛️</span></h2>
+<ul>
+<li>seminar in lecture hall 5</li>
+<li>as of 17 March onwards</li>
 </ul>
 </section></section>
 <section>
@@ -1026,16 +1075,19 @@ $(function() {
 </script>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Evans2016" class="csl-entry" role="doc-biblioentry">
-Evans, James A., and Pedro Aceves. 2016. <span>“Machine <span>Translation</span>: Mining <span>Text</span> for <span>Social Theory</span>.”</span> <em>Annual Review of Sociology</em> 42 (1): 21–50. <a href="https://doi.org/10.1146/annurev-soc-081715-074206">https://doi.org/10.1146/annurev-soc-081715-074206</a>.
+Evans, James A., and Pedro Aceves. 2016. <span>“Machine <span>Translation</span>: <span>Mining Text</span> for <span>Social Theory</span>.”</span> <em>Annual Review of Sociology</em> 42 (1): 21–50. <a href="https://doi.org/10.1146/annurev-soc-081715-074206">https://doi.org/10.1146/annurev-soc-081715-074206</a>.
 </div>
 <div id="ref-Grimmer2013" class="csl-entry" role="doc-biblioentry">
-Grimmer, Justin, and Brandon M. Stewart. 2013. <span>“Text as <span>Data</span>: The <span>Promise</span> and <span>Pitfalls</span> of <span>Automatic Content Analysis Methods</span> for <span>Political Texts</span>.”</span> <em>Political Analysis</em> 21 (3): 267–97. <a href="https://doi.org/10.1093/pan/mps028">https://doi.org/10.1093/pan/mps028</a>.
+Grimmer, Justin, and Brandon M. Stewart. 2013. <span>“Text as <span>Data</span>: <span>The Promise</span> and <span>Pitfalls</span> of <span>Automatic Content Analysis Methods</span> for <span>Political Texts</span>.”</span> <em>Political Analysis</em> 21 (3): 267–97. <a href="https://doi.org/10.1093/pan/mps028">https://doi.org/10.1093/pan/mps028</a>.
 </div>
 <div id="ref-Lazer2009" class="csl-entry" role="doc-biblioentry">
 Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László Barabási, Devon Brewer, Nicholas Christakis, et al. 2009. <span>“Computational <span>Social Science</span>.”</span> <em>Science</em> 323 (5915): 721–23. <a href="https://doi.org/10.1126/science.1167742">https://doi.org/10.1126/science.1167742</a>.
 </div>
+<div id="ref-Michel2011" class="csl-entry" role="doc-biblioentry">
+Michel, J.-B., Y. K. Shen, A. P. Aiden, A. Veres, M. K. Gray, The Google Books Team, J. P. Pickett, et al. 2011. <span>“Quantitative <span>Analysis</span> of <span>Culture Using Millions</span> of <span>Digitized Books</span>.”</span> <em>Science</em> 331 (6014): 176–82. <a href="https://doi.org/10.1126/science.1199644">https://doi.org/10.1126/science.1199644</a>.
+</div>
 <div id="ref-Ogden1923" class="csl-entry" role="doc-biblioentry">
-Ogden, Charles Kay, and Ivor Armstrong Richards. 1923. <em>The <span>Meaning</span> of <span>Meaning</span>: A <span>Study</span> of the <span>Influence</span> of <span>Language Upon Thought</span> and of the <span>Science</span> of <span>Symbolism</span>. <span>Supplementary Essays</span> by <span>B</span>. <span>Malinowski</span> and <span>F</span>.<span>G</span>. <span>Crookshank</span></em>. <span>New York</span>: <span>Harcourt</span>. <a href="https://books.google.com?id=i3MIAQAAIAAJ">https://books.google.com?id=i3MIAQAAIAAJ</a>.
+Ogden, Charles Kay, and Ivor Armstrong Richards. 1923. <em>The <span>Meaning</span> of <span>Meaning</span>: <span>A Study</span> of the <span>Influence</span> of <span>Language Upon Thought</span> and of the <span>Science</span> of <span>Symbolism</span>. <span>Supplementary Essays</span> by <span>B</span>. <span>Malinowski</span> and <span>F</span>.<span>G</span>. <span>Crookshank</span></em>. <span>New York</span>: <span>Harcourt</span>. <a href="https://books.google.com?id=i3MIAQAAIAAJ">https://books.google.com?id=i3MIAQAAIAAJ</a>.
 </div>
 </div>
 </section></section>
