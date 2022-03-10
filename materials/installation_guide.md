@@ -13,8 +13,6 @@ toc-depth: 2
 
 **IMPORTANT NOTE: When you use a Mac and have Python 3/Anaconda installed already, let me know first before proceeding. Installing naively multiple Python versions may cause problems.**
 
-
-
 This guide aims to ease setting up your development environment for Windows 10 and macOS. Depending on your operating system, you have to install additional components to program in Python and perform common data wrangling tasks in the command-line. The instructions cover the installation of the following components:
 
 - Python 3.8
@@ -320,7 +318,7 @@ A common and easy way to install everything needed in a project is by using a pr
 2. Now, you can install the necessary packages listed in the `requirements.txt` with a single command: 
 
     ```bash
-    pip3 install -r requirements.txt
+    python -m p install -r requirements.txt
     ```
 
 ## First Steps in Python
