@@ -156,7 +156,7 @@ Unless you have another favourite coding editor, install and customize VS Code e
 
 2. Open VS Code. You can skip the initial configuration of VS Code by clicking *Next Section*.
 
-3. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch the *VS Code Quick Open* again by pressing `⌘` + `P` , paste the command, and press enter:
+3. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch the *VS Code Quick Open* again by pressing `CMD` + `P` , paste the command, and press enter:
 
    ```
    ext install ms-python.python
