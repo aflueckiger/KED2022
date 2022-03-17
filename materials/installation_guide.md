@@ -300,7 +300,7 @@ We need to install some additional packages that are not included in the Python 
 
 A common and easy way to install everything needed in a project is by using a provided `requirements.txt` file that lists all the used Python packages. You find such a file in the [repository of this seminar](https://github.com/aflueckiger/KED2022/), available on GitHub. We will learn more about GitHub and the installed packages later in the course. For now, you can think of a GitHub repository as a publicly available project folder that is versioned.
 
-1. Open a command-line and download the GitHub repository of this course. 
+1. Open a command-line (Terminal on Mac, Ubuntu on Windows) and download the GitHub repository of this course. 
 
    ```bash
    # Windows user only:
