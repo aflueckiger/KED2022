@@ -266,7 +266,9 @@ Unless you have another favourite coding editor, install and customize VS Code e
    ext install ms-vscode-remote.vscode-remote-extensionpack
    ```
 
-4. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch again the *VS Code Quick Open* by pressing `CTRL`+`P`, paste the command, and press enter:
+4. In the left lower corner, you should now see a green label with `WSL: Ubuntu` (see figure 1). If not, press `F1`, select *Remote-WSL: New Window* to connect the subsystem.
+
+5. To make programming in Python easier, you should install two more extensions: VS Code Python extension and Tabnine. Launch again the *VS Code Quick Open* by pressing `CTRL`+`P`, paste the command, and press enter:
 
    ```
    ext install ms-python.python
@@ -278,13 +280,9 @@ Unless you have another favourite coding editor, install and customize VS Code e
    ext install tabnine.tabnine-vscode
    ```
 
-5. In the left lower corner, you should now see a green label with `WSL: Ubuntu`. If not, press `F1`, select *Remote-WSL: New Window* to connect the subsystem.
-
 Source: [Microsoft](https://code.visualstudio.com/docs/remote/wsl)
 
 ![WSL Ubuntu is successfully connected](images/vs_code_wsl.png){ width=4cm }
-
-
 
 
 
