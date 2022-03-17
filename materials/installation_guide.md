@@ -39,26 +39,27 @@ Let me know if you are struggling with any of the steps.
 
 # Installation Guide for macOS
 
-## Install Development Environment Xcode
+## Install Command Line Tools
 
-Xcode is an integrated development environment (IDE) comprising various software development tools for macOS. The installation of Xcode is a requirement for the subsequent installation of the package manager Homebrew. To check if you have Xcode already installed, you need the command-line called Terminal on your macOS.
+Despite being Unix-based, macOS is lacking some essential command-line tools out-of-the-box. In this section, we install the Command Line Tools first since these tools are also a requirement for the subsequent installation of the package manager Homebrew. 
 
 1. Open a Terminal to get a command-line interface. When you cannot find the application in your system tray, press the `command` and `spacebar` keys to search and type `Terminal` to search for it.
-2. To check if you have installed Xcode already, type the following in the Terminal window: 
-   ```bash
-    xcode-select -p
-   ```
-   
-3. When you get the following output, Xcode is already installed: 
-    `/Library/Developer/CommandLineTools`.
-   If you see an error, then install [Xcode from the App Store](https://apps.apple.com/us/app/xcode/id497799835?ign-mpt=uo%3D2&mt=12) via your web browser and accept the default options. 
-4. Once Xcode is installed, return to your Terminal window. Next, you’ll need to install Xcode's separate Command Line Tools app, which you can do by running: 
+
+4. Type the following command and press enter:
    ```bash
     xcode-select --install
    ```
-5. At this point, Xcode and its Command Line Tools app are fully installed, and we are ready to install the package manager Homebrew.
+   
+3. In the dialogue that pops up, click `Install` and accept the terms and conditions.
 
-Source: [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos)
+4. As soon as the installer goes away, Command Line Tools should be installed successfully. To ensure that everything works as expected, run the following command:
+
+    ```bash
+    git --version
+    ```
+    When you see something like this `git version 2.x`, the installation was successfull.
+
+Source: [OSXDaily](https://osxdaily.com/2014/02/12/install-command-line-tools-mac-os-x/)
 
 ## Install Package Manager Homebrew
 
