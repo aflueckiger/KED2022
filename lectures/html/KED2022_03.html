@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-03-17">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -56,10 +57,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -98,21 +101,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -129,7 +127,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -159,7 +157,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -167,6 +165,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -206,26 +206,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -236,13 +240,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -320,7 +325,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -367,7 +372,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -390,7 +395,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -418,29 +422,19 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#3 Setting up your Development Environment</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">11 March 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="date">17 March 2022</p>
 </section>
 
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
 <li>research workflow <span class="emoji" data-emoji="bookmark_tabs">📑</span></li>
-<li>interacting with computers <span class="emoji" data-emoji="computer">💻</span></li>
+<li>interacting with computers <span class="emoji" data-emoji="magic_wand">🪄</span></li>
 <li>installation of programs <span class="emoji" data-emoji="hammer">🔨</span></li>
 </ul>
 <aside class="notes">
 <ul>
-<li>Organisatorisches
-<ul>
-<li>Mail erhalten?</li>
-<li>Videos verlinkt auf Kurswebsite</li>
-<li>1 Person weniger</li>
-</ul></li>
 <li>Exkurs: wieso braucht es das ganze Tooling?
 <ul>
 <li>Wissenschaft als Praxis</li>
@@ -463,7 +457,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 <aside class="notes">
 <ul>
-<li>Bedeutung kontextabhängig</li>
+<li>Bedeutung ist kontextabhängig</li>
 <li>Unvergleichbarkeit diskreter Symbole</li>
 <li>Ziel: Abstraktion + Kontextualität kombinieren
 <ul>
@@ -491,7 +485,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="research-means-organizing" class="slide level2">
 <h2>Research means Organizing</h2>
-<h3 id="computational-approach">Computational approach</h3>
+<h3 id="how-a-computational-approach-helps">How a computational approach helps</h3>
 <ul>
 <li>scripts as documentation <span class="emoji" data-emoji="memo">📝</span></li>
 <li>efficient automation <span class="emoji" data-emoji="recycle">♻️</span>
@@ -505,18 +499,19 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li>Wissenschaft auch praktische Seite, nicht nur theoretische
 <ul>
-<li>chaotisch statt strukturiert -&gt; Organisation von Komplexität als Problem</li>
+<li>chaotisch statt strukturiert (aufgeräumte Papers kommen erst ganz am Ende)</li>
+<li>Organisation von Komplexität als Problem</li>
 </ul></li>
-<li>Reproduzierbarkeit höchster Wert
+<li>Reproduzierbarkeit ist Arbeitsgrundlage und höchster Wert (mehr noch als Wahrheit)
 <ul>
-<li>Wiederverwendung von Code/Datensatz + Literatur/Vorlagen</li>
+<li>Wiederverwendung von Code/Datensatz + Literatur/Theorien</li>
 </ul></li>
 <li>Wieso computational approach?
 <ul>
 <li>Reproduzierbarkeit und Kritisierbarkeit garantiert</li>
-<li>Automatisierung von Repetition -&gt; spart Zeit</li>
+<li>Automatisierung von repetitiven Aufgaben -&gt; spart Zeit</li>
 </ul></li>
-<li>Code strukturiert/dokumentiert Arbeitsablauf
+<li>Code strukturiert/dokumentiert Arbeitsablauf/Entscheidungen
 <ul>
 <li>gegen Vergessenheit</li>
 <li>schützt nicht vor Fehler, aber sichert inkrementellen Fortschritt</li>
@@ -538,11 +533,11 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li>manage literature in one place</li>
 <li>generating bibliographies</li>
-<li>collect with a click</li>
+<li>collect with a click in your browser</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <figure>
-<img data-src="../images/zotero.png" alt="Zotero" /><figcaption aria-hidden="true"><a href="https://www.zotero.org/">Zotero</a></figcaption>
+<img data-src="../images/zotero.png" alt="Zotero is a free, open-source software for managing scientific literature" /><figcaption aria-hidden="true"><a href="https://www.zotero.org/">Zotero</a> is a free, open-source software for managing scientific literature</figcaption>
 </figure>
 </div>
 </div>
@@ -555,7 +550,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>Zotero
 <ul>
-<li>kostenlos, Weiterentwicklung</li>
+<li>open-source, viele Features, konstante Weiterentwicklung</li>
 </ul></li>
 <li>Nutzen
 <ul>
@@ -578,12 +573,12 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <div class="columns">
 <div class="column" style="width:70%;">
 <ul>
-<li>everyday, mobile, cloud-centered, touch/click-based model
+<li>everyday, mobile, cloud-centered, touch/click-based approach
 <ul>
 <li>single-purpose application</li>
-<li>smartphones</li>
+<li>smartphones + tablets</li>
 </ul></li>
-<li>engineering, open-source, machine-oriented model
+<li>engineering, open-source, machine-oriented approach
 <ul>
 <li>powerful due to modularity</li>
 <li>workflow for data science</li>
@@ -591,7 +586,9 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 <p><span class="citation" data-cites="Healy2019">(see also Healy 2019)</span></p>
 </div><div class="column" style="width:20%;">
-<p><img src="../images/original-apple-iphone.jpg" alt="Apple Original iPhone" style="zoom:20%;" /></p>
+<figure>
+<img data-src="../images/original-apple-iphone.jpg" alt="Apple Original iPhone (2007)" /><figcaption aria-hidden="true">Apple Original iPhone (2007)</figcaption>
+</figure>
 </div>
 </div>
 <aside class="notes">
@@ -599,7 +596,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>Computer haben sich massiv verändert -&gt; am meisten an Oberfläche</li>
 <li>Spannungsfeld zweier Trends
 <ul>
-<li>Einfachheit –&gt; Eingeschränktheit</li>
+<li>Einfachheit –&gt; Eingeschränktheit; nur machen, was vorgesehen ist</li>
 <li>Flexibilität –&gt; technisches Vorwissen</li>
 </ul></li>
 <li>Apple: GUI/Bedienung Angleichung an physische Welt</li>
@@ -618,19 +615,20 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="operating-systems-os" class="slide level2">
 <h2>Operating Systems (OS)</h2>
+<h3 id="between-hardware-and-programs">Between hardware and programs</h3>
 <ul>
 <li>Microsoft Windows</li>
 <li>macOS</li>
-<li>Linux / Unix <span class="emoji" data-emoji="nerd_face">🤓</span></li>
+<li>Linux-based systems <span class="emoji" data-emoji="nerd_face">🤓</span></li>
 </ul>
 <aside class="notes">
 <ul>
 <li>OS</li>
-<li>windows = dominator, Alltag</li>
-<li>unix = stable, secure, free, innovative. Became more user-friendly, sometimes still issue</li>
-<li>mac = restricted to mac HW, Unix-Derivat, vereint beide Welten</li>
-<li>Betriebssysteme wie Autos, Fahrräder</li>
-<li>Angleichung über Zeit
+<li>Windows = Dominator, Alltag</li>
+<li>Linux = stable, secure, free, innovative. Became more user-friendly, sometimes still issue</li>
+<li>Mac = restricted to Mac HW, Unix-Derivat, vereint beide Welten</li>
+<li>Betriebssysteme wie Fahrräder oder Autos</li>
+<li>Systeme gleichen sich immer mehr an
 <ul>
 <li>Installation von Linux in Windows</li>
 </ul></li>
@@ -661,8 +659,8 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="an-awesome-programmer-saves-the-world" class="slide level2 white-text" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">
-<h2 class="white-text" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">“An awesome Programmer saves the World”</h2>
+<section id="an-awesome-programmer-saves-the-world" class="slide level2" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">
+<h2 data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif"><strong>“An awesome Programmer saves the World”</strong></h2>
 <aside class="notes">
 <ul>
 <li>CLI auch in Popkultur, allerdings falsch dargestellt</li>
@@ -671,9 +669,10 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="human-machine-interaction" class="slide level2">
 <h2>Human-Machine Interaction</h2>
+<h3 id="how-to-tell-the-computer-effienctly">How to tell the computer effienctly</h3>
 <ul>
 <li>text commands instead of clicks</li>
-<li>similar to a human languages
+<li>similar to human languages
 <ul>
 <li>syntax (form)</li>
 <li>semantics (meaning)</li>
@@ -734,7 +733,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li><p>automation of software installation</p>
 <ul>
 <li>system: apt, Homebrew</li>
-<li>Python: conda, pip</li>
+<li>Python: pip, conda</li>
 </ul></li>
 <li><p>software dependencies</p></li>
 <li><p>similar to app stores</p></li>
@@ -758,7 +757,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="open-source-is-a-mindset" class="slide level2">
 <h2>Open-Source is a Mindset</h2>
-<h3 id="standing-on-the-shoulders-of-giants.">Standing on the shoulders of giants.</h3>
+<h3 id="standing-on-the-shoulders-of-giants">Standing on the shoulders of giants</h3>
 <ul>
 <li>free + open software</li>
 <li>cross-platform portability</li>
@@ -774,7 +773,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>Abhängigkeiten funktionieren am besten, wenn offen
 <ul>
 <li>Rückmeldungen -&gt; gemeinsame Verbesserung</li>
-<li>enorme Entwicklungsfortschritte</li>
+<li>schnelle Weiterentwicklung</li>
 </ul></li>
 <li>CS offenste Disziplin
 <ul>
@@ -784,8 +783,8 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="resources" class="slide level2">
-<h2>Resources</h2>
+<section id="resources-everyone-is-using" class="slide level2">
+<h2>Resources everyone is using</h2>
 <ul>
 <li><a href="https://stackoverflow.com/questions">Stack Overflow</a>
 <ul>
@@ -813,7 +812,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </aside>
 </section>
 <section id="learning-by-doing-doing-by-googleing." class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Learning by doing, doing by googleing.</h2>
+<h2 data-background="#4d7e65">Learning by doing, doing by Googleing. <br><span class="emoji" data-emoji="woman_cartwheeling">🤸‍♀️</span><span class="emoji" data-emoji="man_cartwheeling">🤸‍♂️</span></h2>
 <aside class="notes">
 <ul>
 <li><p>Technical problems are normal + solutions around the corner</p>
@@ -831,19 +830,20 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 
 </section>
 <section id="backup" class="slide level2" data-background="#b5533c">
-<h2 data-background="#b5533c">Backup</h2>
+<h2 data-background="#b5533c">Backup <span class="emoji" data-emoji="japanese_ogre">👹</span></h2>
 <p>You don’t need it until you desperately need it!</p>
 </section>
 <section id="setting-up-your-development-environment" class="slide level2" data-background="#3c70b5">
 <h2 data-background="#3c70b5">Setting up your Development Environment</h2>
 <h3 id="installation">Installation</h3>
 <ul>
-<li>Anaconda Platform with Python 3.8
+<li>Python 3.8
 <ul>
 <li>packages for NLP + visualization</li>
 </ul></li>
 <li>Tesseract</li>
 <li>various Bash tools</li>
+<li>VS Code Editor</li>
 </ul>
 <p><span class="emoji" data-emoji="point_right">👉</span> Follow the <a href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">installation guide</a> for your OS.</p>
 <aside class="notes">
@@ -851,18 +851,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>verschiedene Installationsmöglichkeiten
 <ul>
 <li>Idee: plattformübergreifend, relativ einfach, uneingeschränkt</li>
-<li>individuell evtl. Alternativen besser</li>
-</ul></li>
-<li>Python mit Anaconda
-<ul>
-<li>wichtigste Packages mitinstalliert</li>
 </ul></li>
 <li>Windows Leute installieren Ubuntu für Bash</li>
 <li>Installations Guide folgen
 <ul>
 <li>Verstehen aktuell egal</li>
-<li>Fragen willkommen</li>
-<li>Ablauf verfolgen &amp; auf Fehler achten?</li>
+<li>Fragen/Verbesserungsvorschläge willkommen</li>
+<li>Ablauf verfolgen &amp; auf Fehler achten</li>
 </ul></li>
 </ul>
 </aside>
@@ -872,27 +867,31 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h1 class="white-text" data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">Relax. <br>It takes a while.</h1>
 
 </section>
-<section id="jupyterlab" class="slide level2">
-<h2>JupyterLab</h2>
+<section id="vs-code-editor" class="slide level2">
+<h2>VS Code Editor</h2>
+<div class="columns">
+<div class="column">
+<h3 id="the-microsoft-word-for-coding">The Microsoft Word for coding</h3>
 <ul>
-<li>a web-based development environment</li>
-<li>interactive analysis</li>
+<li>powerful integrated development environment (IDE)</li>
 <li>cross-platform</li>
+<li>interactive analysis</li>
 </ul>
-<p><img data-src="../images/jupyterlab.png" /></p>
+</div><div class="column">
+<figure>
+<img data-src="../images/vs_code_hello_world.png" alt="Write your first Python script in VS Code" /><figcaption aria-hidden="true">Write your first Python script in <a href="https://code.visualstudio.com/">VS Code</a></figcaption>
+</figure>
+</div>
+</div>
 <aside class="notes">
 <ul>
-<li>Teil von Anaconda</li>
-<li>Jupyterlab als Entwicklungscockpit
-<ul>
-<li>in-class zeigen</li>
-</ul></li>
-<li>code, Erklärung, output an selbem Ort</li>
+<li>in-class demonstrieren</li>
+<li>Visual Studio: Code, Erklärung, Output an selbem Ort</li>
 </ul>
 </aside>
 </section>
 <section id="first-steps-in-python" class="slide level2">
-<h2>First steps in Python</h2>
+<h2>First Steps in Python</h2>
 <p>Learn Python with interactive tutorials</p>
 <ul>
 <li><a href="https://pythonprinciples.com">Python Principles</a></li>
