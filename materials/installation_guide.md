@@ -318,7 +318,7 @@ A common and easy way to install everything needed in a project is by using a pr
 2. Now, you can install the necessary packages listed in the `requirements.txt` with a single command: 
 
     ```bash
-    python -m p install -r requirements.txt
+    python3 -m pip install -r requirements.txt
     ```
 
 ## First Steps in Python
