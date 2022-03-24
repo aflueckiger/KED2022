@@ -80,11 +80,12 @@ The title says it all. We are getting ready for the practical part of the course
 
 The command-line is a powerful tool at your disposal. It is the working horse for many data wrangling tasks. In this session, you learn the basics of shells and perform many operations by effectively substituting clicks on the screen with commands. Admittedly, it is not overly exciting at this stage, yet it is essential for more sophisticated automation later on.
 
-{% comment %}
-
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_04.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_04.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_04.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/653RjYgn8R)
 
 {% endcomment %}
