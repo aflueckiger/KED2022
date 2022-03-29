@@ -30,7 +30,7 @@ geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
 | `grep "search term"` *fname* or *dirname* | search for lines that include search term in file            |
 | `wget` *url*                              | **get** a file from the **w**eb                              |
 
-This cheatsheet is based on [this resource](https://melaniewalsh.github.io/Intro-Cultural-Analytics/Command-Line/The-Command-Line.html#). Please also refer to this resource for a more in-dept explanation in prose. You should follow the guide for macOS and Unix even as a Windows user as we have installed a Unix environment.
+This cheatsheet is based on [this resource](https://melaniewalsh.github.io/Intro-Cultural-Analytics/01-Command-Line/01-The-Command-Line.html#command-line-cheatsheet). Please also refer to this resource for a more in-dept explanation in prose. You should follow the guide for macOS and Unix even as a Windows user as we have installed a Unix environment.
 
 ## Operators
 
@@ -40,13 +40,13 @@ This cheatsheet is based on [this resource](https://melaniewalsh.github.io/Intro
    echo "pass this text to next command" | cat
    ```
 
-- `>`: This operator redirects the output to a file. Example:
+- `>`: This operator redirects the output to a file (overwrites if it already exists). Example:
 
    ```bash
    echo "first line of file1" > file1
    ```
 
-- `>>`: This operator redirects and append the output to an *existing* file: Example:
+- `>>`: This operator redirects and appends the output to an *existing* file: Example:
 
    ```bash
    echo "line following existing content of file1" >> file1
