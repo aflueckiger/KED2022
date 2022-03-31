@@ -93,6 +93,7 @@ The command-line is a powerful tool at your disposal. It is the working horse fo
 
 ### Recommended Resources
 
+- [Cheatsheet](https://aflueckiger.github.io/KED2022/materials/cheatsheet_command_line.pdf) for this course
 - [The Programming Historian](https://programminghistorian.org/en/lessons/intro-to-bash)
 - [DigitalOcean](https://www.digitalocean.com/community/tutorials/an-introduction-to-the-linux-terminal)
 
@@ -102,11 +103,12 @@ The command-line is a powerful tool at your disposal. It is the working horse fo
 
 Counting words is the most basic method to look at texts from a computational perspective. The command-line provides tools to quickly sift through a massive text collection to describe the use of words quantitatively. In no time, you can also take a systematic look at the word usage in context. Sounds like a Swiss knife for computational text analysis in social science? It certainly is.
 
-{% comment %}
-
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_05.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_05.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_05.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/t2mm3kJuRs)
 
 {% endcomment %}
