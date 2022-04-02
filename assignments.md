@@ -10,7 +10,7 @@ You have to submit three assignments to complete the seminar successfully. The p
 
 | #    | Topic                                                        | Published     | Deadline (by midnight)      | Solution                                                     |
 | -- | --------------------------------- | ------------------------- | ----------------------------------------------- | --------------------------------------------- |
-| 1    | [Data Wrangling](https://aflueckiger.github.io/KED2022/assignments/assignment_1/KED2022_assignment_1.pdf) | 24 March 2022 | 31 March 2022 | - |
+| 1    | [Data Wrangling](https://aflueckiger.github.io/KED2022/assignments/assignment_1/KED2022_assignment_1.pdf) | 24 March 2022 | 31 March 2022 | [Example](https://raw.githubusercontent.com/aflueckiger/KED2022/main/assignments/assignment_1/flueckiger_KED2022_1_solutions.sh) |
 | 2    | [Regex NLP](https://aflueckiger.github.io/KED2022/assignments/assignment_2/KED2022_assignment_2.pdf) | 08 April 2022 | 15 April 2022 | - |
 | 3    | [Python NLP](https://aflueckiger.github.io/KED2022/assignments/assignment_3/KED2022_assignment_3.pdf) | 13 May 2022  | 20 May 2022 | - |
 
