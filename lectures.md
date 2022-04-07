@@ -115,13 +115,16 @@ Counting words is the most basic method to look at texts from a computational pe
 
 ## Week 6: Learning Regular Expressions
 
-When working with text data, you spend a lot of time cleaning your documents and extract some pieces of information. Doing this by hand is not only a pain but simply impossible when facing many documents. Fortunately, there is a formal language named Regular Expressions that allows writing expressive and generalizable patterns. Using these patterns, you can extract and remove any textual parts systematically without missing a single instance.
+When working with text data, you spend a lot of time cleaning your documents and extracting some pieces of information. Doing this by hand is not only a pain but simply impossible when facing more than a few dozens of documents. Fortunately, a formal language named Regular Expressions allows writing expressive and generalizable patterns to match specific text. Using these patterns, you can systematically extract and remove any textual parts without missing a single instance.
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_06.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_06.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_06.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/n7Z4sut3Re)
 
 {% endcomment %}
@@ -138,7 +141,7 @@ Everything we have touched about text processing in greater detail.
 
 ### Online Regular Expression Editor
 
-[regex101](https://regex101.com/) is a visual editor to check your regular expressions.
+- [regex101](https://regex101.com/) is a visual editor to check your regular expressions.
 
 ## Week 7: Working with Data
 
