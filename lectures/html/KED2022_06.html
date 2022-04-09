@@ -705,8 +705,24 @@ egrep -roh **/*.txt</code></pre>
 <ul>
 <li><code>egrep -roh "[A-Z]{2,}" **/*.txt | sort | uniq -c | sort -h</code></li>
 <li><strong>Pause</strong></li>
+<li>CTRL+C um Befehl abzubrechen (falls länger als eine Sekunde dauert, ist etwas falsch)</li>
+<li>Start mit einfachem grep-Befehl, dann schauen, was gematcht wird und dann auszählen</li>
 </ul>
 </aside>
+</section>
+<section id="in-class-solution" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Solution</h2>
+<ol type="1">
+<li>Use <code>egrep</code> to extract all uppercased words like <code>UNO, OECD, SP</code> and count their frequency.
+<ul>
+<li><code>egrep -roh "[A-Z]{2,}" **/*.txt | sort | uniq -c | sort -h</code></li>
+</ul></li>
+<li>Use <code>egrep</code> to extract all plural nouns with female endings e.g. <code>Schweizerinnen</code> (starting with an uppercase letter, ending with <code>innen</code>, and any letter in between). Do the same for the male forms. Is there a qualitative or a quantitative difference between the gendered forms?
+<ul>
+<li><code>egrep -roh "[A-Z][a-z]+innen\b" **/*.txt | sort | uniq -c | sort -h</code></li>
+<li><code>egrep -roh "[A-Z][a-z]+er\b" **/*.txt | sort | uniq -c | sort -h</code> (there is no way with regular expression to extract only nouns of the male form but not <code>Wasser</code> and the like. For this, you have to use some kind of machine learning.)</li>
+</ul></li>
+</ol>
 </section>
 <section id="replacing-removing" class="slide level2">
 <h2>Replacing + Removing</h2>
@@ -826,10 +842,27 @@ echo &quot;an apple, other apple&quot; | egrep &quot;a[^,]*apple&quot;</code></p
 <section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercises I</h2>
 <ol type="1">
-<li><p>Use <code>egrep</code> to exctract capitalized words and count them. What are the most frequent nouns?</p></li>
-<li><p>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>. Hint: Use a disjunction.</p></li>
-<li><p>Do the self-check on the next slide.</p></li>
-<li><p>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.</p></li>
+<li>Use <code>egrep</code> to extract capitalized words and count them. What are the most frequent nouns?</li>
+<li>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>. Hint: Use a disjunction.</li>
+<li>Do the self-check on the next slide.</li>
+<li>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.</li>
+</ol>
+</section>
+<section id="in-class-solution-i" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Solution I</h2>
+<ol type="1">
+<li>Use <code>egrep</code> to extract capitalized words and count them. What are the most frequent nouns?
+<ul>
+<li><code>egrep -roh "[A-Z][a-z]+" **/*.txt | sort | uniq -c | sort -h</code></li>
+</ul></li>
+<li>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>. Hint: Use a disjunction.
+<ul>
+<li><code>egrep -roh "(der|die|das) \w+" **/*.txt</code></li>
+</ul></li>
+<li>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.
+<ul>
+<li><code>cat gruene_programme_2019.txt | sed "1,192d" | sed -E "s/^Wahlplattform.*2023$//g" | sed -E "s/^[0-9]+$//g"</code></li>
+</ul></li>
 </ol>
 </section>
 <section id="in-class-self-check" class="slide level2" data-background="#3c70b5">
@@ -849,15 +882,21 @@ a{2,3} == (aa|aaa)      # two or three &quot;a&quot;
 <li>Extract the words following numbers (also consider numbers like: <code>1'000, 1,000 or 5%</code>). Then, count all the words while excluding the numbers themselves. Hint: Pipe another grep to remove the digits.</li>
 <li>You are ready to come up with your own patterns…</li>
 </ol>
-<aside class="notes">
+</section>
+<section id="in-class-solution-ii" class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Solution II</h2>
+<ol type="1">
+<li>Count all the bigrams (sequence of two words) using character sets and quantifiers. What about trigrams (three words)?
 <ul>
-<li>number task
-<ul>
-<li><code>egrep -rho "[0-9]+[,'%][0-9] \w+"</code></li>
-<li><code>egrep -hoir "[a-z]+" | sort | uniq -c | sort -h</code></li>
+<li><code>egrep -hoir "\b[a-z]+ [a-z]+\b" | sort | uniq -c | sort -h</code></li>
+<li><code>egrep -hoir "\b[a-z]+ [a-z]+ [a-z]+\b" | sort | uniq -c | sort -h</code></li>
 </ul></li>
-</ul>
-</aside>
+<li>Extract the words following numbers (also consider numbers like: <code>1'000, 1,000 or 5%</code>). Then, count all the words while excluding the numbers themselves. Hint: Pipe another grep to remove the digits.
+<ul>
+<li><code>egrep -rhoi "[0-9][0-9,'%]+ [a-z]+" | egrep -io "[a-z]+" | sort | uniq -c | sort -h</code></li>
+<li>Alternative: <code>egrep -rhoi "[0-9][0-9,'%]+ [a-z]+" | sed -E "s/[0-9][0-9,'%]+//g" | sort | uniq -c | sort -h</code></li>
+</ul></li>
+</ol>
 </section>
 <section id="in-class-exercise-iii" class="slide level2" data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercise III</h2>
@@ -872,16 +911,18 @@ cat text.txt | tr &quot; &quot; &quot;\n&quot;   </code></pre></li>
 </section>
 <section id="more-resources" class="slide level2">
 <h2>More Resources</h2>
-<h4 id="required">required</h4>
+<h3 id="required">required</h3>
 <ul>
 <li>Ben Schmidt. 2019. <a href="https://github.com/HumanitiesDataAnalysis/HDA19/blob/master/Handouts/01-regex.pdf">Regular Expressions</a>.</li>
 <li><a href="https://aflueckiger.github.io/KED2022/materials/cheatsheet_command_line.pdf">Cheatsheet</a> of this course</li>
 </ul>
-<h4 id="highly-recommended">highly recommended</h4>
+<p><br></p>
+<h3 id="highly-recommended">highly recommended</h3>
 <ul>
 <li>Nikolaj Lindberg. <a href="https://stts.se/egrep_for_linguists/egrep_for_linguists.pdf">egrep for Linguists</a>.</li>
 </ul>
-<h4 id="online-regular-expression-editor">online regular expression editor</h4>
+<p><br></p>
+<h3 id="online-regular-expression-editor">online regular expression editor</h3>
 <ul>
 <li><a href="https://regex101.com/">regex101</a> to write and check patterns</li>
 </ul>
