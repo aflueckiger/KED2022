@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-04-14">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -36,10 +38,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -78,21 +82,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -109,7 +108,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -139,7 +138,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -147,6 +146,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -186,26 +187,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -216,13 +221,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -300,7 +306,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -347,7 +353,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -370,7 +376,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -397,106 +402,20 @@
 <section id="title-slide">
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#7 Working with (your own) Data</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">15 April 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="date">14 April 2022</p>
 </section>
 
-<section id="updated-schedule" class="slide level2">
-<h2>Updated Schedule</h2>
-<table>
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 78%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Date</th>
-<th>Topic</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>25 February 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-1-introduction--where-is-the-digital-revolution">Introduction + Where is the digital revolution?</a></td>
-</tr>
-<tr class="even">
-<td>04 March 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-2-text-as-data">Text as Data</a></td>
-</tr>
-<tr class="odd">
-<td>11 March 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-3-setting-up-your-development-environment">Setting up your Development Environment</a></td>
-</tr>
-<tr class="even">
-<td>18 March 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-4-introduction-to-the-command-line">Introduction to the Command-line</a></td>
-</tr>
-<tr class="odd">
-<td>25 March 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-5-basic-nlp-with-command-line">Basic NLP with Command-line</a></td>
-</tr>
-<tr class="even">
-<td>01 April 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-6-learning-regular-expressions">Learning Regular Expressions</a></td>
-</tr>
-<tr class="odd">
-<td>08 April 2022</td>
-<td><em>no lecture (Osterpause)</em></td>
-</tr>
-<tr class="even">
-<td>15 April 2022</td>
-<td><strong><a href="https://aflueckiger.github.io/KED2022/lectures#week-7-regex--data-sources">Working with (your own) Data</a></strong> <del>Advanced RegEx + Data Sources</del></td>
-</tr>
-<tr class="odd">
-<td>22 April 2022</td>
-<td><strong><a href="https://aflueckiger.github.io/KED2022/lectures#week-8-ethics-and-the-evolution-of-nlp">Ethics and the Evolution of NLP</a></strong> <del>Creating new Data Sets + Ethics</del></td>
-</tr>
-<tr class="even">
-<td>29 April 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-9-introduction-to-python">Introduction to Python</a></td>
-</tr>
-<tr class="odd">
-<td>06 May 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-10-nlp-with-python">NLP with Python</a></td>
-</tr>
-<tr class="even">
-<td>13 May 2022</td>
-<td><em>no lecture (Christi Himmelfahrt)</em></td>
-</tr>
-<tr class="odd">
-<td>20 May 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-11-nlp-with-python-ii--working-session">NLP with Python + Working Session</a></td>
-</tr>
-<tr class="even">
-<td>27 May 2022</td>
-<td><a href="https://aflueckiger.github.io/KED2022/lectures#week-12-mini-project-presentations--discussion">Mini-Project Presentations + Discussion</a></td>
-</tr>
-<tr class="odd">
-<td>03 June 2022</td>
-<td><em>no lecture (Fronleichnam)</em></td>
-</tr>
-</tbody>
-</table>
-<aside class="notes">
-<ul>
-<li>Umstellungen Sitzungen</li>
-<li>heute letzte Sitzung zu Kommandozeile</li>
-<li>heutige Sitzung über Daten</li>
-<li>Überlegen, was für eine Analyse in MiniProject</li>
-</ul>
-</aside>
-</section>
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
 <ul>
-<li>extract + replace textual parts with RegEx
+<li>describe text as pattern using RegEx</li>
+<li>extract + replace textual parts
 <ul>
 <li>literal: <code>abc</code></li>
 <li>meta: <code>\w \s [^abc] *</code></li>
+<li>power of <code>.*</code></li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -508,13 +427,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreu)</li>
 <li>Meta-Zeichen = Zeichen mit spezieller Bedeutung</li>
+<li>Fragen zu RegEx oder Übung?</li>
 </ul>
 </aside>
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>you are on spot! ✋ <em>#assignment2</em></li>
 <li>learn about available data resources</li>
 <li>use your own textual data
 <ul>
@@ -525,9 +444,10 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 <aside class="notes">
 <ul>
-<li>dreiteilige Sitzung
+<li>heute letzte Sitzung zu Kommandozeile</li>
+<li>zweiteilige Sitzung mit wenig Technischem
 <ul>
-<li>Assignment 2, existierende Daten, eigene Daten</li>
+<li>existierende Daten, eigene Daten</li>
 </ul></li>
 <li>interessannte Datasets für die Sozialwissenschaften
 <ul>
@@ -537,58 +457,12 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>eigene Textdaten nutzen unabhängig von
 <ul>
 <li>Formaten</li>
-<li>historischem Kontext</li>
-<li>Speicherort</li>
+<li>historischem Kontext (digital native)</li>
 </ul></li>
+<li>Überlegen, was für eine Analyse in MiniProject</li>
 </ul>
 </aside>
 </section>
-<section>
-<section id="assignment-2" class="title-slide slide level1">
-<h1>Assignment #2</h1>
-
-</section>
-<section id="feedback-assignment-2" class="slide level2">
-<h2>Feedback Assignment #2</h2>
-<p><a href="https://github.com/aflueckiger/KED2022/blob/master/assignments/assignment_2/flueckiger_KED2022_2_solutions.sh">example solution</a></p>
-<ul>
-<li>make patterns more general
-<ul>
-<li>date: <code>DD* Month DDDD</code></li>
-</ul></li>
-<li>keep it simple
-<ul>
-<li>name of month ~ any word ~ <code>\w+</code></li>
-</ul></li>
-<li>avoid false positives with positional information
-<ul>
-<li>start of line: <code>^</code></li>
-</ul></li>
-<li>names are hard to extract
-<ul>
-<li>variation + inconsistency</li>
-</ul></li>
-</ul>
-<p><br></p>
-<p><span class="emoji" data-emoji="nerd_face">🤓</span> check the count of matches with <code>wc</code> + the cleanup with <code>diff</code></p>
-<aside class="notes">
-<ul>
-<li>posititv: gut gelöst, Bearbeitungszeit unterschiedlich (1h - 5h)</li>
-<li>Ziel Patterns: allgemeine Struktur/Eigenschaften beschreiben</li>
-<li>Tradeoff: generalisierung vs. spezifizität
-<ul>
-<li>Kunst ist: so generell wie möglich, so spezifisch wie nötig</li>
-</ul></li>
-<li>Checks
-<ul>
-<li>Zählen der matches, wenn Anzahl Metadaten bekannt</li>
-<li>Differenz File vor und nach Bereinigung</li>
-</ul></li>
-<li>Haben alle Commands funktioniert?</li>
-<li>Fragen</li>
-</ul>
-</aside>
-</section></section>
 <section>
 <section id="data-sources" class="title-slide slide level1" data-background="../images/text_data_mining.jpg">
 <h1 data-background="../images/text_data_mining.jpg">Data Sources</h1>
@@ -603,10 +477,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>websites + social media</li>
 <li>reports by NGOs/GOs</li>
 </ul></li>
-<li>scientific
-<ul>
-<li>journals</li>
-</ul></li>
+<li>scientific articles</li>
 <li>economic
 <ul>
 <li>business plans/reports</li>
@@ -614,10 +485,10 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>patents</li>
 </ul></li>
 </ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> basically, any textual document…</p>
+<p><span class="emoji" data-emoji="point_right">👉</span> basically, any textual documents…</p>
 <aside class="notes">
 <ul>
-<li>unheimliche Vielfalt an Dokumenten</li>
+<li>unheimliche Vielfalt an Dokumenten, alles neue digital</li>
 <li>Textkollektion ist bereits vorhanden im Gegensatz zu Survey
 <ul>
 <li>given data statt created data</li>
@@ -639,23 +510,18 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>newspaper, business + legal reports (international)</li>
 <li>licensed by the university</li>
 </ul></li>
-<li><a href="https://www.hathitrust.org/datasets">HathiTrust</a>
+<li><a href="https://constellate.org/builder/">Constellate</a>
 <ul>
-<li>massive collection of books (international)</li>
-<li>open, requires agreement</li>
-</ul></li>
-<li><a href="https://www.gutenberg.org/">Project Gutenberg</a>
-<ul>
-<li>huge collection of books (international)</li>
-<li>open-access</li>
-</ul></li>
-<li><a href="https://constellate.org/builder/">Constellate</a> by JSTOR and Portico
-<ul>
-<li>scientific articles across disciplines</li>
+<li>scientific articles of JSTOR across disciplines</li>
 <li>provides an easy dataset builder</li>
 </ul></li>
+<li><a href="https://www.hathitrust.org/datasets">HathiTrust</a> and <a href="https://www.gutenberg.org/">Project Gutenberg</a>
+<ul>
+<li>massive collection of books (international)</li>
+<li>open, HathiTrust requires agreement</li>
+</ul></li>
 </ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> check out the licensed resources at <a href="https://www.zhbluzern.ch/recherche/e-medien">ZHB</a></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> check out other resources licensed by <a href="https://www.zhbluzern.ch/recherche/e-medien">ZHB</a></p>
 <aside class="notes">
 <ul>
 <li>Ressourcen gelistet auf ZHBLuzern
@@ -663,12 +529,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>Zugang tlw. über ezproxy</li>
 </ul></li>
 <li>Nexis vielleicht spannendste Quelle für Analyse soziale Probleme</li>
-<li>Wieso Literatur?
+<li>Wieso Literatur? –&gt; Zeitgeist
 <ul>
 <li>genderspezifische Sprache, Verweise Natur/Umwelt</li>
 </ul></li>
 <li>Constellate
 <ul>
+<li>kurze Demo von Constellate</li>
 <li>brandneue Platform</li>
 <li>einfache Zusammenstellung von JSTOR Artikeln</li>
 <li>sehr gute Metadaten</li>
@@ -691,50 +558,46 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>corpora by the <a href="https://www.cl.uzh.ch/en/texttechnologies/research.html">Department of Computational Linguistics @ UZH</a></li>
 </ul>
 <p><br></p>
-<p><span class="emoji" data-emoji="point_right">👉</span> search for a topic followed by <code>corpus</code> or <code>text collection</code></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> search for a topic followed by <code>corpus</code>, <code>text collection</code> or <code>text as data</code></p>
 <aside class="notes">
 <ul>
-<li>moderne Wissenschaft veröffentlicht nicht nur Paper, sondern auch Daten</li>
+<li>moderne Wissenschaft veröffentlicht nicht nur Papers, sondern auch Daten
+<ul>
+<li>computergestützte Textanalyse ist aber immer noch Nische</li>
+</ul></li>
 <li>Suchmaschinen für Datensätze
 <ul>
 <li>allerlei Datensätze, primär aus Wissenschaft</li>
 </ul></li>
-<li>UZH hat Institut Computerlinguistik</li>
-<li>verschiedene Korpora
+<li>UZH hat Institut Computerlinguistik
 <ul>
+<li>verschiedene Korpora</li>
 <li>Credit Suisse PDF Bulletin Corpus</li>
-</ul></li>
-</ul>
-</aside>
-</section>
-<section id="search-techniques" class="slide level2" data-background="var(--green)">
-<h2 data-background="var(--green)">Search Techniques</h2>
-<p>Make your web search more efficient by using dedicated <a href="https://support.google.com/websearch/answer/2466433?hl=en">tags</a>. Examples:</p>
-<ul>
-<li><p><code>"computational social science"</code></p></li>
-<li><p><code>nature OR environment</code></p></li>
-</ul>
-<aside class="notes">
-<ul>
-<li>Quotes für Wörter die zusammen gehören</li>
-<li>Boolean Search
-<ul>
-<li>OR / AND</li>
 </ul></li>
 </ul>
 </aside>
 </section>
 <section id="some-great-historical-corpora" class="slide level2">
 <h2>Some great historical Corpora</h2>
-<h4 id="ready-off-the-shelf-machine-readable">ready off the shelf, machine-readable</h4>
+<h3 id="ready-off-the-shelf-machine-readable">ready off-the-shelf, machine-readable</h3>
 <ul>
-<li><a href="https://www.republik.ch/2019/08/01/anleitung-fuer-die-perfekte-ansprache-zum-1-august">1 August speeches by Swiss Federal Councillors</a>
+<li><a href="https://www.republik.ch/2019/08/01/anleitung-fuer-die-perfekte-ansprache-zum-1-august">1 August speeches by Swiss Federal Councilors</a>
 <ul>
 <li>provided via <a href="https://github.com/aflueckiger/KED2022/blob/master/materials/data/dataset_speeches_federal_council_2019.csv">course repo</a></li>
 </ul></li>
-<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IAH8OY">Human Rights Texts</a></li>
+<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IAH8OY">Human Rights Reports by various NGOs</a></li>
 <li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/0TJX8Y">United Nations General Debate Corpus</a></li>
 </ul>
+<div class="fragment">
+<p><br></p>
+<p><span class="emoji" data-emoji="sweat">😓</span> There are still not many.</p>
+<aside class="notes">
+<ul>
+<li>sehr wenige standardisierte Datasets</li>
+<li>nicht wie bei Survey-Forschung, numerischer Daten aus Politik und Ökonomie</li>
+</ul>
+</aside>
+</div>
 </section>
 <section id="online-computational-text-analysis" class="slide level2">
 <h2>Online Computational Text Analysis</h2>
@@ -763,10 +626,29 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="copyright" class="slide level2">
-<h2>Copyright <span class="emoji" data-emoji="no_entry_sign">🚫</span></h2>
+<section id="search-techniques" class="slide level2" data-background="var(--green)">
+<h2 data-background="var(--green)">Search Techniques</h2>
+<p>Make your web search more efficient by using dedicated <a href="https://support.google.com/websearch/answer/2466433?hl=en">tags</a>. Examples:</p>
 <ul>
-<li>may further limit access to high quality data</li>
+<li><p><code>"computational social science"</code></p></li>
+<li><p><code>nature OR environment</code></p></li>
+<li><p><code>site:nytimes.com</code></p></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Quotes für Wörter die zusammen gehören</li>
+<li>Boolean Search
+<ul>
+<li>OR / AND</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="data-is-property" class="slide level2">
+<h2>Data is property <span class="emoji" data-emoji="no_entry_sign">🚫</span></h2>
+<h3 id="and-has-rights-too">… and has rights too</h3>
+<ul>
+<li>copyright may further limit access to high quality data</li>
 <li>check the rights before processing the data</li>
 </ul>
 <figure>
@@ -806,7 +688,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="common-conversions" class="slide level2">
 <h2>Common Conversions</h2>
-<h4 id="news-press-releases-reports-from-organizations">news, press releases, reports from organizations</h4>
+<h3 id="news-press-releases-reports-from-organizations">news, press releases, reports from organizations</h3>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
@@ -820,6 +702,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <p>Optical Character Recognition (OCR)</p>
 </div>
 </div>
+<p><br></p>
 <p><strong>machine-readable</strong> <span class="emoji" data-emoji="white_check_mark">✅</span></p>
 <aside class="notes">
 <ul>
@@ -834,12 +717,13 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>nur welches Tool, für welche Umwandlung</li>
 <li>mehr oder weniger copy-paste</li>
 </ul></li>
+<li><strong>Pause</strong></li>
 </ul>
 </aside>
 </section>
 <section id="conversion-of-docx" class="slide level2">
 <h2>Conversion of DOCX</h2>
-<h4 id="use-case-news-articles-from-nexis">use case: news articles from <a href="https://www.nexisuni.com/">Nexis</a></h4>
+<h3 id="use-case-news-articles-from-nexis">use case: news articles from <a href="https://www.nexisuni.com/">Nexis</a></h3>
 <ul>
 <li><code>pandoc</code> to convert many file formats</li>
 <li>download as single articles in <code>.docx</code> on Nexis</li>
@@ -850,7 +734,6 @@ pandoc infile.docx -o outfile.txt
 ### Install first with
 brew install pandoc     # macOS
 sudo apt install pandoc # Ubuntu</code></pre>
-<!-- [](../images/nexis.png) -->
 <aside class="notes">
 <ul>
 <li>pandoc ist ein fast-alles Könner für Dokumentkonversion
@@ -868,7 +751,7 @@ sudo apt install pandoc # Ubuntu</code></pre>
 </section>
 <section id="conversion-of-native-pdf" class="slide level2">
 <h2>Conversion of native PDF</h2>
-<h4 id="use-case-swiss-party-programmes">use case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Swiss party programmes</a></h4>
+<h3 id="use-case-swiss-party-programmes">use case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Swiss party programmes</a></h3>
 <ul>
 <li><code>pdftotext</code> extracts text from non-scanned PDF</li>
 </ul>
@@ -920,13 +803,16 @@ sudo apt install poppler-utils  # Ubuntu</code></pre>
 <li><p>tatsächlicher Buchstabe, nicht nur Bild davon</p></li>
 <li><p>Zwischenschritt Verbesserung Kontrast, B/W</p></li>
 <li><p>technisch Deep-Learning, nicht weiter von Bedeutung</p></li>
-<li><p>auch von Handy-Bildern möglich, ohne teure Programme</p></li>
+<li><p>früher teure Programme, heute sogar iPhone</p>
+<ul>
+<li>für viele Dokumente jedoch nicht geeignet</li>
+</ul></li>
 </ul>
 </aside>
 </section>
 <section id="conversion-of-digitalized-pdf" class="slide level2">
 <h2>Conversion of digitalized PDF</h2>
-<h4 id="use-case-historical-party-programmes">use-case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">historical party programmes</a></h4>
+<h3 id="use-case-historical-party-programmes">use-case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">historical party programmes</a></h3>
 <ol type="1">
 <li>extract image from PDF + improve contrast</li>
 <li>run optical character recognition (OCR) on the image</li>
@@ -957,7 +843,7 @@ sudo apt-get install imagemagick    # Ubuntu</code></pre>
 </section>
 <section id="lifehack-make-a-pdf-searchable" class="slide level2" data-background="var(--green)">
 <h2 data-background="var(--green)">#LifeHack: Make a PDF searchable</h2>
-<h4 id="use-case-scanned-book-chapters">use case: scanned book chapters</h4>
+<h3 id="use-case-scanned-book-chapters">use case: scanned book chapters</h3>
 <pre class="bash"><code># output searchable pdf instead of txt
 convert -density 300 -depth 8 -strip -background white -alpha off -compress group4 \
 file_in.pdf temp.tiff
@@ -973,7 +859,7 @@ tesseract -l deu temp.tiff file_out pdf</code></pre>
 </section>
 <section id="scraping-pdf-from-websites" class="slide level2">
 <h2>Scraping PDF from Websites</h2>
-<h4 id="use-case-swiss-voting-booklet">use case: <a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklet</a></h4>
+<h3 id="use-case-swiss-voting-booklet">use case: <a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklet</a></h3>
 <ul>
 <li><code>wget</code> to download any files from the internet</li>
 </ul>
@@ -1003,19 +889,25 @@ https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html
 </ul>
 </aside>
 </section>
-<section id="example-sources" class="slide level2">
-<h2>Example Sources</h2>
+<section id="interesting-resources" class="slide level2">
+<h2>Interesting Resources</h2>
 <ul>
-<li><a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Party Programmes across Europe</a></li>
-<li><a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklets</a></li>
+<li><a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Party Programmes across Europe</a>
+<ul>
+<li>covers over 1000 parties from 1920 until today in over 50 countries</li>
+</ul></li>
+<li><a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklets</a>
+<ul>
+<li>from 1978 until today</li>
+</ul></li>
 <li><a href="https://www.admin.ch/gov/de/start/dokumentation/reden/ansprachen-zum-nationalfeiertag.html">1 August speeches by Swiss Federal Councillors</a></li>
 <li><a href="https://www.nestle.com/csv/performance/downloads">Nestlé Annual Reports</a></li>
 <li>… any organization of your interest <span class="emoji" data-emoji="thumbsup">👍</span></li>
 </ul>
 </section>
-<section id="foundation-of-batch-processing" class="slide level2">
-<h2>Foundation of Batch Processing</h2>
-<h4 id="perform-the-same-operation-on-many-files">perform the same operation on many files</h4>
+<section id="basics-of-batch-processing" class="slide level2">
+<h2>Basics of Batch Processing</h2>
+<h3 id="perform-the-same-operation-on-many-files">perform the same operation on many files</h3>
 <pre class="bash"><code># loop over all txt files
 for file in *.txt; do
 
@@ -1038,8 +930,8 @@ done</code></pre>
 </ul>
 </aside>
 </section>
-<section id="perform-batch-ocr-from-pdf" class="slide level2">
-<h2>Perform Batch OCR from PDF</h2>
+<section id="perform-ocr-for-many-pdf" class="slide level2">
+<h2>Perform OCR for many PDF</h2>
 <pre class="bash"><code>for FILEPATH in *.pdf; do
     # convert pdf to image
     convert -density 300 $FILEPATH -depth 8 -strip \
@@ -1080,23 +972,36 @@ done</code></pre>
 <section id="in-class-exercises-i" class="slide level2" data-background="var(--blue)">
 <h2 data-background="var(--blue)">In-class: Exercises I</h2>
 <ol type="1">
-<li>Make sure that your local copy of the Github repository KED2022 is up-to-date with <code>git pull</code>. Check out the data samples and scripts in <code>materials/</code>.</li>
-<li>Install the missing tools with the commands given on the respective slides: <code>pandoc, imagemagick, poppler</code></li>
-<li><strong>Digest the commands. Test them. Check the resources. Ask questions. Think about your mini-project.</strong></li>
-<li>Use <code>wget</code> to download one or all <em>cogito</em> issues (PDF files) from the <a href="https://www.unilu.ch/magazin/service/pdf-und-archiv/#section=c67079">UniLu website</a>.</li>
-<li>Convert the <em>cogito</em> PDF files into TXT files.</li>
+<li>Make sure that your local copy of the Github repository KED2022 is up-to-date with <code>git pull</code>. Check out the data samples in <code>materials/data</code> and the scripts to extract their text in <code>materials/code</code>.</li>
+<li>Install the missing tools with the commands given on the respective slides: <code>pandoc, imagemagick, poppler</code>.</li>
+<li><strong>Apply the commands to reproduce on the given data. Test them on your own data. Check the resources. Ask questions. Think about your mini-project.</strong></li>
+</ol>
+</section>
+<section id="in-class-exercises-ii" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">In-class: Exercises II</h2>
+<ol type="1">
+<li>Use <code>wget</code> to download <em>cogito</em> and its predecessor <em>uniluAKTUELL</em> issues (PDF files) from the <a href="https://www.unilu.ch/magazin/service/pdf-und-archiv/#section=c67079">UniLu website</a>. Start with downloading one issue first and then try to automatize the process to download all the listed issued using arguments for the <code>wget</code> command.</li>
+<li>Convert the <em>cogito</em> and <em>uniluAKTUELL</em> PDF files into TXT files using <code>tesseract</code>. Try with a single issue first and then write a loop to batch process all of them.</li>
+<li>What is the University of Lucerne talking about in its issues? Use the commands of the previous lectures to count the vocabulary.</li>
+<li>Do the same as in 3.), yet analyze the vocabulary of <em>cogito</em> and <em>uniluAKTUELL</em> issues separately. Does the language and topics differ between the two magazines?</li>
+</ol>
+</section>
+<section id="in-class-exercises-iii" class="slide level2" data-background="var(--blue)">
+<h2 data-background="var(--blue)">In-class: Exercises III</h2>
+<ol type="1">
+<li>Use <code>wget</code> to download a book from Project Gutenberg and count some things (e.g., good/bad, joy/sad).</li>
 <li><code>wget</code> is a powerful tool. Have a look at its arguments and search for more examples in tutorials on the web.</li>
 </ol>
 </section>
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
-<h4 id="make-a-more-sophisticated-script-for-pdf-conversion">Make a more sophisticated script for PDF conversion</h4>
+<h3 id="make-a-more-sophisticated-script-for-pdf-to-txt-conversion">Make a more sophisticated script for PDF-to-TXT conversion</h3>
 <ul>
 <li>Erick Peirson. 2015. Tutorial: Text Extraction and OCR with Tesseract and ImageMagick - Methods in Digital and Computational Humanities - DigInG Confluence. <a href="https://diging.atlassian.net/wiki/spaces/DCH/pages/5275668/Tutorial+Text+Extraction+and+OCR+with+Tesseract+and+ImageMagick">online</a></li>
 </ul>
 </section>
-<section id="references" class="slide level2">
-<h2>References</h2>
+<section id="have-a-nice-easter-break" class="slide level2" data-background="../images/easter-eggs.jpg">
+<h2 data-background="../images/easter-eggs.jpg">Have a nice <br>Easter break!</h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">

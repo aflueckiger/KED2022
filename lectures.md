@@ -147,11 +147,14 @@ Everything we have touched about text processing in greater detail.
 
 To this point, you have acquired the skills to cut a document into pieces and, subsequently, to extract, replace, and count any textual elements. Unless you have interesting data, these tools are neat but of no greater use. Thus, we turn to relevant data resources for social science. Given you have plain text at hand, your tools cut through data like butter. For other formats like PDF or DOCX, we learn some remedies to convert them into plain text. Most notably, we perform optical character recognition (OCR) .
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_07.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_07.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_07.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/yqvP9Ve8jv)
 
 {% endcomment %}
@@ -167,14 +170,6 @@ Ethics are not just an abstract topic of Philosophy. Modern NLP is more powerful
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_08.md)
 
 {% endcomment %}
-
-
-
-<!-- 
-
-The world we live in is not made for machines but people -- for better or for worse. While perfectly readable, documents often require a subsequent conversion to allow machine processing. Firstly, digital documents are shipped in various formats and need a conversion to plain text. Secondly, historical documents require an additional step called optical character recognition (OCR) to extract the text from the scanned original. Converting thousands of documents is easy when using the shell.
-
--->
 
 
 
