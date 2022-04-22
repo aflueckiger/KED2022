@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -403,7 +406,8 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#7 Working with (your own) Data</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
   <p class="date">14 April 2022</p>
 </section>
 
@@ -425,7 +429,8 @@
 <li>man muss nur ungefähr wissen wonach suchen</li>
 <li>generalisierte Form = Muster</li>
 </ul></li>
-<li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreu)</li>
+<li>Literale = Zeichen steht für tatsächliches Zeichen
+(buchstabentreu)</li>
 <li>Meta-Zeichen = Zeichen mit spezieller Bedeutung</li>
 <li>Fragen zu RegEx oder Übung?</li>
 </ul>
@@ -437,9 +442,12 @@
 <li>learn about available data resources</li>
 <li>use your own textual data
 <ul>
-<li>any text <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
-<li>“any” format <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
-<li>from anywhere <span class="emoji" data-emoji="heavy_check_mark">✔️</span></li>
+<li>any text <span class="emoji"
+data-emoji="heavy_check_mark">✔️</span></li>
+<li>“any” format <span class="emoji"
+data-emoji="heavy_check_mark">✔️</span></li>
+<li>from anywhere <span class="emoji"
+data-emoji="heavy_check_mark">✔️</span></li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -464,7 +472,8 @@
 </aside>
 </section>
 <section>
-<section id="data-sources" class="title-slide slide level1" data-background="../images/text_data_mining.jpg">
+<section id="data-sources" class="title-slide slide level1"
+data-background="../images/text_data_mining.jpg">
 <h1 data-background="../images/text_data_mining.jpg">Data Sources</h1>
 
 </section>
@@ -485,7 +494,8 @@
 <li>patents</li>
 </ul></li>
 </ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> basically, any textual documents…</p>
+<p><span class="emoji" data-emoji="point_right">👉</span> basically, any
+textual documents…</p>
 <aside class="notes">
 <ul>
 <li>unheimliche Vielfalt an Dokumenten, alles neue digital</li>
@@ -499,7 +509,9 @@
 <li>Zeit reicht nicht, um auf alle Quellen einzugehen</li>
 </ul></li>
 </ul>
-<p><a href="https://www.copyrightuser.org/understand/exceptions/text-data-mining/">Image Credits</a></p>
+<p><a
+href="https://www.copyrightuser.org/understand/exceptions/text-data-mining/">Image
+Credits</a></p>
 </aside>
 </section>
 <section id="interesting-publishers" class="slide level2">
@@ -515,20 +527,24 @@
 <li>scientific articles of JSTOR across disciplines</li>
 <li>provides an easy dataset builder</li>
 </ul></li>
-<li><a href="https://www.hathitrust.org/datasets">HathiTrust</a> and <a href="https://www.gutenberg.org/">Project Gutenberg</a>
+<li><a href="https://www.hathitrust.org/datasets">HathiTrust</a> and <a
+href="https://www.gutenberg.org/">Project Gutenberg</a>
 <ul>
 <li>massive collection of books (international)</li>
 <li>open, HathiTrust requires agreement</li>
 </ul></li>
 </ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> check out other resources licensed by <a href="https://www.zhbluzern.ch/recherche/e-medien">ZHB</a></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> check out
+other resources licensed by <a
+href="https://www.zhbluzern.ch/recherche/e-medien">ZHB</a></p>
 <aside class="notes">
 <ul>
 <li>Ressourcen gelistet auf ZHBLuzern
 <ul>
 <li>Zugang tlw. über ezproxy</li>
 </ul></li>
-<li>Nexis vielleicht spannendste Quelle für Analyse soziale Probleme</li>
+<li>Nexis vielleicht spannendste Quelle für Analyse soziale
+Probleme</li>
 <li>Wieso Literatur? –&gt; Zeitgeist
 <ul>
 <li>genderspezifische Sprache, Verweise Natur/Umwelt</li>
@@ -551,17 +567,23 @@
 <ul>
 <li>open scientific data repository</li>
 </ul></li>
-<li><a href="https://datasetsearch.research.google.com">Google Dataset Search</a>
+<li><a href="https://datasetsearch.research.google.com">Google Dataset
+Search</a>
 <ul>
 <li>Google for datasets basically</li>
 </ul></li>
-<li>corpora by the <a href="https://www.cl.uzh.ch/en/texttechnologies/research.html">Department of Computational Linguistics @ UZH</a></li>
+<li>corpora by the <a
+href="https://www.cl.uzh.ch/en/texttechnologies/research.html">Department
+of Computational Linguistics @ UZH</a></li>
 </ul>
 <p><br></p>
-<p><span class="emoji" data-emoji="point_right">👉</span> search for a topic followed by <code>corpus</code>, <code>text collection</code> or <code>text as data</code></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> search for a
+topic followed by <code>corpus</code>, <code>text collection</code> or
+<code>text as data</code></p>
 <aside class="notes">
 <ul>
-<li>moderne Wissenschaft veröffentlicht nicht nur Papers, sondern auch Daten
+<li>moderne Wissenschaft veröffentlicht nicht nur Papers, sondern auch
+Daten
 <ul>
 <li>computergestützte Textanalyse ist aber immer noch Nische</li>
 </ul></li>
@@ -579,22 +601,33 @@
 </section>
 <section id="some-great-historical-corpora" class="slide level2">
 <h2>Some great historical Corpora</h2>
-<h3 id="ready-off-the-shelf-machine-readable">ready off-the-shelf, machine-readable</h3>
+<h3 id="ready-off-the-shelf-machine-readable">ready off-the-shelf,
+machine-readable</h3>
 <ul>
-<li><a href="https://www.republik.ch/2019/08/01/anleitung-fuer-die-perfekte-ansprache-zum-1-august">1 August speeches by Swiss Federal Councilors</a>
+<li><a
+href="https://www.republik.ch/2019/08/01/anleitung-fuer-die-perfekte-ansprache-zum-1-august">1
+August speeches by Swiss Federal Councilors</a>
 <ul>
-<li>provided via <a href="https://github.com/aflueckiger/KED2022/blob/master/materials/data/dataset_speeches_federal_council_2019.csv">course repo</a></li>
+<li>provided via <a
+href="https://github.com/aflueckiger/KED2022/blob/master/materials/data/dataset_speeches_federal_council_2019.csv">course
+repo</a></li>
 </ul></li>
-<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IAH8OY">Human Rights Reports by various NGOs</a></li>
-<li><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/0TJX8Y">United Nations General Debate Corpus</a></li>
+<li><a
+href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/IAH8OY">Human
+Rights Reports by various NGOs</a></li>
+<li><a
+href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/0TJX8Y">United
+Nations General Debate Corpus</a></li>
 </ul>
 <div class="fragment">
 <p><br></p>
-<p><span class="emoji" data-emoji="sweat">😓</span> There are still not many.</p>
+<p><span class="emoji" data-emoji="sweat">😓</span> There are still not
+many.</p>
 <aside class="notes">
 <ul>
 <li>sehr wenige standardisierte Datasets</li>
-<li>nicht wie bei Survey-Forschung, numerischer Daten aus Politik und Ökonomie</li>
+<li>nicht wie bei Survey-Forschung, numerischer Daten aus Politik und
+Ökonomie</li>
 </ul>
 </aside>
 </div>
@@ -622,13 +655,17 @@
 <ul>
 <li>Datenanalysen online durchführen</li>
 <li>Absicherung über andere Quellen</li>
-<li>Impresso: Complete re-digitization of the NZZ (together with the Zurich Central Library and Swiss National Library)</li>
+<li>Impresso: Complete re-digitization of the NZZ (together with the
+Zurich Central Library and Swiss National Library)</li>
 </ul>
 </aside>
 </section>
-<section id="search-techniques" class="slide level2" data-background="var(--green)">
+<section id="search-techniques" class="slide level2"
+data-background="var(--green)">
 <h2 data-background="var(--green)">Search Techniques</h2>
-<p>Make your web search more efficient by using dedicated <a href="https://support.google.com/websearch/answer/2466433?hl=en">tags</a>. Examples:</p>
+<p>Make your web search more efficient by using dedicated <a
+href="https://support.google.com/websearch/answer/2466433?hl=en">tags</a>.
+Examples:</p>
 <ul>
 <li><p><code>"computational social science"</code></p></li>
 <li><p><code>nature OR environment</code></p></li>
@@ -645,14 +682,18 @@
 </aside>
 </section>
 <section id="data-is-property" class="slide level2">
-<h2>Data is property <span class="emoji" data-emoji="no_entry_sign">🚫</span></h2>
+<h2>Data is property <span class="emoji"
+data-emoji="no_entry_sign">🚫</span></h2>
 <h3 id="and-has-rights-too">… and has rights too</h3>
 <ul>
 <li>copyright may further limit access to high quality data</li>
 <li>check the rights before processing the data</li>
 </ul>
 <figure>
-<img data-src="../images/copyright.png" style="width:70.0%" alt="Copyrighs may restrict some data use (src)" /><figcaption aria-hidden="true">Copyrighs may restrict some data use (<a href="https://www.ct.edu/files/pdfs/Copyright%20and%20Creative%20Commons%20presentation%20March%201%202019.pdf">src</a>)</figcaption>
+<img data-src="../images/copyright.png" style="width:70.0%"
+alt="Copyrighs may restrict some data use (src)" />
+<figcaption aria-hidden="true">Copyrighs may restrict some data use (<a
+href="https://www.ct.edu/files/pdfs/Copyright%20and%20Creative%20Commons%20presentation%20March%201%202019.pdf">src</a>)</figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -676,8 +717,11 @@
 <h1>Preparing your own Data</h1>
 
 </section>
-<section id="a-world-for-humans-and-a-jungle-of-file-formats." class="slide level2 dark-text" data-background="../images/file_types.jpg">
-<h2 class="dark-text" data-background="../images/file_types.jpg">A world for humans …<br>… and a jungle of file formats.</h2>
+<section id="a-world-for-humans-and-a-jungle-of-file-formats."
+class="slide level2 dark-text"
+data-background="../images/file_types.jpg">
+<h2 class="dark-text" data-background="../images/file_types.jpg">A world
+for humans …<br>… and a jungle of file formats.</h2>
 <!-- https://www.studio-24-7.com/file-formats-and-their-uses-explained/ -->
 <aside class="notes">
 <ul>
@@ -688,22 +732,26 @@
 </section>
 <section id="common-conversions" class="slide level2">
 <h2>Common Conversions</h2>
-<h3 id="news-press-releases-reports-from-organizations">news, press releases, reports from organizations</h3>
+<h3 id="news-press-releases-reports-from-organizations">news, press
+releases, reports from organizations</h3>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
-<p>digital native documents <br><code>.pdf</code>, <code>.docx</code>, <code>.html</code><br></p>
+<p>digital native documents <br><code>.pdf</code>, <code>.docx</code>,
+<code>.html</code><br></p>
 <p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
 <p>convert to <code>.txt</code></p>
 </div><div class="column" style="width:50%;">
 <p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
-<p>scans of (old) documents <br><code>.pdf</code>, <code>.jpg</code>, <code>.png</code><br></p>
+<p>scans of (old) documents <br><code>.pdf</code>, <code>.jpg</code>,
+<code>.png</code><br></p>
 <p><span class="emoji" data-emoji="arrow_down">⬇️</span></p>
 <p>Optical Character Recognition (OCR)</p>
 </div>
 </div>
 <p><br></p>
-<p><strong>machine-readable</strong> <span class="emoji" data-emoji="white_check_mark">✅</span></p>
+<p><strong>machine-readable</strong> <span class="emoji"
+data-emoji="white_check_mark">✅</span></p>
 <aside class="notes">
 <ul>
 <li>PDF ist Publikationsstandard
@@ -717,13 +765,14 @@
 <li>nur welches Tool, für welche Umwandlung</li>
 <li>mehr oder weniger copy-paste</li>
 </ul></li>
-<li><strong>Pause</strong></li>
+<li><strong>Pause (etwas früher)</strong></li>
 </ul>
 </aside>
 </section>
 <section id="conversion-of-docx" class="slide level2">
 <h2>Conversion of DOCX</h2>
-<h3 id="use-case-news-articles-from-nexis">use case: news articles from <a href="https://www.nexisuni.com/">Nexis</a></h3>
+<h3 id="use-case-news-articles-from-nexis">use case: news articles from
+<a href="https://www.nexisuni.com/">Nexis</a></h3>
 <ul>
 <li><code>pandoc</code> to convert many file formats</li>
 <li>download as single articles in <code>.docx</code> on Nexis</li>
@@ -738,7 +787,8 @@ sudo apt install pandoc # Ubuntu</code></pre>
 <ul>
 <li>pandoc ist ein fast-alles Könner für Dokumentkonversion
 <ul>
-<li>kann auch html konvertieren: pandoc slides/KED2022_01.html -t plain</li>
+<li>kann auch html konvertieren: pandoc slides/KED2022_01.html -t
+plain</li>
 </ul></li>
 <li>zusätzliche Installation</li>
 <li>Nexis = News-Datenbank
@@ -751,7 +801,9 @@ sudo apt install pandoc # Ubuntu</code></pre>
 </section>
 <section id="conversion-of-native-pdf" class="slide level2">
 <h2>Conversion of native PDF</h2>
-<h3 id="use-case-swiss-party-programmes">use case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Swiss party programmes</a></h3>
+<h3 id="use-case-swiss-party-programmes">use case: <a
+href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Swiss
+party programmes</a></h3>
 <ul>
 <li><code>pdftotext</code> extracts text from non-scanned PDF</li>
 </ul>
@@ -794,7 +846,10 @@ sudo apt install poppler-utils  # Ubuntu</code></pre>
 </ul>
 </div><div class="column" style="width:50%;">
 <figure>
-<img data-src="../images/ocr.png" alt="steps when performing OCR (Wikipedia)" /><figcaption aria-hidden="true">steps when performing OCR <a href="https://de.wikipedia.org/wiki/Texterkennung">(Wikipedia)</a></figcaption>
+<img data-src="../images/ocr.png"
+alt="steps when performing OCR (Wikipedia)" />
+<figcaption aria-hidden="true">steps when performing OCR <a
+href="https://de.wikipedia.org/wiki/Texterkennung">(Wikipedia)</a></figcaption>
 </figure>
 </div>
 </div>
@@ -812,7 +867,9 @@ sudo apt install poppler-utils  # Ubuntu</code></pre>
 </section>
 <section id="conversion-of-digitalized-pdf" class="slide level2">
 <h2>Conversion of digitalized PDF</h2>
-<h3 id="use-case-historical-party-programmes">use-case: <a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">historical party programmes</a></h3>
+<h3 id="use-case-historical-party-programmes">use-case: <a
+href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">historical
+party programmes</a></h3>
 <ol type="1">
 <li>extract image from PDF + improve contrast</li>
 <li>run optical character recognition (OCR) on the image</li>
@@ -841,9 +898,24 @@ sudo apt-get install imagemagick    # Ubuntu</code></pre>
 </ul>
 </aside>
 </section>
-<section id="lifehack-make-a-pdf-searchable" class="slide level2" data-background="var(--green)">
+<section id="configure-imagemagick-properly" class="slide level2">
+<h2>Configure ImageMagick properly</h2>
+<h3 id="windows-ubuntu-users-need-to-execute-the-following">Windows
+Ubuntu users need to execute the following</h3>
+<pre class="bash"><code># disable security policy for Windows
+sudo sed -i &#39;/&lt;policy domain=&quot;coder&quot; rights=&quot;none&quot; pattern=&quot;PDF&quot;/d&#39; /etc/ImageMagick-6/policy.xml
+
+# increase memory limits
+sudo sed -i -E &#39;s/name=&quot;memory&quot; value=&quot;.+&quot;/name=&quot;memory&quot; value=&quot;8GiB&quot;/g&#39; /etc/ImageMagick-6/policy.xml
+sudo sed -i -E &#39;s/name=&quot;map&quot; value=&quot;.+&quot;/name=&quot;map&quot; value=&quot;8GiB&quot;/g&#39; /etc/ImageMagick-6/policy.xml
+sudo sed -i -E &#39;s/name=&quot;area&quot; value=&quot;.+&quot;/name=&quot;area&quot; value=&quot;8GiB&quot;/g&#39; /etc/ImageMagick-6/policy.xml
+sudo sed -i -E &#39;s/name=&quot;disk&quot; value=&quot;.+&quot;/name=&quot;disk&quot; value=&quot;8GiB&quot;/g&#39; /etc/ImageMagick-6/policy.xml</code></pre>
+</section>
+<section id="lifehack-make-a-pdf-searchable" class="slide level2"
+data-background="var(--green)">
 <h2 data-background="var(--green)">#LifeHack: Make a PDF searchable</h2>
-<h3 id="use-case-scanned-book-chapters">use case: scanned book chapters</h3>
+<h3 id="use-case-scanned-book-chapters">use case: scanned book
+chapters</h3>
 <pre class="bash"><code># output searchable pdf instead of txt
 convert -density 300 -depth 8 -strip -background white -alpha off -compress group4 \
 file_in.pdf temp.tiff
@@ -859,7 +931,9 @@ tesseract -l deu temp.tiff file_out pdf</code></pre>
 </section>
 <section id="scraping-pdf-from-websites" class="slide level2">
 <h2>Scraping PDF from Websites</h2>
-<h3 id="use-case-swiss-voting-booklet">use case: <a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklet</a></h3>
+<h3 id="use-case-swiss-voting-booklet">use case: <a
+href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss
+voting booklet</a></h3>
 <ul>
 <li><code>wget</code> to download any files from the internet</li>
 </ul>
@@ -878,7 +952,8 @@ https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html
 <li>bis hierher: Wie Daten in txt Format bringen</li>
 <li>jetzt Download automatisieren
 <ul>
-<li>Vorteil: schneller systematischer Download &amp; Dokumentation von Quellen</li>
+<li>Vorteil: schneller systematischer Download &amp; Dokumentation von
+Quellen</li>
 </ul></li>
 <li>Haupt-URL angeben, wo PDF verlinkt sind</li>
 <li>Scraping von Blogs möglich über Python
@@ -892,22 +967,32 @@ https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html
 <section id="interesting-resources" class="slide level2">
 <h2>Interesting Resources</h2>
 <ul>
-<li><a href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Party Programmes across Europe</a>
+<li><a
+href="https://visuals.manifesto-project.wzb.eu/mpdb-shiny/cmp_dashboard_dataset/">Party
+Programmes across Europe</a>
 <ul>
-<li>covers over 1000 parties from 1920 until today in over 50 countries</li>
+<li>covers over 1000 parties from 1920 until today in over 50
+countries</li>
 </ul></li>
-<li><a href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss voting booklets</a>
+<li><a
+href="https://www.bk.admin.ch/bk/de/home/dokumentation/abstimmungsbuechlein.html">Swiss
+voting booklets</a>
 <ul>
 <li>from 1978 until today</li>
 </ul></li>
-<li><a href="https://www.admin.ch/gov/de/start/dokumentation/reden/ansprachen-zum-nationalfeiertag.html">1 August speeches by Swiss Federal Councillors</a></li>
-<li><a href="https://www.nestle.com/csv/performance/downloads">Nestlé Annual Reports</a></li>
-<li>… any organization of your interest <span class="emoji" data-emoji="thumbsup">👍</span></li>
+<li><a
+href="https://www.admin.ch/gov/de/start/dokumentation/reden/ansprachen-zum-nationalfeiertag.html">1
+August speeches by Swiss Federal Councillors</a></li>
+<li><a href="https://www.nestle.com/csv/performance/downloads">Nestlé
+Annual Reports</a></li>
+<li>… any organization of your interest <span class="emoji"
+data-emoji="thumbsup">👍</span></li>
 </ul>
 </section>
 <section id="basics-of-batch-processing" class="slide level2">
 <h2>Basics of Batch Processing</h2>
-<h3 id="perform-the-same-operation-on-many-files">perform the same operation on many files</h3>
+<h3 id="perform-the-same-operation-on-many-files">perform the same
+operation on many files</h3>
 <pre class="bash"><code># loop over all txt files
 for file in *.txt; do
 
@@ -953,7 +1038,8 @@ done</code></pre>
 </ul>
 </aside>
 </section>
-<section id="preprocessing-regex" class="slide level2" data-background="var(--red)">
+<section id="preprocessing-regex" class="slide level2"
+data-background="var(--red)">
 <h2 data-background="var(--red)">Preprocessing → RegEx</h2>
 <p><img data-src="../images/clean_data.png" /></p>
 <aside class="notes">
@@ -965,43 +1051,72 @@ done</code></pre>
 </aside>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
-<section id="in-class-exercises-i" class="slide level2" data-background="var(--blue)">
+<section id="in-class-exercises-i" class="slide level2"
+data-background="var(--blue)">
 <h2 data-background="var(--blue)">In-class: Exercises I</h2>
 <ol type="1">
-<li>Make sure that your local copy of the Github repository KED2022 is up-to-date with <code>git pull</code>. Check out the data samples in <code>materials/data</code> and the scripts to extract their text in <code>materials/code</code>.</li>
-<li>Install the missing tools with the commands given on the respective slides: <code>pandoc, imagemagick, poppler</code>.</li>
-<li><strong>Apply the commands to reproduce on the given data. Test them on your own data. Check the resources. Ask questions. Think about your mini-project.</strong></li>
+<li>Make sure that your local copy of the Github repository KED2022 is
+up-to-date with <code>git pull</code>. Check out the data samples in
+<code>materials/data</code> and the scripts to extract their text in
+<code>materials/code</code>.</li>
+<li>Install the missing tools with the commands given on the respective
+slides: <code>pandoc, imagemagick, poppler</code>.</li>
+<li><strong>Apply the commands to reproduce on the given data. Test them
+on your own data. Check the resources. Ask questions. Think about your
+mini-project.</strong></li>
 </ol>
 </section>
-<section id="in-class-exercises-ii" class="slide level2" data-background="var(--blue)">
+<section id="in-class-exercises-ii" class="slide level2"
+data-background="var(--blue)">
 <h2 data-background="var(--blue)">In-class: Exercises II</h2>
 <ol type="1">
-<li>Use <code>wget</code> to download <em>cogito</em> and its predecessor <em>uniluAKTUELL</em> issues (PDF files) from the <a href="https://www.unilu.ch/magazin/service/pdf-und-archiv/#section=c67079">UniLu website</a>. Start with downloading one issue first and then try to automatize the process to download all the listed issued using arguments for the <code>wget</code> command.</li>
-<li>Convert the <em>cogito</em> and <em>uniluAKTUELL</em> PDF files into TXT files using <code>tesseract</code>. Try with a single issue first and then write a loop to batch process all of them.</li>
-<li>What is the University of Lucerne talking about in its issues? Use the commands of the previous lectures to count the vocabulary.</li>
-<li>Do the same as in 3.), yet analyze the vocabulary of <em>cogito</em> and <em>uniluAKTUELL</em> issues separately. Does the language and topics differ between the two magazines?</li>
+<li>Use <code>wget</code> to download <em>cogito</em> and its
+predecessor <em>uniluAKTUELL</em> issues (PDF files) from the <a
+href="https://www.unilu.ch/magazin/service/pdf-und-archiv/#section=c67079">UniLu
+website</a>. Start with downloading one issue first and then try to
+automatize the process to download all the listed issued using arguments
+for the <code>wget</code> command.</li>
+<li>Convert the <em>cogito</em> and <em>uniluAKTUELL</em> PDF files into
+TXT files using <code>tesseract</code>. Try with a single issue first
+and then write a loop to batch process all of them.</li>
+<li>What is the University of Lucerne talking about in its issues? Use
+the commands of the previous lectures to count the vocabulary.</li>
+<li>Do the same as in 3.), yet analyze the vocabulary of <em>cogito</em>
+and <em>uniluAKTUELL</em> issues separately. Does the language and
+topics differ between the two magazines?</li>
 </ol>
 </section>
-<section id="in-class-exercises-iii" class="slide level2" data-background="var(--blue)">
+<section id="in-class-exercises-iii" class="slide level2"
+data-background="var(--blue)">
 <h2 data-background="var(--blue)">In-class: Exercises III</h2>
 <ol type="1">
-<li>Use <code>wget</code> to download a book from Project Gutenberg and count some things (e.g., good/bad, joy/sad).</li>
-<li><code>wget</code> is a powerful tool. Have a look at its arguments and search for more examples in tutorials on the web.</li>
+<li>Use <code>wget</code> to download a book from Project Gutenberg and
+count some things (e.g., good/bad, joy/sad).</li>
+<li><code>wget</code> is a powerful tool. Have a look at its arguments
+and search for more examples in tutorials on the web.</li>
 </ol>
 </section>
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
-<h3 id="make-a-more-sophisticated-script-for-pdf-to-txt-conversion">Make a more sophisticated script for PDF-to-TXT conversion</h3>
+<h3 id="make-a-more-sophisticated-script-for-pdf-to-txt-conversion">Make
+a more sophisticated script for PDF-to-TXT conversion</h3>
 <ul>
-<li>Erick Peirson. 2015. Tutorial: Text Extraction and OCR with Tesseract and ImageMagick - Methods in Digital and Computational Humanities - DigInG Confluence. <a href="https://diging.atlassian.net/wiki/spaces/DCH/pages/5275668/Tutorial+Text+Extraction+and+OCR+with+Tesseract+and+ImageMagick">online</a></li>
+<li>Erick Peirson. 2015. Tutorial: Text Extraction and OCR with
+Tesseract and ImageMagick - Methods in Digital and Computational
+Humanities - DigInG Confluence. <a
+href="https://diging.atlassian.net/wiki/spaces/DCH/pages/5275668/Tutorial+Text+Extraction+and+OCR+with+Tesseract+and+ImageMagick">online</a></li>
 </ul>
 </section>
-<section id="have-a-nice-easter-break" class="slide level2" data-background="../images/easter-eggs.jpg">
-<h2 data-background="../images/easter-eggs.jpg">Have a nice <br>Easter break!</h2>
+<section id="have-a-nice-easter-break" class="slide level2"
+data-background="../images/easter-eggs.jpg">
+<h2 data-background="../images/easter-eggs.jpg">Have a nice <br>Easter
+break!</h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
