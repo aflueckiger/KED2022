@@ -55,6 +55,20 @@ cat newspaper_articles.txt | sed -E "s/^[0-9,]+ words$//g" | sed -E "s/^[0-9]{1,
 
 
 ####################################
+# Collective Feedback
+####################################
+# - make patterns more general
+#   - date: `DD* Month DDDD`
+# - keep it simple
+#   - name of month ~ any word ~ `\w+`
+# - avoid false positives with positional information 
+#   - start of line: `^`
+# - names are hard to extract
+#   - variation + inconsistency
+
+# pro-tip check the count of matches with `wc` + the cleanup with `diff`
+
+####################################
 # Further Information
 ####################################
 
@@ -78,4 +92,3 @@ sed -E '/^\s*$/d' newspaper_articles.txt
 
 # Pattern to extract URLs (there are also more complicated ones to cover edge-cases)
 egrep -o "(http://)?www\.[a-z0-9.-]+" newspaper_articles.txt
-
