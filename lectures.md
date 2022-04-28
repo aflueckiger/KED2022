@@ -6,7 +6,7 @@ date: "2022-03-01"
 
 Below you find a brief description of all the lectures. I make the slides available before the lecture starts. The slides are provided in the following formats and may be opened by clicking the icon: 
 
-- <i class="fas fa-desktop"></i> HTML to open in a browser 
+- <i class="fas fa-desktop"></i> HTML to open in a browser (Press CTRL+Shift+F to search slide content)
 
 - <i class="fas fa-file-pdf"></i> PDF document 
 
@@ -161,17 +161,13 @@ To this point, you have acquired the skills to cut a document into pieces and, s
 
 ## Week 8: Ethics and the Evolution of NLP
 
-Ethics are not just an abstract topic of Philosophy. Modern NLP is more powerful than ever before and, thus, embedded in many aspects of life. Unfortunately, it also exhibits severe and not yet well-understood bias that causes harm. With the recent *data-driven deep learning turn*, NLP overcame many theoretical limitations -- yet, this comes at a cost. It is our duty to better understand the working and impact of this technology. 
+Ethics is not just an abstract topic of Philosophy. Modern NLP is more powerful than ever before and, thus, embedded in many aspects of life. Unfortunately, it also exhibits severe and not yet well-understood bias that causes harm. With the recent *data-driven deep learning turn*, NLP overcame many theoretical limitations -- yet, this comes at a cost. It is our duty to better understand the working and impact of this technology. 
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_08.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_08.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_08.md)
-
-{% endcomment %}
-
-
 
 ## Week 9: Introduction to Python
 

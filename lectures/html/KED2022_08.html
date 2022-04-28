@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
+  <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-04-28">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -55,10 +60,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -97,21 +104,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -128,7 +130,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -158,7 +160,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -166,6 +168,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -205,26 +209,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -235,13 +243,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -319,7 +328,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -351,8 +360,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -366,7 +374,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -389,7 +397,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -416,28 +423,41 @@
 <section id="title-slide">
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#8 Ethics and the Evolution of NLP</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">22 April 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="author">Alex Flückiger</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">28 April 2022</p>
 </section>
 
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
 <ul>
-<li>an abundance data sources
+<li>assignment 2 accomplished <span class="emoji"
+data-emoji="white_check_mark">✅</span></li>
+<li>an abundance of data sources
 <ul>
 <li>JSTOR, Nexis, few datasets</li>
 </ul></li>
 <li>creating your own dataset
 <ul>
-<li>converting any data to <code>.txt</code></li>
+<li>convert any data to <code>.txt</code></li>
+</ul></li>
+<li>processing a batch of files
+<ul>
+<li>perform tasks in for-loop</li>
 </ul></li>
 </ul>
 <aside class="notes">
 <ul>
+<li>Assignment
+<ul>
+<li>posititv: gut gelöst, für manche Leute sehr viel einfacher, für
+manche schwieriger</li>
+<li>Tradeoff: generalisierung vs. spezifizität
+<ul>
+<li>Kunst ist: so generell wie möglich, so spezifisch wie nötig</li>
+</ul></li>
+</ul></li>
 <li>interessante Quellen für Sozialwissenschaften
 <ul>
 <li>Unmenge intressanter Daten, wenig Datensätze</li>
@@ -450,110 +470,146 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>cover last lecture’s batch processing <span class="emoji" data-emoji="memo">📝</span></li>
-<li>ethics is your responsibility <span class="emoji" data-emoji="see_no_evil">🙈</span><span class="emoji" data-emoji="hear_no_evil">🙉</span><span class="emoji" data-emoji="speak_no_evil">🙊</span></li>
-<li>understand the development of modern NLP <span class="emoji" data-emoji="rocket">🚀</span>
+<li>ethics is everywhere <span class="emoji"
+data-emoji="see_no_evil">🙈</span><span class="emoji"
+data-emoji="hear_no_evil">🙉</span><span class="emoji"
+data-emoji="speak_no_evil">🙊</span>
+<ul>
+<li>… and your responsibility</li>
+</ul></li>
+<li>understand the development of modern NLP <span class="emoji"
+data-emoji="rocket">🚀</span>
 <ul>
 <li>… or how to put words into computers</li>
 </ul></li>
 </ul>
 <aside class="notes">
 <ul>
-<li>Inhalte letzter Lektion fertig bearbeiten</li>
 <li>heute ein Sprung, der über praktischen Teil von Seminar hinausgeht
 <ul>
 <li>Mix aus Ethik und Entwicklung NLP</li>
-<li>moderne NLP mächtig, aber mit Problemen</li>
+<li>moderne NLP leistungsfähiger als je zuvor, aber mit Problemen</li>
 </ul></li>
 <li>AI ist Werkzeug, erstmal weder gut noch schlecht
 <ul>
-<li>Vergleich: Motor für Krankenwagen oder Panzer.</li>
+<li>Vergleich: Motor für Krankenwagen oder Panzer
+(Verteidigung/Angriff).</li>
 <li>Internet für Wikipedia oder für Kinderpornographie</li>
 </ul></li>
-<li>Die Frage ist: Wer profitiert genau von was? Wer verliert dabei?</li>
-<li>Technische Fragen stellen, da ich Technologien selber verwende</li>
+<li>Die Frage ist: Wer profitiert genau von was? Wer verliert
+dabei?</li>
 </ul>
 </aside>
 </section>
-<section>
-<section id="a-primer-on-ethics" class="title-slide slide level1">
-<h1>A primer on Ethics</h1>
+<section id="ethics-is-more-than-philosophy.-it-is-everywhere."
+class="title-slide slide level1">
+<h1><strong>Ethics</strong> is more than philosophy.<br>It <strong>is
+everywhere</strong>.</h1>
 
 </section>
-<section id="ethics-doesnt-need-to-be-abstract" class="slide level2">
-<h2>Ethics doesn’t need to be abstract</h2>
-<h4 id="cv-assessment">CV Assessment</h4>
-<ol type="1">
-<li>You send a CV for a job.</li>
-<li>The company automatically pre-filters candidates.</li>
-<li>Do you pass?</li>
-<li><span class="emoji" data-emoji="red_circle">🔴</span> <span class="emoji" data-emoji="green_circle">🟢</span></li>
-</ol>
-<p><img data-src="../images/cv.jpg" class="l-image-corner" style="height:60.0%" alt="Did you include the right keywords? (src)" /> <br></p>
-<h4 id="interview-assessment">Interview Assessment</h4>
-<ol type="1">
-<li>You got a video interview.</li>
-<li>This company does a computational personality test.</li>
-<li>How do you like that?</li>
-<li><span class="emoji" data-emoji="slightly_smiling_face">🙂</span> <span class="emoji" data-emoji="pensive">😔</span></li>
-</ol>
+
+<section>
+<section id="an-example" class="title-slide slide level1">
+<h1>An Example</h1>
+
+</section>
+<section id="you-are-applying-for-a-job-at-a-big-company."
+class="slide level2" data-background="../images/cv.png">
+<h2 data-background="../images/cv.png">You are applying for a job at a
+big company.</h2>
 <aside class="notes">
 <ul>
-<li>Anekdoten aus eigenem Bewerbungsprozess
-<ul>
-<li><p>alle betroffen</p></li>
-<li><p>Ethik ist nicht abstrakt und gehört nicht nur in Philosophie</p>
+<li>Ethik ist nicht nur abstrakt und gehört nicht nur in Philosophie
 <ul>
 <li>nicht Begriff ist wichtig, sondern Denkart</li>
 <li>nachdenken über Ausgangslage + Konsequenzen</li>
 </ul></li>
+<li>Anekdoten aus eigenem Bewerbungsprozess
+<ul>
+<li>als Bewerber</li>
+<li>für Jobs, die Tools zur automatischen CV-Verarbeitung machen</li>
 </ul></li>
-<li>automatische Vorselektion Bewerbungen</li>
-<li>bestenfalls: naiv, schlechtensfalls: anti-liberal/diskriminierend</li>
-<li>besseres Verständnis = bessere Data Science</li>
 </ul>
 </aside>
 </section>
-<section id="dont-worry-about-the-future" class="slide level2" data-background="var(--red)">
+<section id="does-your-cv-pass-the-automatic-pre-filtering"
+class="slide level2">
+<h2>Does your CV pass the automatic pre-filtering?</h2>
+<p><span class="emoji" data-emoji="red_circle">🔴</span> <span
+class="emoji" data-emoji="green_circle">🟢</span></p>
+<div class="fragment">
+<h3 id="for-what-reasons"><span class="emoji"
+data-emoji="thinking">🤔</span> For what reasons?</h3>
+<aside class="notes">
+<ul>
+<li>automatische Vorselektion Bewerbungen</li>
+<li>bestenfalls: naiv, schlechtensfalls:
+anti-liberal/diskriminierend</li>
+</ul>
+</aside>
+</div>
+</section>
+<section
+id="your-interview-is-recorded.-what-personal-traits-are-inferred-from-that"
+class="slide level2">
+<h2>Your interview is recorded. <span class="emoji"
+data-emoji="sunglasses">😎</span> <span class="emoji"
+data-emoji="hot_face">🥵</span><br> What personal traits are inferred
+from that? <br></h2>
+<div class="fragment">
+<h3 id="is-it-a-good-reflection-of-your-personality"><span class="emoji"
+data-emoji="thinking">🤔</span> Is it a good reflection of your
+personality?</h3>
+<figure>
+<img data-src="../images/face_impressions.png" style="width:60.0%"
+alt="Face impressions as perceived by a model by (Peterson et al. 2022)" />
+<figcaption aria-hidden="true">Face impressions as perceived by a model
+by <span class="citation" data-cites="Peterson2022">(Peterson et al.
+2022)</span></figcaption>
+</figure>
+</div>
+</section>
+<section id="dont-worry-about-the-future" class="slide level2"
+data-background="var(--red)">
 <h2 data-background="var(--red)">Don’t worry about the future …</h2>
 <h3 id="worry-about-the-present.">… worry about the present.</h3>
 <ul>
-<li>AI is persuasive in everyday’s life</li>
+<li>AI is persuasive in everyday’s life
+<ul>
+<li>assessing risks and performances (credits, job, crimes, terrorism
+etc.)</li>
+</ul></li>
 <li>AI is extremely capable</li>
-<li>AI is not so smart</li>
+<li>AI is not so smart and often poorly evaluated</li>
 </ul>
-<p><span class="emoji" data-emoji="bulb">💡</span> what is going on behind the scene?</p>
+<p><span class="emoji" data-emoji="bulb">💡</span> What is going on
+behind the scene?</p>
 <aside class="notes">
 <ul>
-<li>Entwicklung NLP und Ethik hängen zusammen</li>
-<li>je mehr die Systeme können, desto mehr werden sie eingesetzt, desto unsichtbarer wird, was sie nicht können</li>
-<li>NLP lernt Muster aus Daten
+<li>je mehr die Systeme können, desto mehr werden sie eingesetzt, desto
+unsichtbarer wird, was sie nicht können</li>
+<li>Moderne AI lernt Muster aus Daten. Gilt auch für NLP.
 <ul>
 <li>generalisiert blind oder eben genau so wie gelernt</li>
 </ul></li>
-<li>Ungleichheit werden reproduziert, gar verstärkt durch Systematik
+<li>Ungleichheit wird reproduziert, gar verstärkt durch Systematik
 <ul>
 <li>Geschlecht, Ethnie, sozioökonomisch</li>
-</ul></li>
-<li>Anwendungen für Text, Bild, Video
-<ul>
-<li>Objektererkennung
-<ul>
-<li>self-driving cars (walking pedestrians vs wheel chair pedestrians)</li>
-</ul></li>
-<li>Klassifikation sexuelle Orientierung</li>
-<li>Risikobestimmung
-<ul>
-<li>öffentlicher Raum</li>
-<li>Terrorbekämpfung</li>
-<li>Rückfall Kriminalität</li>
-</ul></li>
-<li>Leistungskontrollen</li>
-<li>In the hands of exploitative companies or oppressive law enforcement, a more accurate facial recognition system is harmful.</li>
 </ul></li>
 <li>Problematik ist Reichweite und Intransparenz
 <ul>
 <li>Menschen auch fallibel, aber mit grösser Varietät</li>
+</ul></li>
+<li>Anwendungen für tabelarische Daten, Text, Bild, Video
+<ul>
+<li>self-driving cars (walking pedestrians vs wheel chair
+pedestrians)</li>
+</ul></li>
+<li>Entwicklung NLP und Ethik hängen zusammen
+<ul>
+<li>quasi: je leistungsfähiger NLP, desto mehr Bias wird mitgelernt im
+aktuellen Paradigma</li>
+<li>besseres Verständnis = bessere Data Science</li>
 </ul></li>
 </ul>
 </aside>
@@ -565,24 +621,32 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </section>
 <section id="from-bag-of-words-to-embeddings" class="slide level2">
 <h2>From Bag of Words to Embeddings</h2>
-<h3 id="putting-words-into-computers-smith2020-church2022">Putting Words into Computers <span class="citation" data-cites="Smith2020 Church2022">(Smith 2020; <strong>Church2022?</strong>)</span></h3>
+<h3 id="putting-words-into-computers-smith2020-church2021">Putting Words
+into Computers <span class="citation"
+data-cites="Smith2020 Church2021">(Smith 2020; Church and Liberman
+2021)</span></h3>
 <ul>
-<li>from <strong>coarse, static</strong> to <strong>fine, contextual</strong> meaning</li>
-<li>how to measure similarity
+<li>from <strong>coarse, static</strong> to <strong>fine,
+contextual</strong> meaning</li>
+<li>how to measure similarity of words
 <ul>
 <li>string-based</li>
 <li>syntactic (e.g., part-of-speech)</li>
 <li>semantic (e.g., animate)</li>
-<li>embedding</li>
+<li>embedding as abstract representations</li>
 </ul></li>
-<li>from counting to learning representations
-<ul>
-<li>end2end deep learning</li>
-</ul></li>
+<li>from counting to learning representations</li>
 </ul>
 <aside class="notes">
 <ul>
 <li>Ein Sprung, wie diese Technologie gewachsen ist</li>
+<li>Probleme
+<ul>
+<li>Bank kann Kreditinstitut bedeuten, in anderem Satz Parkbank</li>
+<li>Haus und Gebäude sehr ähnlich, aber nicht reflektiert in
+Oberflächenform</li>
+</ul></li>
+<li>Syntax und Semantik um Wörter zu gruppieren</li>
 </ul>
 </aside>
 </section>
@@ -593,27 +657,31 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li><code>King = 1, Queen = 2, Man = 3, Woman = 4</code></li>
 </ul></li>
-<li>intrinsic meaning
-<ul>
-<li>derived from data</li>
-<li>defined by experts</li>
-</ul></li>
+<li>intrinsic meaning</li>
 <li>how are these words similar?</li>
 </ul>
 <figure>
-<img data-src="../images/word2vec-one-hot.png" alt="Discrete, symbolic words (Colyer 2016)" /><figcaption aria-hidden="true">Discrete, symbolic words <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+<img data-src="../images/word2vec-one-hot.png"
+alt="Discrete, symbolic words (Colyer 2016)" />
+<figcaption aria-hidden="true">Discrete, symbolic words <span
+class="citation" data-cites="Colyer2016">(Colyer
+2016)</span></figcaption>
 </figure>
 <aside class="notes">
 <ul>
-<li>jedes Wort ist anderes alles jedes andere, in unvergleichbarer Weise</li>
+<li>Vektorrepräsentation für ganzes Vokubular</li>
+<li>jedes Wort ist anderes als jedes andere, in unvergleichbarer
+Weise</li>
+<li>BoW lange Zeit Standard. Ergänzt durch zusätzliche Information wie
+POS</li>
 </ul>
 </aside>
 </section>
-<section id="corpus-representation" class="slide level2">
-<h2>Corpus Representation</h2>
+<section id="representing-a-corpus" class="slide level2">
+<h2>Representing a Corpus</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<h4 id="collection-of-documents">Collection of Documents</h4>
+<h3 id="collection-of-documents">Collection of Documents</h3>
 <div class="l-left-align">
 <ol type="1">
 <li><p><code>NLP is great. I love NLP.</code></p></li>
@@ -622,7 +690,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ol>
 </div>
 </div><div class="column" style="width:50%;">
-<h4 id="document-term-matrix">Document Term Matrix</h4>
+<h3 id="document-term-matrix">Document Term Matrix</h3>
 <table>
 <thead>
 <tr class="header">
@@ -630,7 +698,7 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <th><code>NLP</code></th>
 <th><code>I</code></th>
 <th><code>is</code></th>
-<th><em>term</em></th>
+<th><strong><em>term</em></strong></th>
 </tr>
 </thead>
 <tbody>
@@ -660,12 +728,30 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <td>…</td>
 <td>…</td>
 <td>…</td>
-<td><em>term frequency</em></td>
+<td><strong><em>term frequency</em></strong></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>für den Computer müssen Daten tabularisiert werden für weitere
+Verarbeitung</li>
+</ul>
+</aside>
+</section>
+<section id="i-eat-a-hot-___-for-lunch." class="slide level2"
+data-background="var(--blue)">
+<h2 data-background="var(--blue)">“I eat a hot <code>___</code> for
+lunch.”</h2>
+<aside class="notes">
+<ul>
+<li>Wörter können aber auch anders definiert werden und das will ich
+hier illustrieren</li>
+<li>Frage an Studis</li>
+</ul>
+</aside>
 </section>
 <section id="section" class="slide level2">
 <h2></h2>
@@ -677,16 +763,15 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li>kontextuelle Bedeutung statt intrinschische Definition</li>
 <li>Saussure: Zeichen nur definiert durch andere Zeichen</li>
-<li>relationale Bedeutung</li>
+<li>relationale Bedeutung: Objekt ist definiert durch Kontext</li>
+<li>lange ohne technische Implementation</li>
 </ul>
 </aside>
 </section>
-<section id="i-hate-___-but-the-others-eat-anything." class="slide level2" data-background="var(--blue)">
-<h2 data-background="var(--blue)">“I hate <code>___</code>, but the others eat anything.”</h2>
-</section>
 <section id="word-embeddings" class="slide level2">
 <h2>Word Embeddings</h2>
-<h3 id="word2vec-mikolov2013">word2vec <span class="citation" data-cites="Mikolov2013">(Mikolov et al. 2013)</span></h3>
+<h3 id="word2vec-mikolov2013">word2vec <span class="citation"
+data-cites="Mikolov2013">(Mikolov et al. 2013)</span></h3>
 <ul>
 <li>words as continuous vectors
 <ul>
@@ -695,83 +780,205 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>semantic similarity
 <ul>
 <li><code>King – Man + Woman = Queen</code></li>
+<li><code>France / Paris = Switzerland / Bern</code></li>
 </ul></li>
 </ul>
 <div class="l-multiple">
 <figure>
-<img data-src="../images/word_vectors.png" alt="Single continuous vector per word (Colyer 2016)" /><figcaption aria-hidden="true">Single continuous vector per word <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+<img data-src="../images/word_vectors.png"
+alt="Single continuous vector per word (Colyer 2016)" />
+<figcaption aria-hidden="true">Single continuous vector per word <span
+class="citation" data-cites="Colyer2016">(Colyer
+2016)</span></figcaption>
 </figure>
 <figure>
-<img data-src="../images/word2vec-king-queen-vectors.png" alt="Words as points in a semantic space (Colyer 2016)" /><figcaption aria-hidden="true">Words as points in a semantic space <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+<img data-src="../images/word2vec-king-queen-vectors.png"
+alt="Words as points in a semantic space (Colyer 2016)" />
+<figcaption aria-hidden="true">Words as points in a semantic space <span
+class="citation" data-cites="Colyer2016">(Colyer
+2016)</span></figcaption>
 </figure>
 <figure>
-<img data-src="../images/word2vec-king-queen-composition.png" alt="Doing arithmetics with words (Colyer 2016)" /><figcaption aria-hidden="true">Doing arithmetics with words <span class="citation" data-cites="Colyer2016">(Colyer 2016)</span></figcaption>
+<img data-src="../images/word2vec-king-queen-composition.png"
+alt="Doing arithmetics with words (Colyer 2016)" />
+<figcaption aria-hidden="true">Doing arithmetics with words <span
+class="citation" data-cites="Colyer2016">(Colyer
+2016)</span></figcaption>
 </figure>
 </div>
 <aside class="notes">
 <ul>
+<li>Seit 2013 hat sich alles verändert</li>
 <li>vector = list of numbers -&gt; point in Euclidean space</li>
 <li>Idee: wenn Wort genau gleich gebraucht wird, dann selbe Stelle</li>
-<li>Synonyme, Analogien</li>
-<li>alles noch globale Information, da einzelner Vektor je Wort</li>
+<li>Synonyme, Analogien finden</li>
+<li>alles noch globale Information. Ein Wort hat genau ein Vektor
+<ul>
 <li>Was passiert mit mehrdeutigen Wörter (z.B. Bank)?</li>
+</ul></li>
+<li>Frage wie diese Repräsentationen genau gelernt wir nach Pause</li>
 </ul>
 </aside>
 </section>
 <section id="contextualized-word-embeddings" class="slide level2">
 <h2>Contextualized Word Embeddings</h2>
-<h3 id="bert-devlin2019">BERT <span class="citation" data-cites="Devlin2019">(Devlin et al. 2019)</span></h3>
+<h3 id="bert-devlin2019">BERT <span class="citation"
+data-cites="Devlin2019">(Devlin et al. 2019)</span></h3>
 <ul>
 <li>recontextualize static word embedding
 <ul>
-<li>different embedding in different contexts</li>
+<li>different embeddings in different contexts</li>
 <li>accounting for ambiguity (e.g., <code>bank</code>)</li>
 </ul></li>
 <li>acquire linguistic knowledge from language models (LM)
 <ul>
 <li>LM predict next/missing word</li>
-<li>pre-trained on massive data (&gt; 1 billion words)</li>
+<li>pre-trained on massive data (&gt; 300 billions words)</li>
 </ul></li>
 </ul>
 <p><br></p>
-<p><span class="emoji" data-emoji="boom">💥</span> embeddings mark a new era of NLP</p>
+<p><span class="emoji" data-emoji="boom">💥</span> embeddings are the
+cornerstone of modern NLP</p>
 <aside class="notes">
 <ul>
-<li>alles lässt sich embedden (Wörter, Sätze, Paragraphen, Dokumente)</li>
+<li>alles lässt sich embedden (Wörter, Sätze, Paragraphen,
+Dokumente)</li>
 </ul>
 </aside>
+</section></section>
+<section>
+<section id="modern-nlp-is-propelled-by-data"
+class="title-slide slide level1">
+<h1>Modern NLP is propelled by data</h1>
+
 </section>
-<section id="cultural-associations-in-data" class="slide level2">
-<h2>(Cultural) Associations in Data</h2>
-<ul>
-<li>«<code>___</code> becomes a doctor.»</li>
-<li>«<code>___</code> takes care of the children.»</li>
-</ul>
-<p><br></p>
+<section id="learning-associations-from-data" class="slide level2">
+<h2>Learning Associations from Data</h2>
+</br>
+<p>
+<span style="font-size:1.3em"><span style="font-family:Courier New,Courier,monospace">«<span style="color:#e74c3c"><code>___</code></span>
+becomes a doctor.»</span></span>
+</p>
 <div class="fragment">
+<figure>
+<img data-src="../images/bert_bias_doctor.png"
+alt="Gender bias of the commonly used language model BERT (Devlin et al. 2019)" />
+<figcaption aria-hidden="true">Gender bias of the commonly used language
+model <a
+href="https://pair.withgoogle.com/explorables/fill-in-the-blank">BERT</a>
+<span class="citation" data-cites="Devlin2019">(Devlin et al.
+2019)</span></figcaption>
+</figure>
+<aside class="notes">
 <ul>
-<li><p>«Doing <span style="background-color: #FFFF80">illegal</span> things is <span style="background-color: #FFFF80">bad</span>.»</p></li>
-<li><p>«A recent study by the Swiss state secretariat for migrants (SEM)<br> estimates that there were 76,000 <span style="background-color: #FFFF80"> illegal immigrants</span>.»</p></li>
+<li>BERT wird in Google Search gebraucht</li>
 </ul>
-<p><span class="emoji" data-emoji="thinking">🤔</span> Are migrants somehow bad, then?</p>
+</aside>
 </div>
 </section>
-<section id="word-vectors-are-biased" class="slide level2">
-<h2>Word vectors are biased …</h2>
-<h3 id="because-our-data-is-we-are-biased.-bender2022">… because <del>our data is</del> we are biased. <span class="citation" data-cites="Bender2022">(<strong>Bender2022?</strong>)</span></h3>
+<section id="cultural-associations-in-training-data"
+class="slide level2">
+<h2>Cultural Associations in Training Data</h2>
+<figure>
+<img data-src="../images/bert_bias_hobbies.png" style="width:70.0%"
+alt="Gender bias of the commonly used language model BERT (Devlin et al. 2019)" />
+<figcaption aria-hidden="true">Gender bias of the commonly used language
+model <a
+href="https://pair.withgoogle.com/explorables/fill-in-the-blank">BERT</a>
+<span class="citation" data-cites="Devlin2019">(Devlin et al.
+2019)</span></figcaption>
+</figure>
 <aside class="notes">
 <ul>
-<li>Timnit Gebru (Google Ethics Lead) gefeuert für dieses Paper</li>
+<li>Analyse umkehren: Nicht nach Pronomen fragen, sondern nach
+Tätigkeiten</li>
+<li>Model trained on Wikipedia and Books (not Reddit)</li>
 </ul>
 </aside>
 </section>
-<section id="two-sides-of-the-ai-coin" class="slide level2">
-<h2>Two Sides of the AI Coin</h2>
-<h3 id="explaining-vs.-solving">Explaining vs. Solving</h3>
+<section id="word-embeddings-are-biased" class="slide level2">
+<h2>Word Embeddings are biased …</h2>
+<h3 id="because-our-data-is-we-are-biased.-bender2021">… because
+<del><strong>our data</strong> is</del> we are biased. <span
+class="citation" data-cites="Bender2021">(Bender et al.
+2021)</span></h3>
+<aside class="notes">
 <ul>
-<li>understanding matters in <strong>science</strong>: <strong>data analysis</strong></li>
-<li>automating matters in <strong>business</strong>: <strong>applied AI</strong></li>
+<li>Timnit Gebru (Google Ethics Lead) gefeuert für dieses Paper Ende
+2020</li>
+<li>Daten sind nicht besser als wir und Gesellschaft trägt extreme
+Diskriminierungen mit sich</li>
 </ul>
+</aside>
+</section>
+<section id="in-class-exercises-i" class="slide level2"
+data-background="var(--blue)">
+<h2 data-background="var(--blue)">In-class: Exercises I</h2>
+<ol type="1">
+<li>Open the following website in your browser: <a
+href="https://pair.withgoogle.com/explorables/fill-in-the-blank/"
+class="uri">https://pair.withgoogle.com/explorables/fill-in-the-blank/</a></li>
+<li>Read the the article and play around with the interactive demo.</li>
+<li>What works surprisingly well? What is flawed by societal bias? Where
+do you see limits of large language models?</li>
+</ol>
+</section></section>
+<section>
+<section id="modern-ai-dl" class="title-slide slide level1">
+<h1>Modern AI = DL</h1>
+
+</section>
+<section id="how-does-deep-learning-work" class="slide level2">
+<h2>How does Deep Learning work?</h2>
+<h3 id="deep-learning-works-like-a-huge-bureaucracy">Deep Learning <a
+href="https://thinc.ai/docs/backprop101">works</a> like a huge
+bureaucracy</h3>
+<ol type="1">
+<li><strong>start</strong> with <strong>random</strong> prediction</li>
+<li><strong>blame</strong> units for contributing to <strong>wrong
+predictions</strong></li>
+<li><strong>adjust</strong> units based on the accounted blame</li>
+<li><strong>repeat</strong> the cycle</li>
+</ol>
+<div class="fragment">
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> train with
+<strong>gradient descent</strong>, a series of <strong>small
+steps</strong> taken <strong>to minimize an error function</strong></p>
+</div>
+</section>
+<section id="limitations-of-data-driven-deep-learning"
+class="slide level2">
+<h2>Limitations of data-driven Deep Learning</h2>
+<p><br></p>
+<p>
+<span style="font-size:1.5em"><span
+style="font-family:Courier New,Courier,monospace">„This sentence
+contains <span style="color:#3498db">32</span> characters.“<br />
+„Dieser Satz enthält <span style="color:#e74c3c">32</span>
+Buchstaben.“</span></span><br />  
+</p>
+<aside class="notes">
+<ul>
+<li>ohne Trainingsdaten aktuell nicht zu lösen</li>
+</ul>
+</aside>
+</section>
+<section id="current-state-of-deep-learning" class="slide level2">
+<h2>Current State of Deep Learning</h2>
+<h3 id="extremely-powerful-but-bengio2021">Extremely powerful but …
+<span class="citation" data-cites="Bengio2021">(Bengio, Lecun, and
+Hinton 2021)</span></h3>
+<ul>
+<li>great at <strong>learning patterns</strong>, yet reasoning in its
+infancy</li>
+<li>requires tons of data due to inefficient learning</li>
+<li>generalizes poorly</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>out of domain (schwarze vs weisse Menschen, anderes Textgenre)</li>
+</ul>
+</aside>
 </section></section>
 <section>
 <section id="biased-data-and-beyond" class="title-slide slide level1">
@@ -782,7 +989,12 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h2>Data = Digital Traces = Social Artifacts</h2>
 <ul>
 <li>collecting, curating, preserving traces</li>
-<li>data is a <strong>tool</strong> to refine questions <strong>rather than reflection</strong> of the world</li>
+<li><strong>data is imperfect</strong>, always
+<ul>
+<li>social bias, noise, lack of data etc.</li>
+</ul></li>
+<li>data is more a <strong>tool</strong> to refine questions
+<strong>rather than a reflection of the world</strong></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -794,60 +1006,37 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li>Daten sind auch nicht die Welt</li>
 </ul></li>
-<li>Daten liegen nicht einfach herum, sondern gemacht (siehe Schritte)</li>
+<li>Daten liegen nicht einfach herum, sondern gemacht (siehe
+Schritte)</li>
 </ul>
 </aside>
 </section>
 <section id="data-vs.-capta" class="slide level2">
 <h2>Data vs. Capta</h2>
 <blockquote>
-<p>Differences in the etymological roots of the terms data and capta make the distinction between constructivist and realist approaches clear. <em>Capta</em> is <span style="color:#b5533c"><strong>“taken”</strong></span> actively while <em>data</em> is assumed to be a <span style="color:#b5533c"><strong>“given”</strong></span> able to be recorded and observed.</p>
+<p>Differences in the etymological roots of the terms data and capta
+make the distinction between constructivist and realist approaches
+clear. <em>Capta</em> is <span
+style="color:#b5533c"><strong>“taken”</strong></span> actively while
+<em>data</em> is assumed to be a <span
+style="color:#b5533c"><strong>“given”</strong></span> able to be
+recorded and observed.</p>
 </blockquote>
 <blockquote>
-<p>Humanistic inquiry acknowledges the situated, partial, and constitutive character of knowledge production, the recognition that knowledge is constructed, <em>taken</em>, <span style="color:#b5533c"><strong>not simply given as a natural representation</strong></span> of pre-existing fact.</p>
-<p><span class="citation" data-cites="Drucker2011">Drucker (2011)</span></p>
+<p>Humanistic inquiry acknowledges the situated, partial, and
+constitutive character of knowledge production, the recognition that
+knowledge is constructed, <em>taken</em>, <span
+style="color:#b5533c"><strong>not simply given as a natural
+representation</strong></span> of pre-existing fact.</p>
+<p><span class="citation" data-cites="Drucker2011">Drucker
+(2011)</span></p>
 </blockquote>
 <aside class="notes">
 <ul>
-<li>viel Konflikt geht auf diese Realismus/Konstruktivismus Perspektive zurück</li>
-<li>Konstruktivmus heisst nur, Fragen zu stellen, wieso die Dinge sind, wie sie ausschauen</li>
-</ul>
-</aside>
-</section>
-<section id="imperfect-data-a-tail-of-bias" class="slide level2">
-<h2>Imperfect Data: A Tail of Bias</h2>
-<ul>
-<li><p>social bias</p>
-<ul>
-<li>view from somewhere, stereotypes</li>
-</ul></li>
-<li><p>data/archive holes</p>
-<ul>
-<li>lost, uncollected</li>
-</ul></li>
-<li><p>corpus curation</p>
-<ul>
-<li>supposition that key-word indicates topic</li>
-</ul></li>
-<li><p>noise in data</p>
-<ul>
-<li>OCR errors, inconsistent spelling, non-content</li>
-</ul></li>
-</ul>
-<p><br></p>
-<p><span class="emoji" data-emoji="point_right">👉</span> think about the data and mitigate issues</p>
-<aside class="notes">
-<ul>
-<li>fehlende, rauschende, selektive &amp; verzerrte Daten</li>
-<li>sozialer Kontext
-<ul>
-<li>z.B. Budgetkürzung oder Neuausrichtung –&gt; Wegfall von Thema</li>
-<li>Sicht von weisen Männern auf Thema</li>
-</ul></li>
-<li>non-content elements
-<ul>
-<li>Metadaten, Kopfzeilen etc.</li>
-</ul></li>
+<li>viel Konflikt geht auf diese Realismus/Konstruktivismus Perspektive
+zurück</li>
+<li>Konstruktivmus heisst nur, Fragen zu stellen, wieso die Dinge sind,
+wie sie ausschauen</li>
 </ul>
 </aside>
 </section>
@@ -855,36 +1044,61 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h2></h2>
 <blockquote>
 <p>Raw data is an oxymoron.</p>
-<p><span class="citation" data-cites="Gitelman2013">Gitelman (2013)</span></p>
+<p><span class="citation" data-cites="Gitelman2013">Gitelman
+(2013)</span></p>
 </blockquote>
 </section>
-<section id="mind-your-data" class="slide level2">
-<h2>Mind your Data</h2>
+<section id="two-sides-of-the-ai-coin" class="slide level2">
+<h2>Two Sides of the AI Coin</h2>
+<h3 id="explaining-vs.-solving">Explaining vs. Solving</h3>
 <ul>
-<li>Who has a voice in your data?
-<ul>
-<li>social context</li>
-</ul></li>
-<li>bigger is not necessarily better
-<ul>
-<li>more vs. more diverse data</li>
-</ul></li>
-<li>clean your data thoroughly
-<ul>
-<li>noisy vs. clean data</li>
-</ul></li>
+<li>conduct <strong>research to understand</strong> matters in
+science</li>
+<li><strong>automate</strong> matters <strong>in business</strong> using
+applied AI</li>
 </ul>
 </section>
-<section id="section-2" class="slide level2" data-background="../images/datahumanism.jpeg" data-background-size="90%">
-<h2 data-background="../images/datahumanism.jpeg" data-background-size="90%"></h2>
-<!-- https://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold -->
+<section id="still-doubts-about-practical-implications"
+class="slide level2">
+<h2>Still doubts about practical implications?</h2>
+<figure>
+<img data-src="../images/google_translate_bias.png" style="width:40.0%"
+alt="Gender bias in Google Translate" />
+<figcaption aria-hidden="true">Gender bias in Google
+Translate</figcaption>
+</figure>
+<aside class="notes">
+<ul>
+<li>Ungarische Pronomen sind nich gendered</li>
+</ul>
+</aside>
+</section>
+<section id="and-it-goes-on" class="slide level2">
+<h2>And it goes on …</h2>
+<figure>
+<img data-src="../images/google_translate_bias_promotion.png"
+alt="Gender bias in Google Translate" />
+<figcaption aria-hidden="true">Gender bias in <a
+href="https://translate.google.com/?sl=en&amp;tl=de&amp;text=The%20engineer%20gets%20a%20promotion.%0AThe%20child%20carer%20goes%20to%20the%20zoo%20with%20the%20kids.%0AThe%20child%20carer%20gets%20a%20promotion.&amp;op=translate">Google
+Translate</a></figcaption>
+</figure>
 </section>
 <section id="fair-is-a-fad" class="slide level2">
 <h2>Fair is a Fad</h2>
 <ul>
-<li><em>Fair</em> and <em>good</em> – but to whom? <span class="citation" data-cites="Kalluri2020">(Kalluri 2020 )</span></li>
+<li>companies also engage in fair AI to avoid regulation</li>
+<li><strong>Fair</strong> and <strong>good</strong> – <strong>but to
+whom?</strong> <span class="citation" data-cites="Kalluri2020">(Kalluri
+2020 )</span></li>
 <li>lacking democratic legitimacy</li>
-<li>debiasing data to avoid regulation</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Fair kann ziemlich vieles bedeuten, solange man es selbst definieren
+kann
+<ul>
+<li>demokratische Legitimität fehlt für all diese Systeme</li>
+</ul></li>
 <li>looking beyond data
 <ul>
 <li>invading privacy</li>
@@ -893,49 +1107,31 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>environmental costs</li>
 </ul></li>
 </ul>
-<aside class="notes">
-<ul>
-<li>Fair kann ziemlich vieles bedeuten, solange man es selbst definieren kann
-<ul>
-<li>demokratische Legitimität fehlt für all diese Systeme</li>
-</ul></li>
-</ul>
 </aside>
 </section>
-<section id="section-3" class="slide level2">
+<section id="section-2" class="slide level2">
 <h2></h2>
 <blockquote>
-<p>Don’t ask if artificial intelligence is good or fair, <br>ask how it shifts power.</p>
-<p><span class="citation" data-cites="Kalluri2020">Kalluri (2020)</span></p>
+<p>Don’t ask if artificial intelligence is good or fair, <br>ask how it
+shifts power.</p>
+<p><span class="citation" data-cites="Kalluri2020">Kalluri
+(2020)</span></p>
 </blockquote>
 </section>
-<section id="anatomy-of-aicrawford2018-illustrated-by-the-amazon-echo" class="slide level2" data-background="../images/anatomy_of_ai.png">
-<h2 data-background="../images/anatomy_of_ai.png"><span style="color:var(--red)">Anatomy of AI<span class="citation" data-cites="Crawford2018">(Crawford and Joler 2018)</span><br> illustrated by the Amazon Echo</span></h2>
-<aside class="notes">
-<ul>
-<li>Es geht um mehr als nur Technologie</li>
-<li>Technologie ist eingewoben ins Soziale</li>
-<li>Soziotechnische Systeme</li>
-</ul>
-</aside>
-</section>
-<section id="data-represents-real-life." class="slide level2" data-background="#4d7e65">
+<section id="data-represents-real-life." class="slide level2"
+data-background="#4d7e65">
 <h2 data-background="#4d7e65">Data represents real life.</h2>
 <p>Don’t be a fool. Be wise, think twice.</p>
-<aside class="notes">
-<ul>
-<li>The L in NLP is Language, language means people</li>
-<li>https://medium.com/<span class="citation" data-cites="TSchnoebelen/ethics-and-nlp-some-further-thoughts-53bd7cc3ff69">(<strong>TSchnoebelen/ethics-and-nlp-some-further-thoughts-53bd7cc3ff69?</strong>)</span></li>
-</ul>
-</aside>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
-<section id="references" class="slide level2">
-<h2>References</h2>
+<section id="references" class="slide level2 scrollable">
+<h2 class="scrollable">References</h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
@@ -960,33 +1156,85 @@ $(function() {
     });
 });
 </script>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Colyer2016" class="csl-entry" role="doc-biblioentry">
-Colyer, Adrian. 2016. <span>“The Amazing Power of Word Vectors.”</span> <span>the morning paper</span>. 2016. <a href="https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/">https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/</a>.
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Bender2021" class="csl-entry" role="doc-biblioentry">
+Bender, Emily M., Timnit Gebru, Angelina McMillan-Major, and Shmargaret
+Shmitchell. 2021. <span>“On the <span>Dangers</span> of <span>Stochastic
+Parrots</span>: <span>Can Language Models Be Too Big</span>? 🦜.”</span>
+In <em>Proceedings of the 2021 <span>ACM Conference</span> on
+<span>Fairness</span>, <span>Accountability</span>, and
+<span>Transparency</span></em>, 610–23. <span>Virtual Event
+Canada</span>: <span>ACM</span>. <a
+href="https://doi.org/10.1145/3442188.3445922">https://doi.org/10.1145/3442188.3445922</a>.
 </div>
-<div id="ref-Crawford2018" class="csl-entry" role="doc-biblioentry">
-Crawford, Kate, and Vladan Joler. 2018. <span>“Anatomy of an <span>AI System</span>.”</span> <span>Anatomy of an AI System</span>. 2018. <a href="http://www.anatomyof.ai">http://www.anatomyof.ai</a>.
+<div id="ref-Bengio2021" class="csl-entry" role="doc-biblioentry">
+Bengio, Yoshua, Yann Lecun, and Geoffrey Hinton. 2021. <span>“Deep
+Learning for <span>AI</span>.”</span> <em>Communications of the ACM</em>
+64 (7): 58–65. <a
+href="https://doi.org/10.1145/3448250">https://doi.org/10.1145/3448250</a>.
+</div>
+<div id="ref-Church2021" class="csl-entry" role="doc-biblioentry">
+Church, Kenneth, and Mark Liberman. 2021. <span>“The <span>Future</span>
+of <span>Computational Linguistics</span>: <span>On Beyond
+Alchemy</span>.”</span> <em>Frontiers in Artificial Intelligence</em> 4.
+<a
+href="https://doi.org/10.3389/frai.2021.625341">https://doi.org/10.3389/frai.2021.625341</a>.
+</div>
+<div id="ref-Colyer2016" class="csl-entry" role="doc-biblioentry">
+Colyer, Adrian. 2016. <span>“The Amazing Power of Word Vectors.”</span>
+<span>the morning paper</span>. 2016. <a
+href="https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/">https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/</a>.
 </div>
 <div id="ref-Devlin2019" class="csl-entry" role="doc-biblioentry">
-Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: Pre-Training of <span>Deep Bidirectional Transformers</span> for <span>Language Understanding</span>.”</span> May 24, 2019. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019.
+<span>“<span>BERT</span>: <span class="nocase">Pre-training</span> of
+<span>Deep Bidirectional Transformers</span> for <span>Language
+Understanding</span>.”</span> <a
+href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
 </div>
 <div id="ref-Drucker2011" class="csl-entry" role="doc-biblioentry">
-Drucker, Johanna. 2011. <span>“Humanities <span>Approaches</span> to <span>Graphical Display</span>.”</span> <em>Digital Humanities Quarterly</em> 5 (1). <a href="http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html">http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html</a>.
+Drucker, Johanna. 2011. <span>“Humanities <span>Approaches</span> to
+<span>Graphical Display</span>.”</span> <em>Digital Humanities
+Quarterly</em> 5 (1). <a
+href="http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html">http://www.digitalhumanities.org/dhq/vol/5/1/000091/000091.html</a>.
 </div>
 <div id="ref-Firth1957" class="csl-entry" role="doc-biblioentry">
-Firth, John R. 1957. <span>“A Synopsis of Linguistic Theory, 1930-1955.”</span> In <em>Studies in <span>Linguistic Analysis</span>: Special <span>Volume</span> of the <span>Philological Society</span></em>, edited by John R. Firth, 1–32. <span>Oxford</span>: <span>Blackwell</span>. <a href="http://ci.nii.ac.jp/naid/10020680394/">http://ci.nii.ac.jp/naid/10020680394/</a>.
+Firth, John R. 1957. <span>“A Synopsis of Linguistic Theory,
+1930-1955.”</span> In <em>Studies in <span>Linguistic Analysis</span>:
+<span>Special Volume</span> of the <span>Philological
+Society</span></em>, edited by John R. Firth, 1–32. <span>Oxford</span>:
+<span>Blackwell</span>. <a
+href="http://ci.nii.ac.jp/naid/10020680394/">http://ci.nii.ac.jp/naid/10020680394/</a>.
 </div>
 <div id="ref-Gitelman2013" class="csl-entry" role="doc-biblioentry">
-Gitelman, Lisa. 2013. <em>Raw <span>Data Is</span> an <span>Oxymoron</span></em>. <span>Cambridge</span>: <span>MIT</span>.
+Gitelman, Lisa. 2013. <em>Raw <span>Data Is</span> an
+<span>Oxymoron</span></em>. <span>Cambridge</span>: <span>MIT</span>.
 </div>
 <div id="ref-Kalluri2020" class="csl-entry" role="doc-biblioentry">
-Kalluri, Pratyusha. 2020. <span>“Don’t Ask If Artificial Intelligence Is Good or Fair, Ask How It Shifts Power.”</span> <em>Nature</em> 583 (7815, 7815): 169–69. <a href="https://doi.org/10.1038/d41586-020-02003-2">https://doi.org/10.1038/d41586-020-02003-2</a>.
+Kalluri, Pratyusha. 2020. <span>“Don’t Ask If Artificial Intelligence Is
+Good or Fair, Ask How It Shifts Power.”</span> <em>Nature</em> 583
+(7815, 7815): 169–69. <a
+href="https://doi.org/10.1038/d41586-020-02003-2">https://doi.org/10.1038/d41586-020-02003-2</a>.
 </div>
 <div id="ref-Mikolov2013" class="csl-entry" role="doc-biblioentry">
-Mikolov, Tomas, Ilya Sutskever, Kai Chen, Greg S. Corrado, and Jeff Dean. 2013. <span>“Distributed Representations of Words and Phrases and Their Compositionality.”</span> In <em>Advances in Neural Information Processing Systems</em>, 3111–19.
+Mikolov, Tomas, Ilya Sutskever, Kai Chen, Greg S. Corrado, and Jeff
+Dean. 2013. <span>“Distributed Representations of Words and Phrases and
+Their Compositionality.”</span> In <em>Advances in Neural Information
+Processing Systems</em>, 3111–19.
+</div>
+<div id="ref-Peterson2022" class="csl-entry" role="doc-biblioentry">
+Peterson, Joshua C., Stefan Uddenberg, Thomas L. Griffiths, Alexander
+Todorov, and Jordan W. Suchow. 2022. <span>“Deep Models of Superficial
+Face Judgments.”</span> <em>Proceedings of the National Academy of
+Sciences</em> 119 (17): e2115228119. <a
+href="https://doi.org/10.1073/pnas.2115228119">https://doi.org/10.1073/pnas.2115228119</a>.
 </div>
 <div id="ref-Smith2020" class="csl-entry" role="doc-biblioentry">
-Smith, Noah A. 2020. <span>“Contextual Word Representations: Putting Words into Computers.”</span> <em>Communications of the ACM</em> 63 (6): 66–74. <a href="https://doi.org/10.1145/3347145">https://doi.org/10.1145/3347145</a>.
+Smith, Noah A. 2020. <span>“Contextual Word Representations: Putting
+Words into Computers.”</span> <em>Communications of the ACM</em> 63 (6):
+66–74. <a
+href="https://doi.org/10.1145/3347145">https://doi.org/10.1145/3347145</a>.
 </div>
 </div>
 </section></section>
