@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-05-05">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -37,10 +41,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -79,21 +85,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -110,7 +111,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -140,7 +141,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -148,6 +149,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -187,26 +190,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -217,13 +224,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -301,7 +309,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -333,8 +341,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -348,7 +355,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -371,7 +378,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -399,17 +405,13 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#9 Introduction to Python</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">29 April 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">5 May 2022</p>
 </section>
 
-<section class="slide level1">
-
-<h2 id="recap-last-lecture">Recap last Lecture</h2>
+<section id="recap-last-lecture" class="slide level2">
+<h2>Recap last Lecture</h2>
 <ul>
 <li>from words to embeddings
 <ul>
@@ -426,25 +428,37 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 </ul>
 </aside>
-<h2 id="outline">Outline</h2>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
 <ul>
-<li><p>enter the shiny world of Python <span class="emoji" data-emoji="sunglasses">😎</span></p>
+<li><p>enter the shiny world of Python <span class="emoji"
+data-emoji="sunglasses">😎</span></p>
 <ul>
-<li>development environment</li>
-<li>basic syntax</li>
+<li>programming basics</li>
+<li>development editor</li>
 </ul></li>
+<li><p>think about mini-project</p></li>
 </ul>
 <aside class="notes">
 <ul>
-<li></li>
+<li>ziemlich trockener Einstieg in Python. Notwendig für</li>
 </ul>
 </aside>
 </section>
-<section id="python" class="slide level1" data-background="../images/green_python.jpeg">
+<section>
+<section id="python" class="title-slide slide level1"
+data-background="../images/green_python.jpeg">
 <h1 data-background="../images/green_python.jpeg">Python</h1>
-<h2 id="python-is">Python is …</h2>
+
+</section>
+<section id="python-is" class="slide level2">
+<h2>Python is …</h2>
 <!-- https://pixabay.com/de/photos/gr%C3%BCne-baumpython-python-baumpython-543243/ -->
-<h4 id="a-programming-language-that-is">a programming language that is …</h4>
+<div class="columns">
+<div class="column" style="width:60%;">
+<h3 id="a-programming-language-that-is">a programming language that is
+…</h3>
 <ul>
 <li>general-purpose
 <ul>
@@ -456,6 +470,15 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>standard language in data science</li>
 </ul>
+</div><div class="column" style="width:40%;">
+<figure>
+<img data-src="../images/programming_languages.jpg"
+alt="Popular programming languages src" />
+<figcaption aria-hidden="true">Popular programming languages <a
+href="https://gowithcode.com/top-programming-languages">src</a></figcaption>
+</figure>
+</div>
+</div>
 <aside class="notes">
 <ul>
 <li>Python vs. R
@@ -465,14 +488,17 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 </ul>
 </aside>
-<h2 id="how-to-learn-programming">How to learn programming?</h2>
-<h4 id="three-inconvenient-truths">three inconvenient truths <span class="emoji" data-emoji="cold_sweat">😰</span></h4>
+</section>
+<section id="how-to-learn-programming" class="slide level2">
+<h2>How to learn programming?</h2>
+<h3 id="three-inconvenient-truths">Three inconvenient truths <span
+class="emoji" data-emoji="cold_sweat">😰</span></h3>
 <ul>
 <li>programming cannot be learnt in a course
 <ul>
 <li>I try to make the start as easy as possible!</li>
 </ul></li>
-<li>frustration is normal
+<li>frustration is part of learning
 <ul>
 <li>fight your way!</li>
 </ul></li>
@@ -481,75 +507,48 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>grow skills by step-by-step</li>
 </ul></li>
 </ul>
-<p><strong>Programming can be absolutely captivating! <span class="emoji" data-emoji="v">✌️</span></strong></p>
+<div class="fragment">
+<p><strong>Programming can be absolutely captivating! <span
+class="emoji" data-emoji="v">✌️</span></strong></p>
 <aside class="notes">
 <ul>
+<li>Es wäre gelogen zu sagen, Programmieren sei einfach</li>
+<li>Welt des Programmierens ist riesig
+<ul>
 <li>es gibt mehr möglichkeiten/einschränkungen als ich zeigen kann</li>
+</ul></li>
 <li>vieles wird nicht unmittelbar klar
 <ul>
 <li>lernen aus Fehlern, wenn sie passieren</li>
 </ul></li>
-<li>Beispiele sind möglichst kurz / einfach geschrieben</li>
-<li>positiv
+<li>Programmbeispiele sind möglichst kurz / einfach geschrieben</li>
+<li>Es gibt auch Positives
 <ul>
 <li>unmittelbares feedback</li>
 <li>tolles Gefühl, wenns klappt</li>
+<li>selbständiges Lernen is gut möglich</li>
 </ul></li>
 </ul>
 </aside>
-<h2 id="development-editor">Development Editor</h2>
-<h3 id="jupyter-lab">Jupyter Lab</h3>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li>integrated development environment (IDE)
-<ul>
-<li>interactive development</li>
-<li>similar to RStudio</li>
-</ul></li>
-<li>views
-<ul>
-<li>scripting</li>
-<li>variable explorer</li>
-<li>python console</li>
-</ul></li>
-</ul>
-</div><div class="column" style="width:50%;">
-<figure>
-<img data-src="../images/jupyterlab.png" alt="Spyder IDE" /><figcaption aria-hidden="true"><a href="https://www.spyder-ide.org/">Spyder IDE</a></figcaption>
-</figure>
 </div>
-</div>
-<aside class="notes">
-<ul>
-<li><p>Mac User: spyder über Anaconda Navigator öffnen, da nicht über spotlight verfügbar</p></li>
-<li><p>demonstration</p>
-<ul>
-<li>script</li>
-<li>variable explorer</li>
-<li>tab for completion</li>
-<li></li>
-</ul></li>
-</ul>
-</aside>
-<h2 id="first-steps-in-python">First Steps in Python</h2>
-<h4 id="how-to-start">How to start?</h4>
-<ol type="1">
-<li>open the program <code>Spyder</code></li>
-<li>set working directory</li>
-<li>save your script</li>
-<li>write code <code>print("Hello, World!")</code></li>
-<li>run code + debug</li>
-<li>run saved script in shell <code>python your_script.py</code></li>
-</ol>
+</section></section>
+<section id="wheting-your-appetite" class="title-slide slide level1"
+data-background="../images/scattertext_example.png">
+<h1 data-background="../images/scattertext_example.png"><span
+style="color:#1c1b1b">Wheting your Appetite</span></h1>
+
 </section>
-<section id="wheting-your-appetite" class="slide level1" data-background="../images/scattertext_example.png">
-<h1 data-background="../images/scattertext_example.png"><span style="color:#1c1b1b">Wheting your Appetite</span></h1>
+
+<section>
+<section id="programming-concepts-and-python-syntax"
+class="title-slide slide level1">
+<h1>Programming Concepts and Python Syntax</h1>
+
 </section>
-<section id="syntax" class="slide level1">
-<h1>Syntax</h1>
-<h2 id="variables">Variables</h2>
-<h4 id="variables-are-kind-of-storage-boxes">variables are kind of storage boxes</h4>
+<section id="variables" class="slide level2">
+<h2>Variables</h2>
+<h3 id="variables-are-kind-of-storage-boxes">Variables are kind of
+storage boxes</h3>
 <pre class="python"><code># define variables
 x = &quot;at your service&quot;
 y = 2
@@ -563,17 +562,28 @@ str_combo = x + z       # for text only concatenation with +
 print(str_combo)</code></pre>
 <aside class="notes">
 <ul>
-<li>Variablen sind wie Schachteln
+<li>Variablen sind wie Schachteln oder ein Tupperware
 <ul>
 <li>etwas (Objekte) reinstecken</li>
 <li>bei Gebrauch hervorholen</li>
+<li>Zuweisung/Zugriff</li>
 </ul></li>
-<li>Namen von Variablen: Kleinschreibung, English, underscore statt space</li>
+<li>Namenskonvention von Variablen: Kleinschreibung, English, underscore
+statt space</li>
 </ul>
 </aside>
-<h2 id="data-types">Data Types</h2>
-<h4 id="type-is-implicit-dynamic">type is implicit (dynamic)</h4>
+</section>
+<section id="data-types" class="slide level2">
+<h2>Data Types</h2>
+<h3 id="the-type-defines-the-objects-properties">The type defines the
+object’s properties</h3>
 <table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 33%" />
+<col style="width: 17%" />
+<col style="width: 31%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Name</th>
@@ -596,32 +606,32 @@ print(str_combo)</code></pre>
 <td><code>20</code>, <code>4.5</code></td>
 </tr>
 <tr class="odd">
-<td>List</td>
-<td>Lists (ordered, mutable)</td>
-<td>list</td>
-<td><code>["Good", "Afternoon", "Everybody"]</code></td>
-</tr>
-<tr class="even">
 <td>Boolean</td>
 <td>Truth values</td>
 <td>bool</td>
 <td><code>True</code>, <code>False</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span>⋮</span></td>
 <td><span>⋮</span></td>
 <td><span>⋮</span></td>
 <td><span>⋮</span></td>
 </tr>
+<tr class="odd">
+<td>List</td>
+<td>List of items (ordered, mutable)</td>
+<td>list</td>
+<td><code>["Good", "Afternoon", "Everybody"]</code></td>
+</tr>
 <tr class="even">
 <td>Tuple</td>
-<td>Lists (ordered, immutable)</td>
+<td>List of items (ordered, immutable)</td>
 <td>tuple</td>
 <td><code>(1, 2)</code></td>
 </tr>
 <tr class="odd">
 <td>Dictionary</td>
-<td>Relations (unordered, mutable)</td>
+<td>Relations of items (unordered, mutable)</td>
 <td>dict</td>
 <td><code>{"a":1, "b": 2, "c": 3}</code></td>
 </tr>
@@ -629,16 +639,19 @@ print(str_combo)</code></pre>
 </table>
 <aside class="notes">
 <ul>
-<li>es gibt verschiedene Aufbewahrungsboxen
-<ul>
-<li>Tupperware vs. Büchergestell</li>
-</ul></li>
-<li>ja nach Typ andere Eigenschaften</li>
+<li>es gibt verschiedene Aufbewahrungsboxen</li>
+<li>Namen unabhängig von Programmiersprache</li>
+<li>je nach Typ andere Eigenschaften</li>
+<li>der Typ ist immer implizit (dynamisch), nicht angeben bei
+Zuweisung</li>
 <li>Liste ist eine grosse Box, die kleine Boxen aufnehmen kann</li>
 </ul>
 </aside>
-<h2 id="data-type-conversion">Data Type Conversion</h2>
-<h4 id="combine-variables-of-the-same-type-only">combine variables of the same type only</h4>
+</section>
+<section id="data-type-conversion" class="slide level2">
+<h2>Data Type Conversion</h2>
+<h3 id="combine-variables-of-the-same-type-only">Combine variables of
+the same type only</h3>
 <pre class="python"><code># check the type
 type(YOUR_VARIABLE)
 
@@ -646,17 +659,20 @@ type(YOUR_VARIABLE)
 int(&#39;100&#39;)  # convert to integer
 str(100)    # convert to string
 
-# combine two types
+# easiest way to use a number in a text
 x = 3
-mixed = &quot;x has the value: &quot; + str(x)
+mixed = f&quot;x has the value: {x}&quot;
 print(mixed)</code></pre>
 <aside class="notes">
 <ul>
 <li>Analogie: nur gleiche Schachteln können kombiniert werden</li>
 </ul>
 </aside>
-<h2 id="confusing-equal-sign">Confusing Equal-Sign</h2>
-<h4 id="vs.-contradicts-the-intuition"><code>=</code> vs. <code>==</code> contradicts the intuition</h4>
+</section>
+<section id="confusing-equal-sign" class="slide level2">
+<h2>Confusing Equal-Sign</h2>
+<h3 id="vs.-contradicts-the-intuition"><code>=</code>
+vs. <code>==</code> contradicts the intuition</h3>
 <pre class="python"><code># assign a value to a variable
 x = 1
 word = &quot;Test&quot;
@@ -675,10 +691,12 @@ word == &quot;Test&quot;      # True</code></pre>
 <li>== Vergleichsoperator</li>
 </ul>
 </aside>
-<h2 id="comments">Comments</h2>
+</section>
+<section id="comments" class="slide level2">
+<h2>Comments</h2>
 <ul>
-<li>comments ~ lines ignored by Python</li>
-<li>do it, it helps you …
+<li>lines ignored by Python</li>
+<li>write comments, it helps you …
 <ul>
 <li>to learn initially</li>
 <li>to understand later</li>
@@ -691,8 +709,81 @@ comment across
 multiple 
 lines
 &quot;&quot;&quot;</code></pre>
-<h2 id="iterations">Iterations</h2>
-<h4 id="for-loop">for-loop</h4>
+</section>
+<section id="visual-studio-code" class="slide level2">
+<h2>Visual Studio Code</h2>
+<h3 id="the-best-editor-to-program-in-python">The (best) editor to
+program in Python</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>integrated development environment (IDE)
+<ul>
+<li>interactive development</li>
+<li>similar to RStudio</li>
+</ul></li>
+<li>3 views in editor
+<ul>
+<li>programming (left)</li>
+<li>output (right)</li>
+<li>additional information (bottom)</li>
+</ul></li>
+<li>use <code>tab</code> for autocompletion</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<figure>
+<img data-src="../images/vs_code_hello_world.png"
+alt="Visual Studio Code" />
+<figcaption aria-hidden="true"><a
+href="https://code.visualstudio.com/">Visual Studio
+Code</a></figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>demonstration
+<ul>
+<li>script</li>
+<li>variable explorer</li>
+<li>tab for completion</li>
+<li>check for WSL and tabnine support</li>
+</ul></li>
+</ul>
+</aside>
+</section>
+<section id="in-class-run-your-first-python-program-i"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Run your first Python Program
+I</h2>
+<ol type="1">
+<li><p>Make sure that your local copy of the Github repository KED2022
+is up-to-date with <code>git pull</code>.</p></li>
+<li><p>Open the Visual Studio Editor.</p></li>
+<li><p>Windows User only: Make sure that you are connected to
+<code>WSL: Ubuntu</code> (green badge lower-left corner, see image on
+the next slide). If not, click on the badge and select
+<code>New WSL Window</code>.</p></li>
+<li><p>Create a new file with the following content, save it as
+<code>hello_world.py</code>. Then, execute it by a right click on the
+code and select <code>Run current file in interactive window</code>.</p>
+<pre class="python"><code># print out a message
+msg = &quot;Hello World!&quot;
+print(msg)</code></pre></li>
+<li><p>Does the output looks like the screenshot on the next slide? If
+the execution doesn’t work as expected, ask me or your neighbour. There
+might be a technical issue.</p></li>
+</ol>
+</section>
+<section id="in-class-run-your-first-python-program-i-1"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Run your first Python Program
+I</h2>
+<p><img data-src="../images/vs_code_interactive.png" /></p>
+</section>
+<section id="iterations" class="slide level2">
+<h2>Iterations</h2>
+<h3 id="for-loop">for-loop</h3>
 <p>do something with each element of a collection</p>
 <pre class="python"><code>sentence = [&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;sentence&#39;]
 
@@ -710,19 +801,21 @@ for token in sentence:
 <li>Objekt innerhalb loop bearbeiten</li>
 <li>sentence + token sind Variablen
 <ul>
-<li>token ist temporäre Variable</li>
+<li>token ist temporäre Variable (Inhalt ändert in loop)</li>
 </ul></li>
 </ul>
 </aside>
-<h2 id="conditionals">Conditionals</h2>
-<h4 id="if-else-statement">if-else statement</h4>
+</section>
+<section id="conditionals" class="slide level2">
+<h2>Conditionals</h2>
+<h3 id="if-else-statement">if-else statement</h3>
 <p>condition action on variable content</p>
 <pre class="python"><code>sentence = [&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;sentence&#39;]
 
 if len(sentence) &lt; 3:
     print(&#39;This sentence is shorter than 3 tokens&#39;)
 elif len(sentence) == 3:
-    print(&#39;This sentence has 3 tokens&#39;)
+    print(&#39;This sentence has exactly 3 tokens&#39;)
 else:
     print(&#39;This sentence is longer than 3 tokens&#39;)</code></pre>
 <aside class="notes">
@@ -732,16 +825,18 @@ else:
 <li>Aktion abhängig machen von Variableninhalt</li>
 </ul></li>
 <li>Frage: Was wird ausgegeben?</li>
+<li>Funktionen für Länge und Print</li>
 </ul>
 </aside>
-<h2 id="indentation">Indentation</h2>
-<h4 id="indentation-matters">indentation matters!</h4>
+</section>
+<section id="indentation-matters" class="slide level2">
+<h2>Indentation matters!</h2>
 <ul>
 <li>intend code within code blocks
 <ul>
 <li>loops, if-statements etc.</li>
 </ul></li>
-<li>press tab to intend</li>
+<li>press <code>tab</code> to intend</li>
 </ul>
 <p><br></p>
 <div class="columns">
@@ -761,17 +856,22 @@ print(&#39;5 is greater than 2&#39;)</code></pre>
 <li>tab wird umgewandelt in 4 spaces</li>
 </ul>
 </aside>
-<h2 id="methods">Methods</h2>
-<pre class="python"><code># split at whitespace
-tokens = &#39;This is a sentence&#39;.split(&#39; &#39;)    
+</section>
+<section id="methods" class="slide level2">
+<h2>Methods</h2>
+<h3 id="do-somethin-with-an-object">Do somethin with an object</h3>
+<pre class="python"><code>sentence = &#39;This is a sentence&#39;
 
-# check the variable
-print(tokens, type(tokens))                 
+# split at whitespace
+tokens = sentence.split(&#39; &#39;)    
+
+# check the variables
+print(sentence, type(sentence), tokens, type(tokens))           
 
 # add something to a list
 tokens.append(&#39;.&#39;)
 
-# join elements to string
+# concatenate elements to string
 tokens = &#39; &#39;.join(tokens)
 print(tokens, type(tokens))</code></pre>
 <aside class="notes">
@@ -779,19 +879,21 @@ print(tokens, type(tokens))</code></pre>
 <li>jedes Objekt/Variable stellt Methoden zur Verfügung</li>
 </ul>
 </aside>
-<h2 id="functions-and-arguments">Functions and Arguments</h2>
+</section>
+<section id="functions-and-arguments" class="slide level2">
+<h2>Functions and Arguments</h2>
+<h3 id="dry-dont-repeat-yourself">DRY: Don’t Repeat Yourself</h3>
 <ul>
-<li>functions have the form
+<li>functions have a name and optional arguments
 <ul>
-<li><code>function_name(arg1, arg2)</code></li>
+<li><code>function_name(arg1, ..., argn)</code></li>
 </ul></li>
-<li>functions may have arguments</li>
 </ul>
 <pre class="python"><code># define a new function
-def word_properties(word):
+def get_word_properties(word):
     &quot;&quot;&quot;
     My first function to print word properties.
-    It takes any string as argument (variable word).
+    It takes any string as argument (variable: word).
     &quot;&quot;&quot;
     
     # print(), len() and sorted() work also as functions  
@@ -799,7 +901,7 @@ def word_properties(word):
     sorted_letters = sorted(word, reverse=True)
     print(word, &#39;length:&#39;, length, &#39;letters:&#39;, sorted_letters)
 
-word_properties(&#39;computer&#39;) # call function with any word</code></pre>
+get_word_properties(&#39;computer&#39;) # call function with any word</code></pre>
 <aside class="notes">
 <ul>
 <li>Anwendungsfall
@@ -810,8 +912,11 @@ word_properties(&#39;computer&#39;) # call function with any word</code></pre>
 <li>Funktion mit vordefinierten Argumenten</li>
 </ul>
 </aside>
-<h2 id="indexing">Indexing</h2>
-<h4 id="python-starts-counting-from-zero">python starts counting from zero!</h4>
+</section>
+<section id="indexing" class="slide level2">
+<h2>Indexing</h2>
+<h3 id="computers-start-counting-from-zero">Computers start counting
+from zero! <span class="emoji" data-emoji="dizzy_face">😵</span></h3>
 <pre class="python"><code>sentence = [&#39;This&#39;, &#39;is&#39;, &#39;a&#39;, &#39;sentence&#39;]
 
 # element at position X
@@ -830,7 +935,11 @@ sub_seq_back = sentence[-2:]        # [&#39;a&#39;, &#39;sentence&#39;]</code></
 </ul></li>
 </ul>
 </aside>
-<h2 id="syntax-errors">Syntax Errors</h2>
+</section>
+<section id="errors" class="slide level2">
+<h2>Errors</h2>
+<h3 id="a-myriad-of-things-can-go-wrong">A myriad of things can go
+wrong</h3>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ol type="1">
@@ -844,7 +953,11 @@ sub_seq_back = sentence[-2:]        # [&#39;a&#39;, &#39;sentence&#39;]</code></
 </div><div class="column" style="width:50%;">
 <!-- https://gifer.com/en/78BJ -->
 <figure>
-<img data-src="../images/google_rubiks.gif" alt="Learning by doing, doing by googling" /><figcaption aria-hidden="true"><a href="https://www.google.com/search?q=syntaxerror+python+stack+overflow">Learning by doing, doing by googling</a></figcaption>
+<img data-src="../images/google_rubiks.gif"
+alt="Learning by doing, doing by googling" />
+<figcaption aria-hidden="true"><a
+href="https://www.google.com/search?q=syntaxerror+python+stack+overflow">Learning
+by doing, doing by googling</a></figcaption>
 </figure>
 </div>
 </div>
@@ -853,72 +966,118 @@ sub_seq_back = sentence[-2:]        # [&#39;a&#39;, &#39;sentence&#39;]</code></
 <li>produce NameError, TypeError</li>
 </ul>
 </aside>
-<h2 id="modulespackages">Modules/Packages</h2>
+</section>
+<section id="modulespackages" class="slide level2">
+<h2>Modules/Packages</h2>
+<h3 id="no-programming-from-scratch">No programming from scratch <span
+class="emoji" data-emoji="tada">🎉</span></h3>
 <ul>
-<li>modules provide functionalities</li>
-<li>no programming from scratch <span class="emoji" data-emoji="tada">🎉</span></li>
+<li>packages provide specific functionalities</li>
+<li>packages need to be installed first</li>
 </ul>
 <aside class="notes">
 <ul>
-<li></li>
+<li>Standing on the shoulders of giants</li>
+<li>alles auf GitHub</li>
 </ul>
 </aside>
-<h2 id="nlp-packages">NLP Packages</h2>
+</section>
+<section id="nlp-packages" class="slide level2">
+<h2>NLP Packages</h2>
 <ul>
 <li><a href="https://spacy.io/usage/spacy-101">spaCy</a>
 <ul>
 <li>industrial-strength Natural Language Processing (NLP)</li>
 </ul></li>
-<li><a href="https://chartbeat-labs.github.io/textacy/build/html/index.html">textaCy</a>
+<li><a href="https://textacy.readthedocs.io/en/latest/">textaCy</a>
 <ul>
 <li>NLP, before and after spaCy</li>
 </ul></li>
-<li><a href="https://github.com/JasonKessler/scattertext">scattertext</a>
+<li><a
+href="https://github.com/JasonKessler/scattertext">scattertext</a>
 <ul>
 <li>beautiful visualizations of how language differs across corpora</li>
 </ul></li>
 </ul>
-<h2 data-background="#3c70b5" id="in-class-install-packages-for-next-week">In-class: Install Packages for next week</h2>
-<pre class="python"><code># Windows users
-# open a Anaconda Prompt and install the following
-pip install scattertext
-
-# Mac users
-# open a Terminal and install after replacing the username
-/Users/&lt;Your username&gt;/anaconda3/bin/python -m pip install scattertext
-
-# All users: install language specific models
-python -m spacy download de_core_news_sm
-python -m spacy download en_core_web_sm</code></pre>
-<h2 data-background="#3c70b5" id="in-class-exercises-i">In-class: Exercises I</h2>
+</section>
+<section id="mini-project" class="slide level2">
+<h2>Mini-Project</h2>
+<h3 id="present-project-on-2-june-2022">present project on 2 June
+2022</h3>
+<ul>
+<li>analyze any collection of documents</li>
+<li>apply quantitative measures + interpretation
+<ul>
+<li>compare historically</li>
+<li>compare between actors</li>
+</ul></li>
+<li>form groups of 2-4 people</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>welche Daten das ist das wichtigste</li>
+<li>start on 19 May in class</li>
+</ul>
+</aside>
+</section>
+<section id="in-class-exercises-i" class="slide level2"
+data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises I</h2>
 <ol type="1">
-<li>Make sure that your local copy of the Github repository KED2022 is up-to-date with <code>git pull</code>. Check out the script with the basics of Python in your Jupyter Lab: <code>materials/code/python_basics.ipynb</code>.</li>
-<li>Try to understand and run the commands line-wise. Modify them to see how the output changes. Initially, the try-and-error is good strategy to learn.</li>
+<li>Open the script with the basics of Python in your Visual Studio
+Editor:<br />
+<code>materials/code/python_basics.ipynb</code></li>
+<li>Try to understand the code in each cell and run them by clicking the
+play symbol left to them. Check the output. Modify some code as well as
+data and see how the output changes. Initially, this try-and-error is
+good strategy to learn. Some ideas:
+<ul>
+<li>Combine a string and an integer variable without converting it. What
+error do you get? How can you avoid it?</li>
+<li>Select <code>is a</code> from the list using the right index.</li>
+</ul></li>
 </ol>
-<h2 data-background="#3c70b5" id="in-class-exercises-ii">In-class: Exercises II</h2>
+</section>
+<section id="in-class-exercises-ii" class="slide level2"
+data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Exercises II</h2>
 <ol type="1">
 <li><p>Write a Python script that</p>
 <ul>
 <li>takes text (a string)</li>
 <li>splits it into words (a list)</li>
-<li>iterates over all the tokens and print all tokens that are longer than 5 characters</li>
+<li>iterates over all the tokens and print all tokens that are longer
+than 5 characters</li>
 <li>Bonus: wrap your code in a function.</li>
 </ul></li>
-<li><p>Go to the next slide. Start with some of the great interactive exercises out there in the web.</p></li>
+<li><p>Go to the next slide. Start with some of the great interactive
+exercises out there in the web.</p></li>
 </ol>
-<h2 id="resources">Resources</h2>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
 <h4 id="learn-basics-interactively">learn basics interactively</h4>
 <ul>
 <li><a href="https://pythonprinciples.com">Python Principles</a></li>
-<li><a href="https://www.learnpython.org/en/Welcome">LearnPython</a></li>
+<li><a
+href="https://www.learnpython.org/en/Welcome">LearnPython</a></li>
 </ul>
 <h4 id="official-python-introduction">official Python introduction</h4>
 <ul>
-<li><a href="https://docs.python.org/3/tutorial/introduction.html">Python introduction</a></li>
+<li><a
+href="https://docs.python.org/3/tutorial/introduction.html">Python
+introduction</a></li>
 </ul>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+
 </section>
-<section id="questions" class="slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="section" class="slide level2">
+<h2></h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">
@@ -943,7 +1102,7 @@ $(function() {
     });
 });
 </script>
-</section>
+</section></section>
     </div>
   </div>
 
