@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-05-12">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -56,10 +60,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -98,21 +104,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -129,7 +130,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -159,7 +160,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -167,6 +168,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -206,26 +209,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -236,13 +243,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -320,7 +328,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -352,8 +360,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -367,7 +374,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -390,7 +397,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -418,21 +424,21 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#10 NLP with Python</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">06 May 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">12 May 2022</p>
 </section>
 
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
-<h4 id="introduce-python">introduce Python <span class="emoji" data-emoji="snake">🐍</span></h4>
+<h3 id="introduce-python">introduce Python <span class="emoji"
+data-emoji="snake">🐍</span></h3>
 <ul>
-<li><p>JupyterLab editor</p></li>
-<li><p>syntax</p></li>
-<li><p>data types</p></li>
+<li><p>working with VS Code Editor</p></li>
+<li><p>learning programming concepts &amp; syntax</p>
+<ul>
+<li>data types, loops, indexing…</li>
+</ul></li>
 </ul>
 <aside class="notes">
 
@@ -441,14 +447,15 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>organizational
+<li>get the organizational stuff done
 <ul>
 <li>evaluation, mini-project, assignment #3</li>
 </ul></li>
-<li>Let’s getting to serious NLP! <span class="emoji" data-emoji="sparkles">✨</span></li>
-<li>interactive coding
+<li>let’s do serious NLP! <span class="emoji"
+data-emoji="sparkles">✨</span></li>
+<li>code interactively
 <ul>
-<li>interrupt, ask, complement</li>
+<li>interrupt, ask, and complement</li>
 </ul></li>
 </ul>
 <aside class="notes">
@@ -458,6 +465,9 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <ul>
 <li>Details vorerst unwichtig</li>
 </ul></li>
+<li>dritt letzte Sitzung, neue Inhalte nur noch heute und nächstes
+Mal</li>
+<li>stream via Zoom</li>
 </ul>
 </aside>
 <!-- https://towardsdatascience.com/building-a-text-normalizer-using-nltk-ft-pos-tagger-e713e611db8 -->
@@ -467,18 +477,26 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h1>Organizational</h1>
 
 </section>
-<section id="course-evaluation" class="slide level2" data-background="../images/speech_bubbles.gif">
-<h2 data-background="../images/speech_bubbles.gif">Course Evaluation</h2>
+<section id="course-evaluation" class="slide level2"
+data-background="../images/speech_bubbles.gif">
+<h2 data-background="../images/speech_bubbles.gif">Course
+Evaluation</h2>
 </section>
-<section id="tell-me" class="slide level2" data-background="var(--blue)">
-<h2 data-background="var(--blue)">Tell me… <span class="emoji" data-emoji="mega">📣</span></h2>
-<h3 id="please-follow-the-link-in-the-email">Please follow the link in the email</h3>
+<section id="tell-me" class="slide level2"
+data-background="var(--blue)">
+<h2 data-background="var(--blue)">Tell me… <span class="emoji"
+data-emoji="mega">📣</span></h2>
+<h3 id="please-follow-the-link-in-the-email">Please follow the link in
+the email</h3>
 <ul>
-<li>by the University of Lucerne, Faculty of Humanities and Social Sciences</li>
-<li>received on 3 May 2020 (or similar)</li>
+<li>received on 9 May 2022 (or similar)</li>
+<li>by the University of Lucerne, Faculty of Humanities and Social
+Sciences</li>
 </ul>
 <p><br></p>
-<h4 id="thanks-for-any-constructive-feedback-be-it-sweet-or-sour">Thanks for any constructive feedback, <br> be it sweet or sour!</h4>
+<h3 id="thanks-for-any-constructive-feedback-be-it-sweet-or-sour">Thanks
+for any constructive feedback, <br> be it sweet or sour! <span
+class="emoji" data-emoji="pray">🙏</span></h3>
 <aside class="notes">
 <ul>
 <li>offene Kommentare nutzen, statt nur Kreuze</li>
@@ -494,42 +512,54 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </aside>
 </section>
 <section id="assignment-3" class="slide level2">
-<h2>Assignment #3 <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<h2>Assignment #3 <span class="emoji"
+data-emoji="writing_hand">✍️</span></h2>
 <ul>
 <li>get/submit via OLAT
 <ul>
 <li>starting tomorrow</li>
-<li>deadline 14 May 2022, 23:59</li>
+<li>deadline 20 May 2022, 23:59</li>
 </ul></li>
-<li>use forum on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16703095856">OLAT</a>
+<li>use the <a
+href="https://lms.uzh.ch/auth/RepositoryEntry/17174430971/CourseNode/91271815676815">OLAT</a>
+forum
 <ul>
 <li>subscribe to get notifications</li>
 </ul></li>
 <li>ask friends for support, not solutions</li>
 </ul>
 </section>
-<section id="requirements-mini-project" class="slide level2">
-<h2>Requirements Mini-Project</h2>
-<h4 id="present-project-on-27-may-2022">present project on 27 May 2022</h4>
+<section id="requirements-of-mini-project" class="slide level2">
+<h2>Requirements of Mini-Project</h2>
+<h3 id="present-project-on-2-june-2022">present project on 2 June
+2022</h3>
+<ul>
+<li><p>analyze any collection of documents</p>
+<ul>
+<li><p>compare historically</p></li>
+<li><p>compare between actors</p></li>
+</ul></li>
+<li><p>apply quantitative measures + interpretation</p>
 <ul>
 <li>executable script</li>
 <li>multiple documents</li>
-<li>compare …
-<ul>
-<li>historically</li>
-<li>across actors</li>
 </ul></li>
-<li>quantitative measures + interpretation</li>
+<li><p>form groups of 2-4 people</p></li>
 </ul>
-<p><span class="emoji" data-emoji="exclamation">❗</span> share your project idea <a href="https://docs.google.com/spreadsheets/d/1Z_eZei8PIXt-_OBH8-FZVZCMANWBmsdBfLMaLcsURUo/edit?usp=sharing">here</a> by 14 May 2022</p>
+<p><span class="emoji" data-emoji="exclamation">❗</span> share your
+project idea <a
+href="https://docs.google.com/spreadsheets/d/1VNyoCl7CsJXqko4DXw3ZwGo8QS055YEr42wjoUrkkZs/edit#gid=0">here</a>
+by 19 May 2022</p>
 <aside class="notes">
 <ul>
 <li>mini project online stellen?</li>
 <li>noch nicht alle in Liste?</li>
 <li>“Forschungsfrage” überlegen</li>
 <li>script ist gemachte arbeit zur wiederverwendung</li>
-<li>relative frequency <span class="emoji" data-emoji="thumbsup">👍</span></li>
-<li>absolute frequency <span class="emoji" data-emoji="thumbsdown">👎</span></li>
+<li>relative frequency <span class="emoji"
+data-emoji="thumbsup">👍</span></li>
+<li>absolute frequency <span class="emoji"
+data-emoji="thumbsdown">👎</span></li>
 </ul>
 </aside>
 </section>
@@ -541,14 +571,16 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </section></section>
 <section>
-<section id="a-primer-on-old-school-nlp" class="title-slide slide level1" data-background="../images/words.jpg">
-<h1 data-background="../images/words.jpg"><span style="color:#ffffff">A Primer on <br>old school NLP</span></h1>
+<section id="a-primer-on-old-school-nlp"
+class="title-slide slide level1" data-background="../images/words.jpg">
+<h1 data-background="../images/words.jpg"><span style="color:#ffffff">A
+Primer on <br>Old School NLP</span></h1>
 
 </section>
 <section id="what-is-a-word" class="slide level2">
 <h2>What is a Word?</h2>
 <ul>
-<li>word ~ segments between whitespace</li>
+<li>words ~ segments between whitespace</li>
 <li>yet, there are …
 <ul>
 <li>contractions: <code>U.S.</code>, <code>don't</code></li>
@@ -573,17 +605,22 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li>stop words ~ functional words
 <ul>
 <li>lacking deeper meaning</li>
-<li><code>the</code>, <code>a</code>, <code>on</code>, <code>and</code> …</li>
+<li><code>the</code>, <code>a</code>, <code>on</code>, <code>and</code>
+…</li>
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <figure>
-<img data-src="../images/tokenization.jpeg" alt="tokenization (Medium)" /><figcaption aria-hidden="true">tokenization (<a href="https://medium.com/data-science-in-your-pocket/tokenization-algorithms-in-natural-language-processing-nlp-1fceab8454af">Medium</a>)</figcaption>
+<img data-src="../images/tokenization.jpeg"
+alt="Tokenizing a sentence (Medium)" />
+<figcaption aria-hidden="true">Tokenizing a sentence (<a
+href="https://medium.com/data-science-in-your-pocket/tokenization-algorithms-in-natural-language-processing-nlp-1fceab8454af">Medium</a>)</figcaption>
 </figure>
 </div>
 </div>
 <p><br></p>
-<p><code>Let's tokenize this sentence! Isn't is easy?</code> <span class="emoji" data-emoji="nerd_face">🤓</span></p>
+<p><code>Let's tokenize this sentence! Isn't is easy?</code> <span
+class="emoji" data-emoji="nerd_face">🤓</span></p>
 <aside class="notes">
 <ul>
 <li>Text wird in seine Teile gesplittet</li>
@@ -591,9 +628,10 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="nlp-processing-steps" class="slide level2">
-<h2>NLP Processing Steps</h2>
-<p><img data-src="../images/spacy_parse.png" style="height:10cm" /></p>
+<section id="common-processing-steps-in-nlp" class="slide level2">
+<h2>Common Processing Steps in NLP</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
 <ol type="1">
 <li>Tokenizing
 <ul>
@@ -609,10 +647,16 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul></li>
 <li>Named Entity Recognition (NER)
 <ul>
-<li><em>organizations, persons, locations, time etc.</em></li>
+<li>organizations, persons, locations, time etc.</li>
 </ul></li>
 </ol>
-<p>Catch up on NLP with <span class="citation" data-cites="Jurafskyforthcominga">Jurafsky and Martin (forthcoming)</span></p>
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> Catch up on NLP
+with <span class="citation" data-cites="Jurafskyforthcominga">Jurafsky
+and Martin (forthcoming)</span></p>
+</div><div class="column" style="width:60%;">
+<p><img data-src="../images/spacy_parse.png" /></p>
+</div>
+</div>
 <aside class="notes">
 <ul>
 <li>Abfolge von Prozessierungsschritten</li>
@@ -626,50 +670,70 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="outlook-nlp-is-on-fire" class="slide level2">
-<h2>Outlook: NLP is on Fire 🔥</h2>
+<section id="modulespackages" class="slide level2">
+<h2>Modules/Packages</h2>
+<h3 id="no-programming-from-scratch">No programming from scratch <span
+class="emoji" data-emoji="tada">🎉</span></h3>
 <ul>
-<li><p>supervised machine learning</p></li>
-<li><p>you can do basically anything with modern NLP</p>
-<ul>
-<li>train on human-annotated data</li>
-</ul></li>
-<li><p>effort, insights and quality may differ</p>
-<ul>
-<li>for better or worse</li>
-</ul></li>
+<li>packages provide specific functionalities</li>
+<li>packages need to be installed first</li>
 </ul>
 <aside class="notes">
 <ul>
-<li>die meisten haben ihr Schulwissen wieder vergessen, wieso kann das der Computer</li>
-<li>Intuition einfach, genaue technische Funktionsweise egal
-<ul>
-<li>Genauigkeit wichtig, aber noch zu advanced</li>
-<li>best-practice</li>
-</ul></li>
-<li>viel genauer dank Embeddings (self-supervised)</li>
+<li>Standing on the shoulders of giants</li>
+<li>alles auf GitHub</li>
 </ul>
 </aside>
 </section>
-<section id="deep-dive-into-nlp-for-social-science" class="slide level2" data-background="var(--blue)">
-<h2 data-background="var(--blue)">Deep Dive into NLP for Social Science​​</h2>
+<section id="nlp-packages" class="slide level2">
+<h2>NLP Packages</h2>
 <ul>
-<li>check <a href="https://github.com/aflueckiger/KED2022/blob/master/materials/code/KED2022_10.ipynb">code</a> on GitHub</li>
-<li>run code on Binder <a href="https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?filepath=materials%2Fcode%2FKED2022_10.ipynb"><img data-src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
+<li><a href="https://spacy.io/usage/spacy-101">spaCy</a>
+<ul>
+<li>industrial-strength Natural Language Processing (NLP)</li>
+</ul></li>
+<li><a href="https://textacy.readthedocs.io/en/latest/">textaCy</a>
+<ul>
+<li>NLP, before and after spaCy</li>
+</ul></li>
+<li><a
+href="https://github.com/JasonKessler/scattertext">scattertext</a>
+<ul>
+<li>beautiful visualizations of how language differs across corpora</li>
+</ul></li>
+</ul>
+</section>
+<section id="deep-dive-into-nlp-for-social-science" class="slide level2"
+data-background="var(--blue)">
+<h2 data-background="var(--blue)">Deep Dive into NLP for Social
+Science​​</h2>
+<ul>
+<li>check <a
+href="https://github.com/aflueckiger/KED2022/blob/main/materials/code/KED2022_10.ipynb">code</a>
+on GitHub</li>
+<li>run code on Binder <a
+href="https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?labpath=materials%2Fcode%2FKED2022_10.ipynb"><img
+data-src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
 </ul>
 </section>
 <section id="resources" class="slide level2">
 <h2>Resources</h2>
 <h4 id="tutorials-on-spacy">tutorials on spaCy</h4>
 <ul>
-<li><a href="https://spacy.io/usage/spacy-101">official spaCy 101</a></li>
-<li><a href="https://course.spacy.io/en/">official online course spaCy</a></li>
-<li><a href="https://www.kaggle.com/nirant/hitchhiker-s-guide-to-nlp-in-spacy">Hitchhiker’s Guide to NLP in spaCy</a></li>
+<li><a href="https://spacy.io/usage/spacy-101">official spaCy
+101</a></li>
+<li><a href="https://course.spacy.io/en/">official online course
+spaCy</a></li>
+<li><a
+href="https://www.kaggle.com/nirant/hitchhiker-s-guide-to-nlp-in-spacy">Hitchhiker’s
+Guide to NLP in spaCy</a></li>
 </ul>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
 <section id="references" class="slide level2">
@@ -698,9 +762,14 @@ $(function() {
     });
 });
 </script>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Jurafskyforthcominga" class="csl-entry" role="doc-biblioentry">
-Jurafsky, Dan, and James H. Martin. forthcoming. <em>Speech and <span>Language Processing</span></em>. 3rd (Draft of December 30, 2020). <span>London</span>: <span>Prentice Hall</span>. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Jurafskyforthcominga" class="csl-entry"
+role="doc-biblioentry">
+Jurafsky, Dan, and James H. Martin. forthcoming. <em>Speech and
+<span>Language Processing</span></em>. 3rd (Draft of December 30, 2020).
+<span>London</span>: <span>Prentice Hall</span>. <a
+href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
 </div>
 </div>
 </section></section>

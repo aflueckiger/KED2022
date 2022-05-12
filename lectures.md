@@ -187,14 +187,19 @@ It may come as a surprise that we start with Python in the ninth session only. A
 
 ## Week 10: NLP with Python
 
-Python is the language of choice when it comes to advanced NLP. Have you ever wondered how the frequency of terms evolves over the years? Or how the language differs between two groups whereby the groups may be formed by any metadata (person, organization, gender etc.)? Exploring is most effective in an interactive and visual mode - so be it. Among some basic statistics, this is the serious stuff where we finally arrive in our journey. Moreover, you will learn the jargon of NLP to don't get lost in the forest of yet unknown terms.
+Python is the language of choice when it comes to advanced NLP. Have you ever wondered how the frequency of terms has evolved over the years? Or how the language differs between two groups whereby the groups may be formed by any metadata (people, organization, gender etc.)? In such an exploratory endeavour, using an interactive and visual mode is the most effective that complements basic statistics. In short, we finally arrived at the serious stuff in our journey. To make sure, you don't get lost in the forest of yet unknown terms you will also learn the jargon of NLP. 
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_10.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_10.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_10.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/mm25aFfzWz)
+
+{% endcomment %}
 
 ### Code
 
@@ -202,7 +207,7 @@ Python is the language of choice when it comes to advanced NLP. Have you ever wo
 
  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?labpath=materials%2Fcode%2FKED2022_10.ipynb) Click to run the code in your browser without any installation
 
-{% endcomment %}
+
 
 ## Week 11: NLP with Python II + Working Session
 
