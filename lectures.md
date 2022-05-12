@@ -203,7 +203,7 @@ Python is the language of choice when it comes to advanced NLP. Have you ever wo
 
 ### Code
 
-[<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/blob/master/scripts/KED2022_10.ipynb) Click to open the static code
+[<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/blob/main/materials/code/KED2022_10.ipynb) Click to open the static code
 
  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?labpath=materials%2Fcode%2FKED2022_10.ipynb) Click to run the code in your browser without any installation
 
