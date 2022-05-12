@@ -315,8 +315,7 @@ section:not(.has-dark-background) span.citation{
 }
 .reading p,
 .references {
-    font-size: 0.7em;
-
+    font-size: 0.6em;
 }
 
 .references > div{
