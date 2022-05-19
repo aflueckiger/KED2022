@@ -213,14 +213,17 @@ Python is the language of choice when it comes to advanced NLP. Have you ever wo
 
 In today's session, we continue our deep dive into NLP with Python. It is the last piece of our puzzle. During this course, you have learned about the entire workflow, from assembling datasets of documents to analyze their content and visualize your findings. As soon as you have a structured text collection along with basic metadata (e.g., publication date), you can take numerous perspectives to look at your data. At this stage, it is time to kick-off the mini-projects allowing you to work with your data of interest. 
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_11.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_11.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_11.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/mZDDDeDY8X)
 
-
+{% endcomment %}
 
 ### Explore interactively: 1 August Speeches by Swiss Federal Councilors
 
@@ -231,8 +234,6 @@ The interactive visualization linked below shows how the language differs betwee
 You can search for the terms of your interest. Moreover, you may click on the points in the plot to show the context of the corresponding words within speeches. These functions allow for a quick investigation of the corpus along the dimensions of Swiss parties.
 
 [<i class="fas fa-desktop"></i>](materials/analysis/viz_party_differences.html) Click to explore in your browser<br>*(it may take a few seconds to load)*
-
-{% endcomment %}
 
 ## Week 12: Mini-Project Presentations + Discussion
 

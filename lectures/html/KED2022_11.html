@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-05-19">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -37,10 +41,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -79,21 +85,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -110,7 +111,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -140,7 +141,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -148,6 +149,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -187,26 +190,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -217,13 +224,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -301,7 +309,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -333,8 +341,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -348,7 +355,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -371,7 +378,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -399,23 +405,23 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#11 NLP with Python II + <br>Working Session</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">20 May 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">19 May 2022</p>
 </section>
 
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
 <ul>
-<li>spaCy <span class="emoji" data-emoji="abc">🔤</span>
+<li>perform NLP with spaCy <span class="emoji"
+data-emoji="abc">🔤</span>
 <ul>
-<li>linguistic information, Named Entities</li>
+<li>Named Entities, linguistic information …</li>
 </ul></li>
-<li>create a textacy corpus from text files <span class="emoji" data-emoji="bookmark_tabs">📑</span></li>
-<li>export basic statistics <span class="emoji" data-emoji="abacus">🧮</span></li>
+<li>create a textacy corpus from text files <span class="emoji"
+data-emoji="bookmark_tabs">📑</span></li>
+<li>export basic statistics <span class="emoji"
+data-emoji="abacus">🧮</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -424,19 +430,22 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </aside>
 </section>
 <section id="assignment-3" class="slide level2">
-<h2>Assignment #3 <span class="emoji" data-emoji="heavy_check_mark">✔️</span></h2>
-<p>Check out the <a href="https://github.com/aflueckiger/KED2022/blob/master/assignments/assignment_3/flueckiger_KED2022_3_solutions.ipynb">example solution</a></p>
+<h2>Assignment #3</h2>
+<p><span class="emoji" data-emoji="mega">📣</span> When you cannot
+import the packages or load the model, reach out!</p>
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li><p>explore + visualize <span class="emoji" data-emoji="art">🎨</span></p>
+<li><p>export your own dataset as <code>.csv</code> <span class="emoji"
+data-emoji="package">📦</span></p></li>
+<li><p>explore + visualize <span class="emoji"
+data-emoji="art">🎨</span></p>
 <ul>
 <li>explore corpus interactively</li>
 <li>visualize word frequencies</li>
 </ul></li>
-<li><p>export your own dataset as <code>.csv</code> <span class="emoji" data-emoji="package">📦</span></p></li>
-<li><p>working on mini-project</p></li>
+<li><p>work on mini-project</p></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -449,13 +458,16 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </ul>
 </aside>
 </section>
-<section id="mini-project-presentations" class="slide level2" data-background="#3c70b5">
+<section id="mini-project-presentations" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">Mini-Project Presentations</h2>
 <ul>
-<li><a href="https://docs.google.com/spreadsheets/d/1Z_eZei8PIXt-_OBH8-FZVZCMANWBmsdBfLMaLcsURUo/edit#gid=0">6 projects</a></li>
-<li>presentations on 27 May 2022
+<li><a
+href="https://docs.google.com/spreadsheets/d/1Z_eZei8PIXt-_OBH8-FZVZCMANWBmsdBfLMaLcsURUo/edit#gid=0">~8
+projects</a></li>
+<li>presentations on 2 June 2022
 <ul>
-<li>8 minutes per person</li>
+<li>8 minutes per group</li>
 <li>+1 min preparation</li>
 <li>+1 min feedback</li>
 </ul></li>
@@ -463,44 +475,48 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <aside class="notes">
 <ul>
 <li>hartes Zeitmaximum</li>
+<li>nicht viel, daher kurz und prägnant</li>
 </ul>
 </aside>
 </section>
 <section id="prepare-presentation" class="slide level2">
 <h2>Prepare Presentation</h2>
 <ul>
-<li>share with others
-<ul>
-<li>talk, slides, video, plots</li>
-<li>screen-sharing</li>
-</ul></li>
-<li>points to cover
+<li>talk, slides, and plots …
 <ul>
 <li>Motivation: What did you explore?</li>
-<li>Methods: What data and methods did you use?</li>
-<li>Discussion: What did you find out?</li>
+<li>Data &amp; Methods: What data and methods did you use?</li>
+<li>Results &amp; Discussion: What did you find out?</li>
 </ul></li>
+<li>connect your laptop with projector</li>
 </ul>
 <p><br></p>
-<p><span class="emoji" data-emoji="chart_with_upwards_trend">📈</span> visualize to drive your point home</p>
+<p><span class="emoji" data-emoji="chart_with_upwards_trend">📈</span>
+visualize to drive your point home</p>
 <aside class="notes">
 <ul>
 <li>Projekt online stellen?</li>
 </ul>
 </aside>
 </section>
-<section id="nlp-continue-our-deep-dive" class="slide level2">
-<h2>NLP: Continue our Deep Dive</h2>
+<section id="continue-our-journey-on-nlp-for-social-science"
+class="slide level2">
+<h2>Continue our Journey on NLP for Social Science</h2>
 <ul>
-<li>check <a href="https://github.com/aflueckiger/KED2022/blob/master/materials/code/KED2022_10.ipynb">code</a> on GitHub</li>
-<li>run code on Binder <a href="https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?filepath=materials%2Fcode%2FKED2022_10.ipynb"><img data-src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
+<li>check <a
+href="https://github.com/aflueckiger/KED2022/blob/master/materials/code/KED2022_10.ipynb">code</a>
+on GitHub</li>
+<li>run code on Binder <a
+href="https://mybinder.org/v2/gh/aflueckiger/KED2022/HEAD?labpath=materials%2Fcode%2FKED2022_10.ipynb"><img
+data-src="https://mybinder.org/badge_logo.svg" alt="Binder" /></a></li>
 </ul>
 <aside class="notes">
 <ul>
 <li>vergleichende Analysen</li>
 <li>Anwendungsfall scattertext
 <ul>
-<li>Wie unterscheidet sich die Sprache zwischen zwei Gruppen von Dokumenten?</li>
+<li>Wie unterscheidet sich die Sprache zwischen zwei Gruppen von
+Dokumenten?</li>
 <li>bedeutende Wörter in Korpus finden</li>
 <li>zeige interaktiv</li>
 </ul></li>
