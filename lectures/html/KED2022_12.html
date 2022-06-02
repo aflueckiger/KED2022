@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-06-02">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,6 +12,9 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     span.underline{text-decoration: underline;}
@@ -37,10 +41,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -79,21 +85,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -110,7 +111,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -140,7 +141,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -148,6 +149,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -187,26 +190,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -217,13 +224,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -240,6 +248,9 @@
       max-height: 600px;
   }
 
+  .reveal code {
+      color: silver;
+  }
 
   .reveal table {
       font-size: 0.8em;
@@ -301,7 +312,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -333,8 +344,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -348,7 +358,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -371,7 +381,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -397,58 +406,48 @@
 
 <section id="title-slide">
   <h1 class="title">The ABC of Computational Text Analysis</h1>
-  <p class="subtitle">#12 Mini-Project Presentations + <br>Discussion</p>
+  <p class="subtitle">#12 Mini-Project Presentations +
+<br>Discussion</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">27 May 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">2 June 2022</p>
 </section>
 
-<section id="recap-last-lecture" class="slide level2">
-<h2>Recap last Lecture</h2>
-<ul>
-<li>visualizing ​t​rends over time <span class="emoji" data-emoji="art">🎨</span></li>
-<li>interactive exploring <span class="emoji" data-emoji="mag_right">🔎</span>
-<ul>
-<li>combine stats and context</li>
-</ul></li>
-</ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> more than an end in itself</p>
-</section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>presenting your projects <br><span class="emoji" data-emoji="woman_technologist">👩‍💻</span> <span class="emoji" data-emoji="man_technologist">👨‍💻</span><span class="emoji" data-emoji="woman_technologist">👩‍💻</span> <span class="emoji" data-emoji="man_technologist">👨‍💻</span><span class="emoji" data-emoji="woman_technologist">👩‍💻</span> <span class="emoji" data-emoji="man_technologist">👨‍💻</span></li>
+<li>presenting your projects <br><span class="emoji"
+data-emoji="woman_technologist">👩‍💻</span> <span class="emoji"
+data-emoji="man_technologist">👨‍💻</span><span class="emoji"
+data-emoji="woman_technologist">👩‍💻</span> <span class="emoji"
+data-emoji="man_technologist">👨‍💻</span><span class="emoji"
+data-emoji="woman_technologist">👩‍💻</span> <span class="emoji"
+data-emoji="man_technologist">👨‍💻</span></li>
 <li>discussing your feedback</li>
 </ul>
 </section>
-<section id="project-presentations" class="slide level2" data-background="var(--blue)">
+<section id="project-presentations" class="slide level2"
+data-background="var(--blue)">
 <h2 data-background="var(--blue)">Project Presentations</h2>
 <ul>
-<li><a href="https://docs.google.com/spreadsheets/d/1Z_eZei8PIXt-_OBH8-FZVZCMANWBmsdBfLMaLcsURUo/edit#gid=0">6 projects</a></li>
-<li>schedule
+<li><a
+href="https://docs.google.com/spreadsheets/d/1VNyoCl7CsJXqko4DXw3ZwGo8QS055YEr42wjoUrkkZs/edit#gid=0">8
+projects</a>
 <ul>
-<li>8 minutes per person</li>
-<li>+1 min preparation</li>
-<li>+1 min questions <strong>@students</strong></li>
-<li>+1 min feedback @me</li>
+<li>7-8 minutes per group</li>
+<li>+2 min feedback/questions everyone</li>
 </ul></li>
-<li>publish project on the course website
-<ul>
-<li>when you like</li>
-</ul></li>
+<li>publish project on the course website if you like</li>
 </ul>
 </section>
-<section id="projects" class="slide level2">
-<h2>Projects</h2>
-<div style="font-size: 0.8em;">
+<section id="mini-projects" class="slide level2">
+<h2>Mini-Projects</h2>
+<div style="font-size: 0.9em;">
 <table>
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -458,35 +457,48 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 </thead>
 <tbody>
 <tr class="odd">
-<td>Josias</td>
-<td>Als Vorbereitung für die Hauptseminararbeit möchte ich die “favorite 100” textfiles von Jason Scott untersuchen. <br />Konkret soll untersucht werden, ob inhaltliche Auffälligkeiten bestehen, die möglicherweise Rückschlüsse auf Scotts Interessen und seine Biografie zulassen.</td>
+<td>Stefanie Jakober, Lorena Fähndrich, Serafina Bründler, Maria
+Krack</td>
+<td>Analysis of Migros Luzern’ annual reports (2010-2020) on the shift
+of focus towards more sustainability-related topics and words</td>
 </tr>
 <tr class="even">
-<td>Bastian</td>
-<td>Entwicklung der Patentanmeldungen im Bereich 3D-Technologien</td>
+<td>Valentina Meyer, Dario Haab, Nils Brun</td>
+<td>Geschlechter-Analyse von 2 Parteien anhand deren
+Parteiprogrammen</td>
 </tr>
 <tr class="odd">
-<td>Michelle</td>
-<td>Unterschiede des genutzten Wortschatzes der verschiedenen Interviewteilnehmer*innen in den Interviews meiner Bachelorarbeit untersuchen. <br />Spielt Quantität oder Kontext der Worte eine grössere Rolle?</td>
+<td>Selina Seiler, Fiona Dudé, Selina Buser</td>
+<td>Speeches from Olaf Scholz before and after being Kanzler</td>
 </tr>
 <tr class="even">
-<td>Noah</td>
-<td>Unterschiede im Wortschatz dreier schweizer Parteien (SVP, BDP, die Grünen) im aktuellen Wahlprogramm</td>
+<td>Jakob Henkel, Felix Sigrist, Livio Lombardo</td>
+<td>Speeches vergleichen</td>
 </tr>
 <tr class="odd">
-<td>Julian</td>
-<td>häufig verwendete Wörter zwischen verschiedenen Subreddits vergleichen und schauen, ob diese eine Auswirkung auf die Likes haben</td>
+<td>Ruben Oliveira, Sidney Kämpfer</td>
+<td>Compare most used words in presidental speeches in the US across
+time and parties</td>
 </tr>
 <tr class="even">
-<td>Stefan</td>
-<td>Untersuchung des Wortschatzes der UN General Debates zwischen 1970-2016. <br />Werde verschiedene Zeitrahmen setzen (bsp. 1970-1980,1980-1990,etc) und schauen welches die meistbenutzten Wörter sind.</td>
+<td>Anja Zürcher, Arianna Cambianica, Franciska Coric, Jasmin Wyss</td>
+<td>Comparison of the mission statements of some Swiss banks</td>
+</tr>
+<tr class="odd">
+<td>Cedric Bähler, Natalie Wüst, Leandra Ferrario, Valerio Moreno</td>
+<td>Comparison of annual reports by Glencore</td>
+</tr>
+<tr class="even">
+<td>Klara Förster, Tamara Gander, Lorena Graf, Lara Stiz</td>
+<td>Sprachvergleich einer konservativen Partei, damals vs. heute</td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="the-stage-is-yours" class="slide level2" data-background="../images/stage.gif">
-<h2 data-background="../images/stage.gif">The stage is yours</h2>
+<section id="the-stage-is-yours" class="slide level2"
+data-background="../images/stage.gif">
+<h2 data-background="../images/stage.gif">The stage is yours…</h2>
 <aside class="notes">
 <p>Feedback Fokus für Projekte</p>
 <ul>
@@ -499,7 +511,6 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <li><p>Wie Ressource gefunden?</p></li>
 <li><p>Probleme/Überraschungen</p></li>
 <li><p>Möglichkeiten für weitergehende Untersuchungen</p></li>
-<li><p>Projekt online stellen?</p></li>
 </ul>
 </aside>
 </section>
@@ -507,62 +518,78 @@ Faculty of Humanities and Social Sciences<br>University of Lucerne
 <h2>I hear you …</h2>
 <div class="columns">
 <div class="column">
-<h3 id="section"><span class="emoji" data-emoji="thumbsup">👍</span></h3>
+<h3 id="section"><span class="emoji"
+data-emoji="thumbsup">👍</span></h3>
 <ul>
 <li><p>knowledgeable + supportive</p></li>
 <li><p>well-organized seminar</p></li>
 <li><p>hands-on experience</p></li>
 </ul>
 </div><div class="column">
-<h3 id="section-1"><span class="emoji" data-emoji="thumbsdown">👎</span></h3>
+<h3 id="section-1"><span class="emoji"
+data-emoji="thumbsdown">👎</span></h3>
 <ul>
-<li>lacking interaction</li>
-<li>too fast</li>
-<li>course program too ambitious</li>
+<li>good exercises, yet to little time and no solutions</li>
+<li>lacking use case for Bash</li>
+<li>explanations not always clear</li>
+<li>too fast and ambitious</li>
 </ul>
 </div>
 </div>
-<p><span class="emoji" data-emoji="desktop_computer">🖥️</span></p>
-<ul>
-<li>recorded video of sessions</li>
-</ul>
 <p><br></p>
 <p><strong>Thank you!</strong></p>
 <aside class="notes">
 <ul>
-<li>wenig interaktiv
+<li>Kurs zum 3ten Mal durchgeführt, erstes Mal vor Ort
 <ul>
-<li>Zoom nicht optimal für Interaktion</li>
-<li>leider je technischer, desto weniger Interaktion</li>
+<li>anspruchsvoll, aber lehrreich</li>
+<li>Fordern bedingt auch Fördern</li>
 </ul></li>
-<li>Kurs zum 2ten Mal durchgeführt
+<li>positiv: eigentlicher Aufbau und Unterstützung</li>
+<li>negativ: Erklärung nicht immer klar und fehlende Beispiele</li>
+<li>Grundproblematik
 <ul>
-<li>technische Dinge vereinfachen (Editor nicht optimal)</li>
-<li>Kinderkrankheiten beim nächstes Mal behoben</li>
+<li>wie viel in Kurs packen</li>
+<li>ungeplante technische Schwierigkeiten (insb. Windows)</li>
 </ul></li>
 <li>Persönlisches Ziel: Rhetorik und Erklärungen verbessern</li>
+<li>Tutorat wäre angebracht, aber keine Leute</li>
 </ul>
 </aside>
 </section>
-<section id="go-vs.-nogo" class="slide level2">
-<h2>#Go vs. #NoGo</h2>
+<section id="why-the-heck-did-we-learn-all-this" class="slide level2"
+data-background="var(--green)">
+<h2 data-background="var(--green)">Why the heck did we learn all this?
+<span class="emoji" data-emoji="exploding_head">🤯</span></h2>
 <ul>
-<li>assignments during Easter break?</li>
+<li><strong>Text</strong> is the most abundant form of data. <strong>We
+want to analyze</strong> that.</li>
+<li><del>AI</del> Information technology is <strong>transforming our
+society</strong>. We need to <strong>understand</strong> (to
+criticize).</li>
 </ul>
 </section>
-<section id="ensure-up-to-date-materials" class="slide level2" data-background="var(--blue)">
-<h2 data-background="var(--blue)">Ensure up-to-date materials</h2>
-<p>update with</p>
-<p><code>git pull</code></p>
+<section id="ensure-up-to-date-materials" class="slide level2"
+data-background="var(--blue)">
+<h2 data-background="var(--blue)">Ensure up-to-date Materials</h2>
+<p>update with <code>git pull</code></p>
 </section>
-<section id="nice-work-good-punch" class="slide level2" data-background="var(--green)">
-<h2 data-background="var(--green)">Nice Work<br> <span class="emoji" data-emoji="woman_juggling">🤹‍♀️</span> <span class="emoji" data-emoji="man_juggling">🤹‍♂️</span> <br><br>Good Punch<br> <span class="emoji" data-emoji="punch">👊</span></h2>
+<section id="nice-work" class="slide level2"
+data-background="var(--green)">
+<h2 data-background="var(--green)">Nice Work<br> <span class="emoji"
+data-emoji="woman_juggling">🤹‍♀️</span> <span class="emoji"
+data-emoji="man_juggling">🤹‍♂️</span></h2>
 </section>
-<section id="it-is-getting-easier-from-here-on-relax-first-though" class="slide level2">
-<h2><span class="emoji" data-emoji="crossed_fingers">🤞</span> <br> It is getting easier from here on, <br> relax first though! <br><span class="emoji" data-emoji="swimmer">🏊</span></h2>
+<section id="it-is-getting-easier-from-here-on-relax-first-though"
+class="slide level2">
+<h2><span class="emoji" data-emoji="crossed_fingers">🤞</span> <br> It
+is getting easier from here on, <br> relax first though! <br><span
+class="emoji" data-emoji="swimmer">🏊</span></h2>
 </section>
-<section id="good-bye" class="slide level2" data-background="../images/bye_bye.gif">
-<h2 data-background="../images/bye_bye.gif"><span style="font-size:2em;">Good Bye…</span></h2>
+<section id="good-bye" class="slide level2"
+data-background="../images/bye_bye.gif">
+<h2 data-background="../images/bye_bye.gif"><span
+style="font-size:2em;">Good Bye…</span></h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">

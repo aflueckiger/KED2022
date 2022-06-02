@@ -239,13 +239,16 @@ You can search for the terms of your interest. Moreover, you may click on the po
 
 In this session, it is your turn. Going beyond mere toy examples, you present what you have worked on and show off your first harvest of computational text analysis. 
 
-The seminar is coming to an end, yet it doesn't have to be a dead-end. You may have gotten more proficient in cursing your computer but also making your way through the jungle of technology. Keep going, cheers!
+The seminar is coming to an end, yet it doesn't have to be a dead-end. You may have gotten more proficient in cursing your computer but also fighting your way through the jungle of technology. Keep going, cheers!
 
-{% comment %}
+
 
 [<i class="fas fa-desktop"></i>](https://aflueckiger.github.io/KED2022/lectures/html/KED2022_12.html)
 [<i class="fas fa-file-pdf"></i>](https://aflueckiger.github.io/KED2022/lectures/pdf/KED2022_12.pdf)
 [<i class="fab fa-github"></i>](https://github.com/aflueckiger/KED2022/tree/master/lectures/md/KED2022_12.md)
+
+{% comment %}
+
 [<i class="fas fa-video"></i>](https://tube.switch.ch/videos/F0yHkSqnuy)
 
 {% endcomment %}
