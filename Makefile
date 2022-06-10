@@ -5,7 +5,7 @@ PREFIX = /home/alex/pandoc-templates
 CSS = lectures/resources/custom_style_reveal.css
 
 ## Location of your working bibliography file
-BIB = /home/alex/drive/zotero/references.bib
+BIB = /home/alex/zotero.bib
 
 TITLE?= "BA Seminar: The ABC of Computational Text Analysis"
 AUTHOR?= "Alex Flückiger"
@@ -73,10 +73,10 @@ $(LECTURES_HTML_DIR)/%.html: $(LECTURES_MD_DIR)/%.md $(CSS)
     --include-in-header lectures/resources/custom_style_reveal.css lectures/resources/code_highlighting.html \
 	-V biblio-title:References \
     --citeproc \
-    --bibliography /home/alex/drive/zotero/references.bib
+    --bibliography $(BIB)
 
 $(NOTES_DIR)/%.notes.pdf: $(LECTURES_MD_DIR)/%.md lib/extract_notes.py
-	python lib/extract_notes.py < $< | pandoc -o $@ -f markdown --pdf-engine=xelatex -V geometry:margin=2.5cm
+	python lib/extract_notes.py < $< | pandoc -o $@ -f markdown --pdf-engine=xelatex -V geometry:margin=2cm
 
 $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
 	decktape --load-pause 500 --pdf-author $(AUTHOR) --pdf-title $(TITLE) $< $@
@@ -87,7 +87,7 @@ $(LECTURES_PDF_DIR)/%.pdf: $(LECTURES_HTML_DIR)/%.html
 KED2022_syllabus.pdf: index.md schedule.md lectures.md assignments.md
 	cat index.md <(echo "[Go to Course Website](https://aflueckiger.github.io/KED2022/)" ) | grep -v "Go to UniLu website" | sed '/<div/,/div>/d'	> index.md.tmp
 	sed '5 a # Schedule' schedule.md | sed 's/.lectures//' > schedule.md.tmp
-	sed '5 a # Lectures' lectures.md | sed 's/!.*\.svg)/Binder/' | grep -v "{%" > lectures.md.tmp
+	sed '5 a # Lectures' lectures.md | sed 's/!.*\.svg)//' | grep -v "{%" > lectures.md.tmp
 	sed '5 a # Assignments' assignments.md > assignments.md.tmp
 	pandoc -o $@ index.md.tmp schedule.md.tmp lectures.md.tmp assignments.md.tmp \
 	--from markdown \
