@@ -81,6 +81,7 @@ The only requirement is to complement your claims with some quantitative facts a
 
 ## Inspiring Student Projects
 
+- [Gender differences in 1 August speeches](https://github.com/aflueckiger/KED2022/raw/main/materials/mini_projects/2022_gender_differences/KED2022_presentation.pdf) [[Code](https://github.com/aflueckiger/KED2022/tree/main/materials/mini_projects/2022_gender_differences)], Dario Haab, Valentina Meyer, Nils Brun, 2022
 - [Analysis of Bulletin Board Systeme (BBS)](https://git.makersphere.ch/josias/jason-scotts-favorite-100/raw/master/README.pdf), Josias Bruderer, 2021
 
 # Optional Seminar Paper
