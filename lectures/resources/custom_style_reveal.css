@@ -222,6 +222,9 @@ section:not(.has-dark-background) span.citation{
     max-height: 600px;
 }
 
+.reveal code {
+    color: silver;
+}
 
 .reveal table {
     font-size: 0.8em;
