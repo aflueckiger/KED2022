@@ -12,12 +12,20 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     div.csl-bib-body { }
     div.csl-entry {
@@ -265,6 +273,10 @@
   }
 
 
+  section.has-dark-background code {
+      color: silver;
+  }
+
   .reveal table {
       font-size: 0.8em;
   }
@@ -357,8 +369,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -422,7 +433,8 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#2 Text as Data</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
   <p class="date">10 March 2022</p>
 </section>
 
@@ -430,7 +442,8 @@
 <h2>Outline</h2>
 <ul>
 <li>recap + reading</li>
-<li>methodological foundation <span class="emoji" data-emoji="grimacing">😬</span></li>
+<li>methodological foundation <span class="emoji"
+data-emoji="grimacing">😬</span></li>
 <li>first computational text analysis</li>
 </ul>
 <aside class="notes">
@@ -440,7 +453,8 @@
 <ul>
 <li>3/4 mit R-Erfahrung, wenige mit Python und Kommandozeile</li>
 <li>SoCom Leute mit Inhaltsanalyse, keine Daten in Aussicht</li>
-<li>Einführungskurs, aber komplementäres Wissen und Pointers für Fortgeschrittene</li>
+<li>Einführungskurs, aber komplementäres Wissen und Pointers für
+Fortgeschrittene</li>
 <li>Skills für Seminar/BA-Arbeiten</li>
 <li>allgemeine Programmier- und Computerkenntnisse</li>
 </ul></li>
@@ -477,10 +491,13 @@
 </div>
 <aside class="notes">
 <ul>
-<li>Technologie verändert Welt. Seit immer, erneut grosser Schritt nach Industrialisierung.</li>
+<li>Technologie verändert Welt. Seit immer, erneut grosser Schritt nach
+Industrialisierung.</li>
 <li>Computer als Werkzeug/interaktiver Partner
 <ol type="1">
-<li>nehmen an sozialen Prozessen teil -&gt; wie verändert sich das Soziale/Ökonomische (Wissenschaft, Arbeit, Jobmarkt, Benachteiligung)?</li>
+<li>nehmen an sozialen Prozessen teil -&gt; wie verändert sich das
+Soziale/Ökonomische (Wissenschaft, Arbeit, Jobmarkt,
+Benachteiligung)?</li>
 <li>für CSS: Daten wichtiger als ML</li>
 </ol></li>
 <li>Daten sind da -&gt; erst Programmieren ermöglicht Auswertung</li>
@@ -489,7 +506,9 @@
 </section>
 <section id="reading" class="slide level2" data-background="#3c70b5">
 <h2 data-background="#3c70b5">Reading</h2>
-<h4 id="computational-social-science-lazer2009">Computational Social Science <span class="citation" data-cites="Lazer2009">(Lazer et al. 2009)</span></h4>
+<h4 id="computational-social-science-lazer2009">Computational Social
+Science <span class="citation" data-cites="Lazer2009">(Lazer et al.
+2009)</span></h4>
 <div class="fragment">
 <ul>
 <li>data-driven</li>
@@ -499,7 +518,8 @@
 </ul>
 <aside class="notes">
 <ul>
-<li>hochaktuell: Einsichten in Pandemiegeschehen durch Netzwerkanalyse</li>
+<li>hochaktuell: Einsichten in Pandemiegeschehen durch
+Netzwerkanalyse</li>
 <li>methodical focus because of Nature paper</li>
 <li>more than self-reported data (survey)</li>
 <li>tlw. schwieriger Zugang
@@ -523,7 +543,10 @@
 </ul>
 </div><div class="column">
 <figure>
-<img data-src="../images/ogden_semiotic_triangle.png" alt="Semiotic Triangle (Ogden and Richards 1923)" /><figcaption aria-hidden="true">Semiotic Triangle <span class="citation" data-cites="Ogden1923">(Ogden and Richards 1923)</span></figcaption>
+<img data-src="../images/ogden_semiotic_triangle.png"
+alt="Semiotic Triangle (Ogden and Richards 1923)" />
+<figcaption aria-hidden="true">Semiotic Triangle <span class="citation"
+data-cites="Ogden1923">(Ogden and Richards 1923)</span></figcaption>
 </figure>
 </div>
 </div>
@@ -537,7 +560,8 @@
 <li>Versuch der Einheit: Ding, Konzept und Wort</li>
 <li>keine direkte Beziehung zwischen Symbol &amp; Gegenstand
 <ul>
-<li>keine Eineindeutigkeit wie in Datenbanken –&gt; schwierig für Computer
+<li>keine Eineindeutigkeit wie in Datenbanken –&gt; schwierig für
+Computer
 <ul>
 <li>identische Personen- und Ortsnamen</li>
 <li>umfasst Früchte auch Hülsenfrüchte?</li>
@@ -553,7 +577,8 @@
 <section id="section" class="slide level2">
 <h2></h2>
 <blockquote>
-<p>Language shapes the way we think, <br> and determines what we can think about.</p>
+<p>Language shapes the way we think, <br> and determines what we can
+think about.</p>
 <p><cite>Benjamin Lee Whorf</cite></p>
 </blockquote>
 <aside class="notes">
@@ -561,7 +586,8 @@
 <li>zweiteilige These umstritten (Sapir-Whorf-Hypothese)
 <ul>
 <li>Sprache formt das Denken</li>
-<li>unabhängig der Determination: überragende Bedeutung für das Soziale</li>
+<li>unabhängig der Determination: überragende Bedeutung für das
+Soziale</li>
 <li>Inuit-Anekdote zu Schnee bedingt durch Grammatik</li>
 </ul></li>
 <li>Sprache ist das Soziale schlechthin
@@ -569,15 +595,18 @@
 <li>Vermittlungsmedium</li>
 <li>weitere Formen: Zeichnen, Mathematik, Fotos</li>
 </ul></li>
-<li>wenn nicht kommuniziert, dann gesellschaftlich ohne Bedeutung (aber nicht unbedingt unvorstellbar)
+<li>wenn nicht kommuniziert, dann gesellschaftlich ohne Bedeutung (aber
+nicht unbedingt unvorstellbar)
 <ul>
 <li>Wörter sind Unterscheidungen</li>
 <li>Link zu Luhmann</li>
 </ul></li>
 <li>Aktuelles Beispiel Ukraine-Krieg
 <ul>
-<li>Konflikt vs Krieg (Gewalt) vs Invasion (asymmetrisch), militärische Operation</li>
-<li>Definitionskampf ist gut erkennbar von Russland, aber auch allen anderen</li>
+<li>Konflikt vs Krieg (Gewalt) vs Invasion (asymmetrisch), militärische
+Operation</li>
+<li>Definitionskampf ist gut erkennbar von Russland, aber auch allen
+anderen</li>
 </ul></li>
 </ul>
 </aside>
@@ -589,21 +618,29 @@
 </section>
 <section id="a-micro-and-macro-perspective-i" class="slide level2">
 <h2>A micro and macro perspective I</h2>
-<h3 id="individual-cases-vs.-collective-trends">individual cases vs. collective trends</h3>
+<h3 id="individual-cases-vs.-collective-trends">individual cases
+vs. collective trends</h3>
 <div class="columns">
 <div class="column">
 <figure>
-<img data-src="../images/close_reading.png" style="height:15cm" alt="close reading (src)" /><figcaption aria-hidden="true">close reading <a href="https://i1.wp.com/elevenews.com/wp-content/uploads/2018/03/golf-cart-repair-manuals.png">(src)</a></figcaption>
+<img data-src="../images/close_reading.png" style="height:15cm"
+alt="close reading (src)" />
+<figcaption aria-hidden="true">close reading <a
+href="https://i1.wp.com/elevenews.com/wp-content/uploads/2018/03/golf-cart-repair-manuals.png">(src)</a></figcaption>
 </figure>
 </div><div class="column">
 <figure>
-<img data-src="../images/nlp-natural-language-processing.jpg" style="height:15cm" alt="distant reading (src)" /><figcaption aria-hidden="true">distant reading <a href="https://www.100worte.de/wp-content/uploads/2019/08/nlp-natural-language-processing.jpg">(src)</a></figcaption>
+<img data-src="../images/nlp-natural-language-processing.jpg"
+style="height:15cm" alt="distant reading (src)" />
+<figcaption aria-hidden="true">distant reading <a
+href="https://www.100worte.de/wp-content/uploads/2019/08/nlp-natural-language-processing.jpg">(src)</a></figcaption>
 </figure>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>Nun klar, wieso Textanalyse wichtig, aber welche Herangehensweise?</li>
+<li>Nun klar, wieso Textanalyse wichtig, aber welche
+Herangehensweise?</li>
 <li>Traditionell
 <ul>
 <li>Inhaltsanalyse, close reading</li>
@@ -630,11 +667,17 @@
 <div class="columns">
 <div class="column">
 <figure>
-<img data-src="../images/newspapers-in-pile.jpg" style="height:15cm" alt="tons of text (src)" /><figcaption aria-hidden="true">tons of text <a href="https://independencedaily.co.uk/sunday-papers-12-august-2018/">(src)</a></figcaption>
+<img data-src="../images/newspapers-in-pile.jpg" style="height:15cm"
+alt="tons of text (src)" />
+<figcaption aria-hidden="true">tons of text <a
+href="https://independencedaily.co.uk/sunday-papers-12-august-2018/">(src)</a></figcaption>
 </figure>
 </div><div class="column">
 <figure>
-<img data-src="../images/numbers_unsplash.jpg" style="height:15cm" alt="meaning of numbers (src)" /><figcaption aria-hidden="true">meaning of numbers <a href="https://unsplash.com/photos/Wpnoqo2plFA">(src)</a></figcaption>
+<img data-src="../images/numbers_unsplash.jpg" style="height:15cm"
+alt="meaning of numbers (src)" />
+<figcaption aria-hidden="true">meaning of numbers <a
+href="https://unsplash.com/photos/Wpnoqo2plFA">(src)</a></figcaption>
 </figure>
 </div>
 </div>
@@ -655,8 +698,11 @@
 </ul>
 </aside>
 </section>
-<section id="from-micro-to-macro-and-back-again" class="slide level2" data-background="var(--green)">
-<h2 data-background="var(--green)">From micro to macro <span class="emoji" data-emoji="bar_chart">📊</span><br>…and back again <span class="emoji" data-emoji="bookmark_tabs">📑</span></h2>
+<section id="from-micro-to-macro-and-back-again" class="slide level2"
+data-background="var(--green)">
+<h2 data-background="var(--green)">From micro to macro <span
+class="emoji" data-emoji="bar_chart">📊</span><br>…and back again <span
+class="emoji" data-emoji="bookmark_tabs">📑</span></h2>
 <aside class="notes">
 <ul>
 <li>Lösung: Vogelperspektive, dann Eintauchen und zurück</li>
@@ -667,7 +713,9 @@
 </section>
 <section id="two-research-paradigms" class="slide level2">
 <h2>Two Research Paradigms</h2>
-<h4 id="data-exploration-vs.-hypothesis-testing-evans2016">data exploration vs. hypothesis testing <span class="citation" data-cites="Evans2016">(Evans and Aceves 2016)</span></h4>
+<h4 id="data-exploration-vs.-hypothesis-testing-evans2016">data
+exploration vs. hypothesis testing <span class="citation"
+data-cites="Evans2016">(Evans and Aceves 2016)</span></h4>
 <ul>
 <li>add nuance</li>
 <li>develop new narratives</li>
@@ -688,8 +736,10 @@
 </ul>
 </aside>
 </section>
-<section id="numbers-do-not-talk" class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Numbers do not talk <span class="emoji" data-emoji="no_mouth">😶</span></h2>
+<section id="numbers-do-not-talk" class="slide level2"
+data-background="#4d7e65">
+<h2 data-background="#4d7e65">Numbers do not talk <span class="emoji"
+data-emoji="no_mouth">😶</span></h2>
 <div class="fragment">
 <p>Thus, quantification and qualitative analysis go well together.</p>
 <aside class="notes">
@@ -714,7 +764,8 @@
 <li>discrete symbols</li>
 <li>unstructured, messy data</li>
 </ul>
-<p><span class="citation" data-cites="Grimmer2013">(see also Grimmer and Stewart 2013)</span></p>
+<p><span class="citation" data-cites="Grimmer2013">(see also Grimmer and
+Stewart 2013)</span></p>
 <aside class="notes">
 <ul>
 <li>Link zu semiotischem Dreieck</li>
@@ -740,10 +791,16 @@
 </aside>
 </section>
 <section id="unstructured-text" class="slide level2">
-<h2>Unstructured Text? <span class="emoji" data-emoji="thinking">🤔</span></h2>
-<h3 id="collection-documents-paragraphs-sentences-words">collection &gt; documents &gt; paragraphs &gt; sentences &gt; words</h3>
+<h2>Unstructured Text? <span class="emoji"
+data-emoji="thinking">🤔</span></h2>
+<h3 id="collection-documents-paragraphs-sentences-words">collection &gt;
+documents &gt; paragraphs &gt; sentences &gt; words</h3>
 <figure>
-<img data-src="../images/alphabet_pasta.png" alt="Texts carry more meaning than a soup (=set) of words (Wikimedia)" /><figcaption aria-hidden="true">Texts carry more meaning than a soup (=set) of words <a href="https://commons.wikimedia.org/wiki/File:AlphabetPasta.jpg">(Wikimedia)</a></figcaption>
+<img data-src="../images/alphabet_pasta.png"
+alt="Texts carry more meaning than a soup (=set) of words (Wikimedia)" />
+<figcaption aria-hidden="true">Texts carry more meaning than a soup
+(=set) of words <a
+href="https://commons.wikimedia.org/wiki/File:AlphabetPasta.jpg">(Wikimedia)</a></figcaption>
 </figure>
 </section></section>
 <section>
@@ -751,12 +808,14 @@
 <h1>Data Formats</h1>
 
 </section>
-<section id="in-class-task-file-types" class="slide level2" data-background="#3c70b5">
+<section id="in-class-task-file-types" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class Task: File Types</h2>
 <div class="columns blockstyle">
 <ul>
 <li>What file formats do you know?</li>
-<li>Open files of different types in a text editor. <br> Which ones look good?</li>
+<li>Open files of different types in a text editor. <br> Which ones look
+good?</li>
 </ul>
 </div>
 <aside class="notes">
@@ -792,12 +851,16 @@
 </section></section>
 <section>
 <section id="lets-dive-into-it" class="title-slide slide level1">
-<h1>Let’s Dive into it! <span class="emoji" data-emoji="sweat_drops">💦</span></h1>
+<h1>Let’s Dive into it! <span class="emoji"
+data-emoji="sweat_drops">💦</span></h1>
 
 </section>
 <section id="counting-ngrams" class="slide level2">
 <h2>Counting ngrams</h2>
-<h3 id="google-ngram-viewer-michel2011"><a href="https://books.google.com/ngrams">Google Ngram Viewer</a> <span class="citation" data-cites="Michel2011">(Michel et al. 2011)</span></h3>
+<h3 id="google-ngram-viewer-michel2011"><a
+href="https://books.google.com/ngrams">Google Ngram Viewer</a> <span
+class="citation" data-cites="Michel2011">(Michel et al.
+2011)</span></h3>
 <ul>
 <li>historical perspective with ngrams</li>
 <li>&gt;5.2 million books</li>
@@ -820,8 +883,10 @@
 </ul>
 </aside>
 </section>
-<section id="in-class-task-investigate-the-environmental-discourse" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-Class Task: Investigate the Environmental Discourse</h2>
+<section id="in-class-task-investigate-the-environmental-discourse"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-Class Task: Investigate the
+Environmental Discourse</h2>
 <ul>
 <li><p>What other terms have been used to describe nature?</p>
 <ul>
@@ -836,7 +901,9 @@
 <li>i.e. similar words with non-equivalent curves over time</li>
 </ul></li>
 </ul>
-<h3 id="what-do-you-conclude-from-your-observations"><span class="emoji" data-emoji="dart">🎯</span> What do you conclude from your observations?</h3>
+<h3 id="what-do-you-conclude-from-your-observations"><span class="emoji"
+data-emoji="dart">🎯</span> What do you conclude from your
+observations?</h3>
 <aside class="notes">
 <ul>
 <li>Dauer: 20 Minuten</li>
@@ -848,7 +915,9 @@
 </section>
 <section id="refine-your-queries" class="slide level2">
 <h2>Refine your Queries</h2>
-<h3 id="check-out-case-sensitiveness-wildcards-and-operators">check out case-sensitiveness, wildcards (*) ​an​d ​operators <span class="emoji" data-emoji="nerd_face">🤓</span></h3>
+<h3 id="check-out-case-sensitiveness-wildcards-and-operators">check out
+case-sensitiveness, wildcards (*) ​an​d ​operators <span class="emoji"
+data-emoji="nerd_face">🤓</span></h3>
 <table>
 <colgroup>
 <col style="width: 11%" />
@@ -863,19 +932,27 @@
 <tbody>
 <tr class="odd">
 <td><code>+</code></td>
-<td>sums multiple expressions into one to <strong>aggregate trends</strong>.</td>
+<td>sums multiple expressions into one to <strong>aggregate
+trends</strong>.</td>
 </tr>
 <tr class="even">
 <td><code>-</code></td>
-<td>subtracts the expression on the right from the expression on the left, giving you a way to <strong>measure one ngram relative to another</strong>.</td>
+<td>subtracts the expression on the right from the expression on the
+left, giving you a way to <strong>measure one ngram relative to
+another</strong>.</td>
 </tr>
 <tr class="odd">
 <td><code>/</code></td>
-<td>divides the expression on the left by the expression on the right, which is useful for <strong>isolating the behavior of an ngram with respect to another</strong>.</td>
+<td>divides the expression on the left by the expression on the right,
+which is useful for <strong>isolating the behavior of an ngram with
+respect to another</strong>.</td>
 </tr>
 <tr class="even">
 <td><code>*</code></td>
-<td>multiplies the expression on the left by the number on the right, making it easier to compare ngrams of very different frequencies. (Be sure to enclose the entire ngram in parentheses so that * isn’t interpreted as a wildcard.)</td>
+<td>multiplies the expression on the left by the number on the right,
+making it easier to compare ngrams of very different frequencies. (Be
+sure to enclose the entire ngram in parentheses so that * isn’t
+interpreted as a wildcard.)</td>
 </tr>
 </tbody>
 </table>
@@ -883,7 +960,10 @@
 <section id="ngram-pay-attention" class="slide level2">
 <h2>Ngram ‘pay attention’</h2>
 <figure>
-<img data-src="../images/google_ngram_pay_attention.jpeg" alt="Google Ngram Viewer: Evolution of the phrase ‘attention’" /><figcaption aria-hidden="true">Google Ngram Viewer: Evolution of the phrase ‘attention’</figcaption>
+<img data-src="../images/google_ngram_pay_attention.jpeg"
+alt="Google Ngram Viewer: Evolution of the phrase ‘attention’" />
+<figcaption aria-hidden="true">Google Ngram Viewer: Evolution of the
+phrase ‘attention’</figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -891,12 +971,14 @@
 <li>externer Faktor (call) vs. aktives Verhalten (pay)</li>
 <li>pay attention as a form of currency</li>
 <li>Zusammenhang? Aufmerksamkeitsökonomie, Individualismus</li>
-<li>“if you don’t want to call attention to yourself by giving an incorrect answer, then you should probably pay attention in class.”</li>
+<li>“if you don’t want to call attention to yourself by giving an
+incorrect answer, then you should probably pay attention in class.”</li>
 </ul>
 </aside>
 </section>
 <section id="remember" class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Remember <span class="emoji" data-emoji="thumbsup">👍</span></h2>
+<h2 data-background="#4d7e65">Remember <span class="emoji"
+data-emoji="thumbsup">👍</span></h2>
 <p>Has the language evolved over time or the social perception?</p>
 <div class="fragment">
 <p><br></p>
@@ -917,12 +999,14 @@
 </section>
 <section id="no-culturomics-but-meaning-making" class="slide level2">
 <h2>No Culturomics but Meaning-Making</h2>
-<h3 id="phenomena-in-collective-memory">phenomena in collective memory</h3>
+<h3 id="phenomena-in-collective-memory">phenomena in collective
+memory</h3>
 <ul>
 <li>semantic drifts (meaning)</li>
 <li>lexical shifts (frequency)</li>
 </ul>
-<p><strong>Read, read, read</strong> to complement <strong>stats</strong> with context!</p>
+<p><strong>Read, read, read</strong> to complement
+<strong>stats</strong> with context!</p>
 <aside class="notes">
 <ul>
 <li><p>Änderung von kontextueller Verwendung oder Wortfrequenz</p></li>
@@ -944,7 +1028,8 @@
 </section>
 <section id="questions-of-interpretation" class="slide level2">
 <h2>Questions of Interpretation</h2>
-<h3 id="possible-reasons-of-decreasing-frequency">possible reasons of decreasing frequency</h3>
+<h3 id="possible-reasons-of-decreasing-frequency">possible reasons of
+decreasing frequency</h3>
 <ul>
 <li>loosing interest</li>
 <li>becoming an established fact</li>
@@ -967,7 +1052,8 @@
 </ul>
 </aside>
 </section>
-<section id="a-word-of-caution" class="slide level2" data-background="#b5533c">
+<section id="a-word-of-caution" class="slide level2"
+data-background="#b5533c">
 <h2 data-background="#b5533c">A Word of Caution</h2>
 <p>The unknowns of Google Ngram Viewer</p>
 <ul>
@@ -977,19 +1063,25 @@
 </ul></li>
 <li>artifacts of digitalization</li>
 </ul>
-<p><span class="emoji" data-emoji="nerd_face">🤓</span> use better alternative: <a href="https://bookworm.htrc.illinois.edu/develop/">bookworm HathiTrust</a></p>
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> use better
+alternative: <a
+href="https://bookworm.htrc.illinois.edu/develop/">bookworm
+HathiTrust</a></p>
 <aside class="notes">
 <ul>
 <li>Google: ~4% of all books ever published</li>
 <li>Compared to the 2009 versions, the 2012 and 2019 versions:
 <ul>
-<li>more books, improved OCR, improved library and publisher metadata.</li>
-<li>ngrams across page boundaries, no ngrams across sentence boundaries</li>
+<li>more books, improved OCR, improved library and publisher
+metadata.</li>
+<li>ngrams across page boundaries, no ngrams across sentence
+boundaries</li>
 <li>rule-based tokenization</li>
 </ul></li>
 <li>wissenschaftlicher Standard
 <ul>
-<li>Ziel: nicht Unfehlbarkeit, sondern methodisch nachvollziehbar und kritisierbar</li>
+<li>Ziel: nicht Unfehlbarkeit, sondern methodisch nachvollziehbar und
+kritisierbar</li>
 <li>zitierfähig</li>
 </ul></li>
 <li>HathiTrust
@@ -1004,7 +1096,10 @@
 <h2>Interacting with Data</h2>
 <h3 id="it-is-a-lense-not-a-map.">It is a lense, not a map.</h3>
 <figure>
-<img data-src="../images/dikw_pyramid.svg" alt="DIKW pyramid (Wikipedia)" /><figcaption aria-hidden="true">DIKW pyramid <a href="https://en.wikipedia.org/wiki/DIKW_pyramid#/media/File:DIKW_Pyramid.svg">(Wikipedia)</a></figcaption>
+<img data-src="../images/dikw_pyramid.svg"
+alt="DIKW pyramid (Wikipedia)" />
+<figcaption aria-hidden="true">DIKW pyramid <a
+href="https://en.wikipedia.org/wiki/DIKW_pyramid#/media/File:DIKW_Pyramid.svg">(Wikipedia)</a></figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -1024,27 +1119,34 @@
 <section id="prepare-your-system" class="slide level2">
 <h2>Prepare your System</h2>
 <ol type="1">
-<li>backup files + update system <span class="emoji" data-emoji="construction">🚧</span></li>
-<li>start installation with this <a href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">guide</a> <span class="emoji" data-emoji="construction_worker">👷</span></li>
+<li>backup files + update system <span class="emoji"
+data-emoji="construction">🚧</span></li>
+<li>start installation with this <a
+href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">guide</a>
+<span class="emoji" data-emoji="construction_worker">👷</span></li>
 </ol>
 <aside class="notes">
 <ul>
-<li>Nicht riskanter als anderes. Ein Backup gehört dazu, ein Datenverlust sicher nicht.</li>
+<li>Nicht riskanter als anderes. Ein Backup gehört dazu, ein
+Datenverlust sicher nicht.</li>
 <li>Unklarheiten/Probleme unbedingt zurückmelden</li>
 <li>Wer hat Python schon installiert? Welches OS/Installer?</li>
 </ul>
 </aside>
 </section>
 <section id="new-room" class="slide level2">
-<h2>New room <span class="emoji" data-emoji="classical_building">🏛️</span></h2>
+<h2>New room <span class="emoji"
+data-emoji="classical_building">🏛️</span></h2>
 <ul>
 <li>seminar in lecture hall 5</li>
 <li>as of 17 March onwards</li>
 </ul>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
 <section id="references" class="slide level2">
@@ -1073,21 +1175,46 @@ $(function() {
     });
 });
 </script>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
 <div id="ref-Evans2016" class="csl-entry" role="doc-biblioentry">
-Evans, James A., and Pedro Aceves. 2016. <span>“Machine <span>Translation</span>: <span>Mining Text</span> for <span>Social Theory</span>.”</span> <em>Annual Review of Sociology</em> 42 (1): 21–50. <a href="https://doi.org/10.1146/annurev-soc-081715-074206">https://doi.org/10.1146/annurev-soc-081715-074206</a>.
+Evans, James A., and Pedro Aceves. 2016. <span>“Machine
+<span>Translation</span>: <span>Mining Text</span> for <span>Social
+Theory</span>.”</span> <em>Annual Review of Sociology</em> 42 (1):
+21–50. <a
+href="https://doi.org/10.1146/annurev-soc-081715-074206">https://doi.org/10.1146/annurev-soc-081715-074206</a>.
 </div>
 <div id="ref-Grimmer2013" class="csl-entry" role="doc-biblioentry">
-Grimmer, Justin, and Brandon M. Stewart. 2013. <span>“Text as <span>Data</span>: <span>The Promise</span> and <span>Pitfalls</span> of <span>Automatic Content Analysis Methods</span> for <span>Political Texts</span>.”</span> <em>Political Analysis</em> 21 (3): 267–97. <a href="https://doi.org/10.1093/pan/mps028">https://doi.org/10.1093/pan/mps028</a>.
+Grimmer, Justin, and Brandon M. Stewart. 2013. <span>“Text as
+<span>Data</span>: <span>The Promise</span> and <span>Pitfalls</span> of
+<span>Automatic Content Analysis Methods</span> for <span>Political
+Texts</span>.”</span> <em>Political Analysis</em> 21 (3): 267–97. <a
+href="https://doi.org/10.1093/pan/mps028">https://doi.org/10.1093/pan/mps028</a>.
 </div>
 <div id="ref-Lazer2009" class="csl-entry" role="doc-biblioentry">
-Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László Barabási, Devon Brewer, Nicholas Christakis, et al. 2009. <span>“Computational <span>Social Science</span>.”</span> <em>Science</em> 323 (5915): 721–23. <a href="https://doi.org/10.1126/science.1167742">https://doi.org/10.1126/science.1167742</a>.
+Lazer, David, Alex Pentland, Lada Adamic, Sinan Aral, Albert-László
+Barabási, Devon Brewer, Nicholas Christakis, et al. 2009.
+<span>“Computational <span>Social Science</span>.”</span>
+<em>Science</em> 323 (5915): 721–23. <a
+href="https://doi.org/10.1126/science.1167742">https://doi.org/10.1126/science.1167742</a>.
 </div>
 <div id="ref-Michel2011" class="csl-entry" role="doc-biblioentry">
-Michel, J.-B., Y. K. Shen, A. P. Aiden, A. Veres, M. K. Gray, The Google Books Team, J. P. Pickett, et al. 2011. <span>“Quantitative <span>Analysis</span> of <span>Culture Using Millions</span> of <span>Digitized Books</span>.”</span> <em>Science</em> 331 (6014): 176–82. <a href="https://doi.org/10.1126/science.1199644">https://doi.org/10.1126/science.1199644</a>.
+Michel, J.-B., Y. K. Shen, A. P. Aiden, A. Veres, M. K. Gray, The Google
+Books Team, J. P. Pickett, et al. 2011. <span>“Quantitative
+<span>Analysis</span> of <span>Culture Using Millions</span> of
+<span>Digitized Books</span>.”</span> <em>Science</em> 331 (6014):
+176–82. <a
+href="https://doi.org/10.1126/science.1199644">https://doi.org/10.1126/science.1199644</a>.
 </div>
 <div id="ref-Ogden1923" class="csl-entry" role="doc-biblioentry">
-Ogden, Charles Kay, and Ivor Armstrong Richards. 1923. <em>The <span>Meaning</span> of <span>Meaning</span>: <span>A Study</span> of the <span>Influence</span> of <span>Language Upon Thought</span> and of the <span>Science</span> of <span>Symbolism</span>. <span>Supplementary Essays</span> by <span>B</span>. <span>Malinowski</span> and <span>F</span>.<span>G</span>. <span>Crookshank</span></em>. <span>New York</span>: <span>Harcourt</span>. <a href="https://books.google.com?id=i3MIAQAAIAAJ">https://books.google.com?id=i3MIAQAAIAAJ</a>.
+Ogden, Charles Kay, and Ivor Armstrong Richards. 1923. <em>The
+<span>Meaning</span> of <span>Meaning</span>: <span>A Study</span> of
+the <span>Influence</span> of <span>Language Upon Thought</span> and of
+the <span>Science</span> of <span>Symbolism</span>. <span>Supplementary
+Essays</span> by <span>B</span>. <span>Malinowski</span> and
+<span>F</span>.<span>G</span>. <span>Crookshank</span></em>. <span>New
+York</span>: <span>Harcourt</span>. <a
+href="https://books.google.com?id=i3MIAQAAIAAJ">https://books.google.com?id=i3MIAQAAIAAJ</a>.
 </div>
 </div>
 </section></section>

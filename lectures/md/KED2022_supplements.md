@@ -116,15 +116,83 @@ done
 
 
 
-## Data Cleaning
+## Imperfect Data: A Tail of Bias
+
+- social bias
+  - view from somewhere, stereotypes
+- data/archive holes
+
+  - lost, uncollected
+- corpus curation
+  - supposition that key-word indicates topic
+- noise in data
+  - OCR errors, inconsistent spelling, non-content
 
 
 
-## In-class: Exercises I{data-background=#3c70b5}
+<br>
+
+:point_right: think about the data and mitigate issues
 
 
 
+::: notes
 
+- fehlende, rauschende, selektive & verzerrte Daten
+- sozialer Kontext
+  - z.B. Budgetkürzung oder Neuausrichtung --> Wegfall von Thema
+  - Sicht von weisen Männern auf Thema
+- non-content elements
+  - Metadaten, Kopfzeilen etc.
+
+:::
+
+
+
+## Outlook: NLP is on Fire 🔥
+
+
+- supervised machine learning
+- you can do basically anything with modern NLP
+
+  - train on human-annotated data
+- effort, insights and quality may differ
+
+  - for better or worse
+
+::: notes
+
+- die meisten haben ihr Schulwissen wieder vergessen, wieso kann das der Computer
+- Intuition einfach, genaue technische Funktionsweise egal
+  - Genauigkeit wichtig, aber noch zu advanced
+  - best-practice
+- viel genauer dank Embeddings (self-supervised)
+
+:::
+
+
+
+## Mind your Data
+
+- Who has a voice in your data?
+  - social context
+- bigger is not necessarily better
+  - more vs. more diverse data
+
+* clean your data thoroughly
+  * noisy vs. clean data
+
+
+
+## <span style="color:var(--red)">Anatomy of AI[@Crawford2018]<br> illustrated by the Amazon Echo</span>{data-background=../images/anatomy_of_ai.png}
+
+::: notes
+
+- Es geht um mehr als nur Technologie
+- Technologie ist eingewoben ins Soziale
+- Soziotechnische Systeme
+
+:::
 
 ## Grid Example
 

@@ -12,12 +12,20 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     div.csl-bib-body { }
     div.csl-entry {
@@ -265,6 +273,10 @@
   }
 
 
+  section.has-dark-background code {
+      color: silver;
+  }
+
   .reveal table {
       font-size: 0.8em;
   }
@@ -357,8 +369,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -422,16 +433,20 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#3 Setting up your Development Environment</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
   <p class="date">17 March 2022</p>
 </section>
 
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>research workflow <span class="emoji" data-emoji="bookmark_tabs">📑</span></li>
-<li>interacting with computers <span class="emoji" data-emoji="magic_wand">🪄</span></li>
-<li>installation of programs <span class="emoji" data-emoji="hammer">🔨</span></li>
+<li>research workflow <span class="emoji"
+data-emoji="bookmark_tabs">📑</span></li>
+<li>interacting with computers <span class="emoji"
+data-emoji="magic_wand">🪄</span></li>
+<li>installation of programs <span class="emoji"
+data-emoji="hammer">🔨</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -479,30 +494,41 @@
 </aside>
 </section>
 <section>
-<section id="the-zen-of-organizing" class="title-slide slide level1 white-text" data-background="../images/puzzle_unsplash.jpg">
-<h1 class="white-text" data-background="../images/puzzle_unsplash.jpg">The Zen of Organizing</h1>
+<section id="the-zen-of-organizing"
+class="title-slide slide level1 white-text"
+data-background="../images/puzzle_unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/puzzle_unsplash.jpg">The Zen of
+Organizing</h1>
 
 </section>
 <section id="research-means-organizing" class="slide level2">
 <h2>Research means Organizing</h2>
-<h3 id="how-a-computational-approach-helps">How a computational approach helps</h3>
+<h3 id="how-a-computational-approach-helps">How a computational approach
+helps</h3>
 <ul>
-<li>scripts as documentation <span class="emoji" data-emoji="memo">📝</span></li>
-<li>efficient automation <span class="emoji" data-emoji="recycle">♻️</span>
+<li>scripts as documentation <span class="emoji"
+data-emoji="memo">📝</span></li>
+<li>efficient automation <span class="emoji"
+data-emoji="recycle">♻️</span>
 <ul>
 <li>“don’t repeat yourself”</li>
 </ul></li>
-<li>less error-prone <span class="emoji" data-emoji="woman_facepalming">🤦‍♀️</span> <span class="emoji" data-emoji="man_facepalming">🤦‍♂️</span></li>
+<li>less error-prone <span class="emoji"
+data-emoji="woman_facepalming">🤦‍♀️</span> <span class="emoji"
+data-emoji="man_facepalming">🤦‍♂️</span></li>
 <li>reproducible <span class="emoji" data-emoji="100">💯</span></li>
 </ul>
 <aside class="notes">
 <ul>
 <li>Wissenschaft auch praktische Seite, nicht nur theoretische
 <ul>
-<li>chaotisch statt strukturiert (aufgeräumte Papers kommen erst ganz am Ende)</li>
+<li>chaotisch statt strukturiert (aufgeräumte Papers kommen erst ganz am
+Ende)</li>
 <li>Organisation von Komplexität als Problem</li>
 </ul></li>
-<li>Reproduzierbarkeit ist Arbeitsgrundlage und höchster Wert (mehr noch als Wahrheit)
+<li>Reproduzierbarkeit ist Arbeitsgrundlage und höchster Wert (mehr noch
+als Wahrheit)
 <ul>
 <li>Wiederverwendung von Code/Datensatz + Literatur/Theorien</li>
 </ul></li>
@@ -514,7 +540,8 @@
 <li>Code strukturiert/dokumentiert Arbeitsablauf/Entscheidungen
 <ul>
 <li>gegen Vergessenheit</li>
-<li>schützt nicht vor Fehler, aber sichert inkrementellen Fortschritt</li>
+<li>schützt nicht vor Fehler, aber sichert inkrementellen
+Fortschritt</li>
 </ul></li>
 <li>wichtig für grössere Projekte + Abschlussarbeiten</li>
 <li>kurzfristig langsamer, langfristig effizienter
@@ -537,7 +564,11 @@
 </ul>
 </div><div class="column" style="width:50%;">
 <figure>
-<img data-src="../images/zotero.png" alt="Zotero is a free, open-source software for managing scientific literature" /><figcaption aria-hidden="true"><a href="https://www.zotero.org/">Zotero</a> is a free, open-source software for managing scientific literature</figcaption>
+<img data-src="../images/zotero.png"
+alt="Zotero is a free, open-source software for managing scientific literature" />
+<figcaption aria-hidden="true"><a
+href="https://www.zotero.org/">Zotero</a> is a free, open-source
+software for managing scientific literature</figcaption>
 </figure>
 </div>
 </div>
@@ -584,23 +615,29 @@
 <li>workflow for data science</li>
 </ul></li>
 </ul>
-<p><span class="citation" data-cites="Healy2019">(see also Healy 2019)</span></p>
+<p><span class="citation" data-cites="Healy2019">(see also Healy
+2019)</span></p>
 </div><div class="column" style="width:20%;">
 <figure>
-<img data-src="../images/original-apple-iphone.jpg" alt="Apple Original iPhone (2007)" /><figcaption aria-hidden="true">Apple Original iPhone (2007)</figcaption>
+<img data-src="../images/original-apple-iphone.jpg"
+alt="Apple Original iPhone (2007)" />
+<figcaption aria-hidden="true">Apple Original iPhone (2007)</figcaption>
 </figure>
 </div>
 </div>
 <aside class="notes">
 <ul>
-<li>Computer haben sich massiv verändert -&gt; am meisten an Oberfläche</li>
+<li>Computer haben sich massiv verändert -&gt; am meisten an
+Oberfläche</li>
 <li>Spannungsfeld zweier Trends
 <ul>
-<li>Einfachheit –&gt; Eingeschränktheit; nur machen, was vorgesehen ist</li>
+<li>Einfachheit –&gt; Eingeschränktheit; nur machen, was vorgesehen
+ist</li>
 <li>Flexibilität –&gt; technisches Vorwissen</li>
 </ul></li>
 <li>Apple: GUI/Bedienung Angleichung an physische Welt</li>
-<li>Engineering: schwieriger Einstieg/Lernen, dafür sehr viel effektiver/vielseitiger
+<li>Engineering: schwieriger Einstieg/Lernen, dafür sehr viel
+effektiver/vielseitiger
 <ul>
 <li>ist alternativlos für Standardisierung unstandardisierter Daten</li>
 <li>keine Zauberei, aber sehr nützlich</li>
@@ -615,17 +652,20 @@
 </section>
 <section id="operating-systems-os" class="slide level2">
 <h2>Operating Systems (OS)</h2>
-<h3 id="between-hardware-and-programs">Between hardware and programs</h3>
+<h3 id="between-hardware-and-programs">Between hardware and
+programs</h3>
 <ul>
 <li>Microsoft Windows</li>
 <li>macOS</li>
-<li>Linux-based systems <span class="emoji" data-emoji="nerd_face">🤓</span></li>
+<li>Linux-based systems <span class="emoji"
+data-emoji="nerd_face">🤓</span></li>
 </ul>
 <aside class="notes">
 <ul>
 <li>OS</li>
 <li>Windows = Dominator, Alltag</li>
-<li>Linux = stable, secure, free, innovative. Became more user-friendly, sometimes still issue</li>
+<li>Linux = stable, secure, free, innovative. Became more user-friendly,
+sometimes still issue</li>
 <li>Mac = restricted to Mac HW, Unix-Derivat, vereint beide Welten</li>
 <li>Betriebssysteme wie Fahrräder oder Autos</li>
 <li>Systeme gleichen sich immer mehr an
@@ -639,8 +679,10 @@
 <h2>User Interfaces</h2>
 <div class="columns">
 <div class="column">
-<h3 id="graphical-user-interface-gui">graphical user interface (GUI)</h3>
-<p><img data-src="../images/graphical_user_interface.png" style="height:14cm" /></p>
+<h3 id="graphical-user-interface-gui">graphical user interface
+(GUI)</h3>
+<p><img data-src="../images/graphical_user_interface.png"
+style="height:14cm" /></p>
 </div><div class="column">
 <h3 id="command-line-interface-cli">command line interface (CLI)</h3>
 <p><img data-src="../images/command_line.png" style="height:14cm" /></p>
@@ -659,8 +701,11 @@
 </ul>
 </aside>
 </section>
-<section id="an-awesome-programmer-saves-the-world" class="slide level2" data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">
-<h2 data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif"><strong>“An awesome Programmer saves the World”</strong></h2>
+<section id="an-awesome-programmer-saves-the-world" class="slide level2"
+data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif">
+<h2
+data-background="https://media.giphy.com/media/AOSwwqVjNZlDO/giphy.gif"><strong>“An
+awesome Programmer saves the World”</strong></h2>
 <aside class="notes">
 <ul>
 <li>CLI auch in Popkultur, allerdings falsch dargestellt</li>
@@ -669,7 +714,8 @@
 </section>
 <section id="human-machine-interaction" class="slide level2">
 <h2>Human-Machine Interaction</h2>
-<h3 id="how-to-tell-the-computer-effienctly">How to tell the computer effienctly</h3>
+<h3 id="how-to-tell-the-computer-effienctly">How to tell the computer
+effienctly</h3>
 <ul>
 <li>text commands instead of clicks</li>
 <li>similar to human languages
@@ -689,7 +735,8 @@
 <li>Syntax sehr restriktiv
 <ul>
 <li>Computer sind ziemlich doof, aber sehr gehorsam.</li>
-<li>Machen genau, was man ihnen sagt, nichts mehr, nichts weniger. Nie.</li>
+<li>Machen genau, was man ihnen sagt, nichts mehr, nichts weniger.
+Nie.</li>
 </ul></li>
 </ul>
 </aside>
@@ -716,7 +763,8 @@
 <li>Python
 <ul>
 <li>einfach: reduziert auf das elementare</li>
-<li>Python is a general-purpose language whereas R is a statistical programming language.</li>
+<li>Python is a general-purpose language whereas R is a statistical
+programming language.</li>
 </ul></li>
 <li>Software heisst neuerdings Algorithmus
 <ul>
@@ -757,7 +805,8 @@
 </section>
 <section id="open-source-is-a-mindset" class="slide level2">
 <h2>Open-Source is a Mindset</h2>
-<h3 id="standing-on-the-shoulders-of-giants">Standing on the shoulders of giants</h3>
+<h3 id="standing-on-the-shoulders-of-giants">Standing on the shoulders
+of giants</h3>
 <ul>
 <li>free + open software</li>
 <li>cross-platform portability</li>
@@ -805,14 +854,18 @@
 </ul></li>
 <li>Github
 <ul>
-<li>source code + anleitung für Millionen von Programmen (klein und gross)</li>
+<li>source code + anleitung für Millionen von Programmen (klein und
+gross)</li>
 <li>repository</li>
 </ul></li>
 </ul>
 </aside>
 </section>
-<section id="learning-by-doing-doing-by-googleing." class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Learning by doing, doing by Googleing. <br><span class="emoji" data-emoji="woman_cartwheeling">🤸‍♀️</span><span class="emoji" data-emoji="man_cartwheeling">🤸‍♂️</span></h2>
+<section id="learning-by-doing-doing-by-googleing." class="slide level2"
+data-background="#4d7e65">
+<h2 data-background="#4d7e65">Learning by doing, doing by Googleing.
+<br><span class="emoji" data-emoji="woman_cartwheeling">🤸‍♀️</span><span
+class="emoji" data-emoji="man_cartwheeling">🤸‍♂️</span></h2>
 <aside class="notes">
 <ul>
 <li><p>Technical problems are normal + solutions around the corner</p>
@@ -820,7 +873,8 @@
 <li>Fehlermeldung lesen + googlen</li>
 </ul></li>
 <li><p>Without the internet, you are a nobody</p></li>
-<li><p>Installation is sometimes harder and much more poorly documented than mere usage</p></li>
+<li><p>Installation is sometimes harder and much more poorly documented
+than mere usage</p></li>
 </ul>
 </aside>
 </section></section>
@@ -830,11 +884,14 @@
 
 </section>
 <section id="backup" class="slide level2" data-background="#b5533c">
-<h2 data-background="#b5533c">Backup <span class="emoji" data-emoji="japanese_ogre">👹</span></h2>
+<h2 data-background="#b5533c">Backup <span class="emoji"
+data-emoji="japanese_ogre">👹</span></h2>
 <p>You don’t need it until you desperately need it!</p>
 </section>
-<section id="setting-up-your-development-environment" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">Setting up your Development Environment</h2>
+<section id="setting-up-your-development-environment"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">Setting up your Development
+Environment</h2>
 <h3 id="installation">Installation</h3>
 <ul>
 <li>Python 3.8
@@ -845,7 +902,9 @@
 <li>various Bash tools</li>
 <li>VS Code Editor</li>
 </ul>
-<p><span class="emoji" data-emoji="point_right">👉</span> Follow the <a href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">installation guide</a> for your OS.</p>
+<p><span class="emoji" data-emoji="point_right">👉</span> Follow the <a
+href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">installation
+guide</a> for your OS.</p>
 <aside class="notes">
 <ul>
 <li>verschiedene Installationsmöglichkeiten
@@ -863,15 +922,20 @@
 </aside>
 </section></section>
 <section>
-<section id="relax.-it-takes-a-while." class="title-slide slide level1 white-text" data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">
-<h1 class="white-text" data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">Relax. <br>It takes a while.</h1>
+<section id="relax.-it-takes-a-while."
+class="title-slide slide level1 white-text"
+data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">
+<h1 class="white-text"
+data-background="https://media.giphy.com/media/ZsbqQrUrzRtN6/giphy.gif">Relax.
+<br>It takes a while.</h1>
 
 </section>
 <section id="vs-code-editor" class="slide level2">
 <h2>VS Code Editor</h2>
 <div class="columns">
 <div class="column">
-<h3 id="the-microsoft-word-for-coding">The Microsoft Word for coding</h3>
+<h3 id="the-microsoft-word-for-coding">The Microsoft Word for
+coding</h3>
 <ul>
 <li>powerful integrated development environment (IDE)</li>
 <li>cross-platform</li>
@@ -879,7 +943,10 @@
 </ul>
 </div><div class="column">
 <figure>
-<img data-src="../images/vs_code_hello_world.png" alt="Write your first Python script in VS Code" /><figcaption aria-hidden="true">Write your first Python script in <a href="https://code.visualstudio.com/">VS Code</a></figcaption>
+<img data-src="../images/vs_code_hello_world.png"
+alt="Write your first Python script in VS Code" />
+<figcaption aria-hidden="true">Write your first Python script in <a
+href="https://code.visualstudio.com/">VS Code</a></figcaption>
 </figure>
 </div>
 </div>
@@ -895,7 +962,8 @@
 <p>Learn Python with interactive tutorials</p>
 <ul>
 <li><a href="https://pythonprinciples.com">Python Principles</a></li>
-<li><a href="https://www.learnpython.org/en/Welcome">LearnPython</a></li>
+<li><a
+href="https://www.learnpython.org/en/Welcome">LearnPython</a></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -906,11 +974,15 @@
 <section id="readings" class="slide level2">
 <h2>Readings</h2>
 <h3 id="optional-pimp-your-workflow">optional: pimp your workflow</h3>
-<p>Healy, Kieran. 2019. “The Plain Person’s Guide to Plain Text Social Science.” <a href="https://kieranhealy.org/publications/plain-person-text/">online</a>.</p>
+<p>Healy, Kieran. 2019. “The Plain Person’s Guide to Plain Text Social
+Science.” <a
+href="https://kieranhealy.org/publications/plain-person-text/">online</a>.</p>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
 <section id="references" class="slide level2">
@@ -939,9 +1011,12 @@ $(function() {
     });
 });
 </script>
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
 <div id="ref-Healy2019" class="csl-entry" role="doc-biblioentry">
-Healy, Kieran. 2019. <span>“The <span>Plain Person</span>’s <span>Guide</span> to <span>Plain Text Social Science</span>.”</span> <a href="https://kieranhealy.org/publications/plain-person-text/">https://kieranhealy.org/publications/plain-person-text/</a>.
+Healy, Kieran. 2019. <span>“The <span>Plain Person</span>’s
+<span>Guide</span> to <span>Plain Text Social Science</span>.”</span> <a
+href="https://kieranhealy.org/publications/plain-person-text/">https://kieranhealy.org/publications/plain-person-text/</a>.
 </div>
 </div>
 </section></section>

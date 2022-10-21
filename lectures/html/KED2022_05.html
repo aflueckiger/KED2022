@@ -12,12 +12,20 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
@@ -246,6 +254,10 @@
   }
 
 
+  section.has-dark-background code {
+      color: silver;
+  }
+
   .reveal table {
       font-size: 0.8em;
   }
@@ -338,8 +350,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -403,19 +414,22 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#5 Basic NLP with Command-line</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
   <p class="date">31 March 2022</p>
 </section>
 
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
 <ul>
-<li>perform shell commands <span class="emoji" data-emoji="joystick">🕹️</span>
+<li>perform shell commands <span class="emoji"
+data-emoji="joystick">🕹️</span>
 <ul>
 <li>navigate filesystem</li>
 <li>create/copy/move/remove files</li>
 </ul></li>
-<li>complete assignment <span class="emoji" data-emoji="writing_hand">✍️</span></li>
+<li>complete assignment <span class="emoji"
+data-emoji="writing_hand">✍️</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -425,13 +439,15 @@
 <li>Piping für komplexere Operationen</li>
 </ul></li>
 <li>Übungen ok? technische Fragen?</li>
-<li>letztes Mal inhaltliche Zumutung, heute erste inhaltlich interessante Analysen</li>
+<li>letztes Mal inhaltliche Zumutung, heute erste inhaltlich
+interessante Analysen</li>
 <li>ähnliches Tempo, dafür mehr Zeit zum Üben</li>
 </ul>
 </aside>
 </section>
 <section id="get-around-in-your-filesystem" class="slide level2">
-<h2>Get around in your filesystem <span class="emoji" data-emoji="evergreen_tree">🌲</span></h2>
+<h2>Get around in your filesystem <span class="emoji"
+data-emoji="evergreen_tree">🌲</span></h2>
 <pre class="bash"><code>.
 ├── README.md
 └── lectures
@@ -440,7 +456,8 @@
     └── md
         ├── KED2022_01.md
         └── KED2022_02.md</code></pre>
-<p>Example location of the course material: <code>/home/alex/KED2022</code></p>
+<p>Example location of the course material:
+<code>/home/alex/KED2022</code></p>
 <ul>
 <li><code>pwd</code> get the path to the current directory</li>
 <li><code>cd ..</code> go one folder up</li>
@@ -451,11 +468,13 @@
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>corpus linguistic using the shell​ <span class="emoji" data-emoji="knife">🔪</span>
+<li>corpus linguistic using the shell​ <span class="emoji"
+data-emoji="knife">🔪</span>
 <ul>
 <li>counting, finding, comparing​​</li>
 </ul></li>
-<li>analyzing programmes of Swiss parties <span class="emoji" data-emoji="bar_chart">📊</span></li>
+<li>analyzing programmes of Swiss parties <span class="emoji"
+data-emoji="bar_chart">📊</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -464,14 +483,20 @@
 <li>äusserst effektiv</li>
 </ul></li>
 <li>Ziel: mehr Übungszeit</li>
-<li>Syntax nicht merken, Wichtiges werdet ihr schlussendlich erinnern</li>
+<li>Syntax nicht merken, Wichtiges werdet ihr schlussendlich
+erinnern</li>
 </ul>
 </aside>
 </section>
-<section id="when-politics-changes-language-changes." class="slide level2">
+<section id="when-politics-changes-language-changes."
+class="slide level2">
 <h2>When politics changes, <br>language changes.</h2>
 <figure>
-<img data-src="../images/swiss_party_politics.gif" alt="historical development of Swiss party politics (Tagesanzeiger)" /><figcaption aria-hidden="true">historical development of Swiss party politics (<a href="https://blog.tagesanzeiger.ch/datenblog/index.php/1791/wie-sich-die-svp-aus-dem-buergerblock-verabschiedet-hat">Tagesanzeiger</a>)</figcaption>
+<img data-src="../images/swiss_party_politics.gif"
+alt="historical development of Swiss party politics (Tagesanzeiger)" />
+<figcaption aria-hidden="true">historical development of Swiss party
+politics (<a
+href="https://blog.tagesanzeiger.ch/datenblog/index.php/1791/wie-sich-die-svp-aus-dem-buergerblock-verabschiedet-hat">Tagesanzeiger</a>)</figcaption>
 </figure>
 <aside class="notes">
 <ul>
@@ -480,7 +505,8 @@
 <li>Wie erkenne ich semantische Veränderungen?
 <ul>
 <li>hier: Abstimmungsparolen von Parteien ausgewertet</li>
-<li>Welche Ziele/Ideologien stehen dahinter? –&gt; Texte fundamental</li>
+<li>Welche Ziele/Ideologien stehen dahinter? –&gt; Texte
+fundamental</li>
 </ul></li>
 <li>Wenn Politik ändert, ändert sich Sprache
 <ul>
@@ -497,17 +523,22 @@
 <ul>
 <li>use shell for quick analysis</li>
 </ul></li>
-<li>a dataset of documents (<code>.csv</code>, <code>.tsv</code>, <code>.xml</code>)
+<li>a dataset of documents (<code>.csv</code>, <code>.tsv</code>,
+<code>.xml</code>)
 <ul>
 <li>use Python for indepth analysis</li>
 </ul></li>
 </ol>
 <figure>
-<img data-src="../images/pile_books_unsplash.jpg" alt="Processing a collection of documents (src)" /><figcaption aria-hidden="true">Processing a collection of documents (<a href="https://unsplash.com/photos/5cFwQ-WMcJU">src</a>)</figcaption>
+<img data-src="../images/pile_books_unsplash.jpg"
+alt="Processing a collection of documents (src)" />
+<figcaption aria-hidden="true">Processing a collection of documents (<a
+href="https://unsplash.com/photos/5cFwQ-WMcJU">src</a>)</figcaption>
 </figure>
 <aside class="notes">
 <ul>
-<li>Start sehr oft Kommandozeile (z.B. Datenextraktion), dann Auswertung in Python</li>
+<li>Start sehr oft Kommandozeile (z.B. Datenextraktion), dann Auswertung
+in Python</li>
 <li>txt-files erste Stufe bei Datensatzerstellung</li>
 <li>Daten existieren viele, Datensätze eher wenige</li>
 <li>bei Datensatz
@@ -520,8 +551,11 @@
 </aside>
 </section>
 <section>
-<section id="counting-things" class="title-slide slide level1 white-text" data-background="../images/counting_blackboard.jpg">
-<h1 class="white-text" data-background="../images/counting_blackboard.jpg">Counting Things</h1>
+<section id="counting-things"
+class="title-slide slide level1 white-text"
+data-background="../images/counting_blackboard.jpg">
+<h1 class="white-text"
+data-background="../images/counting_blackboard.jpg">Counting Things</h1>
 
 </section>
 <section id="frequency-analysis" class="slide level2">
@@ -536,7 +570,10 @@
 </ul>
 </div><div class="column" style="width:40%;">
 <figure>
-<img data-src="../images/word_magnets.jpg" alt="text as a bag of words (src)" /><figcaption aria-hidden="true">text as a bag of words (<a href="https://cdn02.plentymarkets.com/r3pmentklgg2/item/../images/1716/full/Magnetwoerter.jpg">src</a>)</figcaption>
+<img data-src="../images/word_magnets.jpg"
+alt="text as a bag of words (src)" />
+<figcaption aria-hidden="true">text as a bag of words (<a
+href="https://cdn02.plentymarkets.com/r3pmentklgg2/item/../images/1716/full/Magnetwoerter.jpg">src</a>)</figcaption>
 </figure>
 </div>
 </div>
@@ -547,7 +584,8 @@
 <ul>
 <li>BoW = Sack mit Wörtern</li>
 <li>Approach schmerzt aus sozialwissenschaftlicher Perspektive</li>
-<li>Verlust Ambiguitäten = Nachteil // radikale Vereinfachung (einfaches Zählen) = grösster Vorteil</li>
+<li>Verlust Ambiguitäten = Nachteil // radikale Vereinfachung (einfaches
+Zählen) = grösster Vorteil</li>
 </ul></li>
 <li>theoetische Übersicht von Approaches später im Seminar
 <ul>
@@ -632,7 +670,8 @@ uniq -c         # count repeated lines</code></pre>
 <li>Frage an Klasse: häufigstes Wort SVP?
 <ul>
 <li>Schweiz, Bürger etc.: national, männlich</li>
-<li>cat materials/data/swiss_party_programmes/txt/svp_programmes/*txt | tr ” ” “” | sort | uniq -c | sort -h</li>
+<li>cat materials/data/swiss_party_programmes/txt/svp_programmes/*txt |
+tr ” ” “” | sort | uniq -c | sort -h</li>
 </ul></li>
 </ul>
 </aside>
@@ -654,7 +693,8 @@ uniq -c         # count repeated lines</code></pre>
 <aside class="notes">
 <ul>
 <li>Korpus = Textsammlung</li>
-<li>absolut nur, wenn grösserer Output (z.B. mehr Flyers) mitgemessen werden soll</li>
+<li>absolut nur, wenn grösserer Output (z.B. mehr Flyers) mitgemessen
+werden soll</li>
 </ul>
 </aside>
 </section>
@@ -678,14 +718,19 @@ tr -s &quot; &quot; &quot;\t&quot;  &gt; test.tsv  </code></pre>
 </ul>
 </aside>
 </section>
-<section id="in-class-matching-and-counting" class="slide level2" data-background="#3c70b5">
+<section id="in-class-matching-and-counting" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Matching and counting</h2>
 <ol type="1">
-<li><p>Print the following sentence in your command line using <code>echo</code>.</p>
+<li><p>Print the following sentence in your command line using
+<code>echo</code>.</p>
 <pre class="bash"><code>echo &quot;There are a few related fields: NLP, computational linguistics, and computational text analysis.&quot;</code></pre></li>
-<li><p>How many words are in this sentence? Use the pipe operator to combine the command above with <code>wc</code>.</p></li>
-<li><p>Match the words <code>computational</code> and colorize its occurences in the sentence using <code>egrep</code>.</p></li>
-<li><p>Get the frequencies of each word in this sentence using <code>tr</code> and other commands.</p></li>
+<li><p>How many words are in this sentence? Use the pipe operator to
+combine the command above with <code>wc</code>.</p></li>
+<li><p>Match the words <code>computational</code> and colorize its
+occurences in the sentence using <code>egrep</code>.</p></li>
+<li><p>Get the frequencies of each word in this sentence using
+<code>tr</code> and other commands.</p></li>
 </ol>
 <aside class="notes">
 <p><strong>Pause</strong></p>
@@ -705,7 +750,8 @@ tr -s &quot; &quot; &quot;\t&quot;  &gt; test.tsv  </code></pre>
 <li>join lines</li>
 <li>trimming header + footer</li>
 <li>splitting into multiple files</li>
-<li>using patterns to remove/extract parts <span class="emoji" data-emoji="date">📅</span></li>
+<li>using patterns to remove/extract parts <span class="emoji"
+data-emoji="date">📅</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -734,7 +780,8 @@ tr &quot;Y&quot; &quot;Z&quot;                          # replace any Y with Z</
 <ul>
 <li>Es gibt Zeichenklassen für Buchstaben, Zahlen und Interpunktion</li>
 <li>löscht alle Einzelzeichen in Text (keine Sequenzen)</li>
-<li>Interpunktion wird sehr oft entfernt, da sowieso Kontext verloren geht in BoW</li>
+<li>Interpunktion wird sehr oft entfernt, da sowieso Kontext verloren
+geht in BoW</li>
 </ul>
 </aside>
 </section>
@@ -747,7 +794,8 @@ tr -d &quot;[:punct:]&quot; | tr -d &quot;[:digit:]&quot; &gt; speech_clean.txt<
 <aside class="notes">
 <ul>
 <li>Kleinschreibung , keine Interpunktion, keine Zahlen</li>
-<li>standardmässige Repräsentation in BoW (hier noch mit Reihenfolge)</li>
+<li>standardmässige Repräsentation in BoW (hier noch mit
+Reihenfolge)</li>
 </ul>
 </aside>
 </section>
@@ -773,19 +821,23 @@ csplit huge_text.txt  &quot;/delimiter/&quot; {*}</code></pre>
 </section>
 <section id="check-differences-between-files" class="slide level2">
 <h2>Check Differences between Files</h2>
-<h4 id="sanity-check-after-modification">sanity check after modification</h4>
+<h4 id="sanity-check-after-modification">sanity check after
+modification</h4>
 <pre class="bash"><code># show differences side-by-side and only differing lines
 diff -y --suppress-common-lines text_raw.txt text_proc.txt</code></pre>
 </section>
-<section id="where-there-is-a-shell-there-is-a-way." class="slide level2" data-background="#4d7e65">
-<h2 data-background="#4d7e65">Where there is a shell,<br>there is a way. <span class="emoji" data-emoji="thumbsup">👍</span></h2>
+<section id="where-there-is-a-shell-there-is-a-way."
+class="slide level2" data-background="#4d7e65">
+<h2 data-background="#4d7e65">Where there is a shell,<br>there is a way.
+<span class="emoji" data-emoji="thumbsup">👍</span></h2>
 <aside class="notes">
 <ul>
 <li>Zusammenfassung
 <ul>
 <li>Nach Filesystem, nun auch Bearbeiten, Zählen</li>
 </ul></li>
-<li>Shell = flexibles + mächtiges Werkzeug durch Kombinieren von mehreren Commands</li>
+<li>Shell = flexibles + mächtiges Werkzeug durch Kombinieren von
+mehreren Commands</li>
 <li>Stackoverflow liefert Antworten auf ein Problem</li>
 </ul>
 </aside>
@@ -793,14 +845,17 @@ diff -y --suppress-common-lines text_raw.txt text_proc.txt</code></pre>
 <section id="organizing-code" class="slide level2">
 <h2>Organizing Code</h2>
 <ul>
-<li><a href="https://git-scm.com/">Git</a> tracks file changes and allows for version management</li>
-<li><a href="https://github.com/">GitHub</a> is a popular hosting platform based on Git
+<li><a href="https://git-scm.com/">Git</a> tracks file changes and
+allows for version management</li>
+<li><a href="https://github.com/">GitHub</a> is a popular hosting
+platform based on Git
 <ul>
 <li>share code and collaborate</li>
 <li>repository = project folder</li>
 </ul></li>
 </ul>
-<p><span class="emoji" data-emoji="nerd_face">🤓</span> Published code and data are parts of the endeavour of open science.</p>
+<p><span class="emoji" data-emoji="nerd_face">🤓</span> Published code
+and data are parts of the endeavour of open science.</p>
 <aside class="notes">
 <ul>
 <li>Version Managment Software
@@ -817,46 +872,78 @@ diff -y --suppress-common-lines text_raw.txt text_proc.txt</code></pre>
 </aside>
 </section></section>
 <section>
-<section id="questions" class="title-slide slide level1 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h1 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
+<section id="questions" class="title-slide slide level1 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h1 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h1>
 
 </section>
-<section id="in-class-getting-ready" class="slide level2" data-background="#3c70b5">
+<section id="in-class-getting-ready" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Getting ready</h2>
 <ol type="1">
-<li><p>Change into your local copy of the GitHub course repository KED2022 and update it with <code>git pull</code>. When you haven’t cloned the repository, follow section 5 of the <a href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">installation guide</a> .</p>
-<p>You find some party programmes (Grüne, SP, SVP) in <code>materials/data/swiss_party_programmes/txt</code>. The programmes are provided in plain text which I have extracted from the publicly available PDFs.</p></li>
-<li><p>Have a look at the content of some of these text files using <code>more</code>.</p></li>
+<li><p>Change into your local copy of the GitHub course repository
+KED2022 and update it with <code>git pull</code>. When you haven’t
+cloned the repository, follow section 5 of the <a
+href="https://aflueckiger.github.io/KED2022/materials/installation_guide.pdf">installation
+guide</a> .</p>
+<p>You find some party programmes (Grüne, SP, SVP) in
+<code>materials/data/swiss_party_programmes/txt</code>. The programmes
+are provided in plain text which I have extracted from the publicly
+available PDFs.</p></li>
+<li><p>Have a look at the content of some of these text files using
+<code>more</code>.</p></li>
 </ol>
 </section>
-<section id="in-class-analyzing-swiss-party-programmes-i" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes I</h2>
+<section id="in-class-analyzing-swiss-party-programmes-i"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes
+I</h2>
 <ol type="1">
-<li><p>Compare the absolute frequencies of single terms or multi-word expressions of your choice (e.g., Ökologie, Sicherheit, Schweiz)…</p>
+<li><p>Compare the absolute frequencies of single terms or multi-word
+expressions of your choice (e.g., Ökologie, Sicherheit, Schweiz)…</p>
 <ul>
 <li>across parties</li>
 <li>historically within a party</li>
 </ul>
-<p>Use the file names as filter to get various aggregation of the word counts.</p></li>
-<li><p>Pick terms of your interest and look at their contextual use by extracting relevant passages. Does the usage differ across parties or time?</p></li>
+<p>Use the file names as filter to get various aggregation of the word
+counts.</p></li>
+<li><p>Pick terms of your interest and look at their contextual use by
+extracting relevant passages. Does the usage differ across parties or
+time?</p></li>
 </ol>
-<p><strong>Share your insights with the class using <a href="https://etherpad.wikimedia.org/p/KED2022">Etherpad</a>.</strong></p>
+<p><strong>Share your insights with the class using <a
+href="https://etherpad.wikimedia.org/p/KED2022">Etherpad</a>.</strong></p>
 </section>
-<section id="in-class-analyzing-swiss-party-programmes-ii" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes II</h2>
+<section id="in-class-analyzing-swiss-party-programmes-ii"
+class="slide level2" data-background="#3c70b5">
+<h2 data-background="#3c70b5">In-class: Analyzing Swiss Party Programmes
+II</h2>
 <ol type="1">
-<li>Convert the word frequencies per party into a <code>tsv</code> dataset. Compute the relative word frequency instead of the absolute frequency using any spreadsheet software (e.g. Excel). Are your conclusions still valid after accounting for the size?</li>
-<li>Can you refine the results with further preprocessing of the data?</li>
-<li>What is the size of the vocabulary of this data collection (number of unique words)?</li>
+<li>Convert the word frequencies per party into a <code>tsv</code>
+dataset. Compute the relative word frequency instead of the absolute
+frequency using any spreadsheet software (e.g. Excel). Are your
+conclusions still valid after accounting for the size?</li>
+<li>Can you refine the results with further preprocessing of the
+data?</li>
+<li>What is the size of the vocabulary of this data collection (number
+of unique words)?</li>
 </ol>
-<p><strong>Pro Tip</strong> <span class="emoji" data-emoji="nerd_face">🤓</span>: Use <code>egrep</code> to look up commands in the <code>.md</code> course slides</p>
+<p><strong>Pro Tip</strong> <span class="emoji"
+data-emoji="nerd_face">🤓</span>: Use <code>egrep</code> to look up
+commands in the <code>.md</code> course slides</p>
 </section>
 <section id="additional-resources" class="slide level2">
 <h2>Additional Resources</h2>
-<p>When you look for useful primers on Bash, consider the following resources:</p>
+<p>When you look for useful primers on Bash, consider the following
+resources:</p>
 <ul>
-<li><a href="https://williamjturkel.net/2013/06/15/basic-text-analysis-with-command-line-tools-in-linux/">Tutorial Basic Text Analysis by W. Turkel</a></li>
-<li><a href="https://williamjturkel.net/2013/06/20/pattern-matching-and-permuted-term-indexing-with-command-line-tools-in-linux/">Tutorial Pattern Matching + KWIC by W. Turkel</a></li>
+<li><a
+href="https://williamjturkel.net/2013/06/15/basic-text-analysis-with-command-line-tools-in-linux/">Tutorial
+Basic Text Analysis by W. Turkel</a></li>
+<li><a
+href="https://williamjturkel.net/2013/06/20/pattern-matching-and-permuted-term-indexing-with-command-line-tools-in-linux/">Tutorial
+Pattern Matching + KWIC by W. Turkel</a></li>
 </ul>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>

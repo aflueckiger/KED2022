@@ -222,7 +222,8 @@ section:not(.has-dark-background) span.citation{
     max-height: 600px;
 }
 
-.reveal code {
+
+section.has-dark-background code {
     color: silver;
 }
 

@@ -12,12 +12,20 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
@@ -246,6 +254,10 @@
   }
 
 
+  section.has-dark-background code {
+      color: silver;
+  }
+
   .reveal table {
       font-size: 0.8em;
   }
@@ -338,8 +350,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -403,22 +414,27 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">#6 Learning Regular Expressions</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute">Faculty of Humanities and Social Sciences<br>University of Lucerne</p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
   <p class="date">7 April 2022</p>
 </section>
 
 <section id="recap-last-lecture" class="slide level2">
 <h2>Recap last Lecture</h2>
 <ul>
-<li>well-solved assignment #1 <span class="emoji" data-emoji="confetti_ball">🎊</span>
+<li>well-solved assignment #1 <span class="emoji"
+data-emoji="confetti_ball">🎊</span>
 <ul>
-<li><a href="https://github.com/aflueckiger/KED2022/blob/main/assignments/assignment_1/flueckiger_KED2022_1_solutions.sh">example solution</a></li>
+<li><a
+href="https://github.com/aflueckiger/KED2022/blob/main/assignments/assignment_1/flueckiger_KED2022_1_solutions.sh">example
+solution</a></li>
 </ul></li>
 <li>counting words <span class="emoji" data-emoji="1234">🔢</span>
 <ul>
 <li>particular words or entire vocabulary</li>
 </ul></li>
-<li>preprocessing ​and cleaning <span class="emoji" data-emoji="soap">🧼</span></li>
+<li>preprocessing ​and cleaning <span class="emoji"
+data-emoji="soap">🧼</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -441,8 +457,10 @@
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
 <ul>
-<li>introducing regular expression <span class="emoji" data-emoji="sparkles">✨</span></li>
-<li>practicing the writing of patterns <span class="emoji" data-emoji="roller_coaster">🎢</span></li>
+<li>introducing regular expression <span class="emoji"
+data-emoji="sparkles">✨</span></li>
+<li>practicing the writing of patterns <span class="emoji"
+data-emoji="roller_coaster">🎢</span></li>
 </ul>
 <aside class="notes">
 <ul>
@@ -460,14 +478,17 @@
 </section>
 <section id="formal-search-patterns" class="slide level2">
 <h2>Formal Search Patterns</h2>
-<h3 id="how-to-extract-all-email-addresses-in-a-text-collection">How to extract <strong>all email addresse</strong>s in a text collection?</h3>
+<h3 id="how-to-extract-all-email-addresses-in-a-text-collection">How to
+extract <strong>all email addresse</strong>s in a text collection?</h3>
 <pre class="bash"><code>Please contact us via info@organization.org.
 ---
 For specific questions ask Mrs. Green (a.green@mail.com).
 ---
 Reach out to support@me.ch</code></pre>
 <div class="fragment">
-<p><span class="emoji" data-emoji="point_right">👉</span> <strong>Solution:</strong> Write a single pattern to match any valid email adress</p>
+<p><span class="emoji" data-emoji="point_right">👉</span>
+<strong>Solution:</strong> Write a single pattern to match any valid
+email adress</p>
 <pre class="bash"><code>[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}   # match any email address (case-insensitive)</code></pre>
 <aside class="notes">
 <ul>
@@ -486,7 +507,8 @@ Reach out to support@me.ch</code></pre>
 <li>Suche nach @ findet alle Adressen</li>
 <li>wie aber extrahieren und welche Teile gehören genau dazu?</li>
 </ul></li>
-<li>kryptisch + hässlich, aber beliebig expressive Beschreibungssprache</li>
+<li>kryptisch + hässlich, aber beliebig expressive
+Beschreibungssprache</li>
 </ul>
 </aside>
 </div>
@@ -495,8 +517,10 @@ Reach out to support@me.ch</code></pre>
 <h2>What are patterns for?</h2>
 <ul>
 <li>finding <span class="emoji" data-emoji="mag_right">🔎</span></li>
-<li>extracting <span class="emoji" data-emoji="hammer_and_wrench">🛠️</span></li>
-<li>removing/cleaning <span class="emoji" data-emoji="wastebasket">🗑️</span></li>
+<li>extracting <span class="emoji"
+data-emoji="hammer_and_wrench">🛠️</span></li>
+<li>removing/cleaning <span class="emoji"
+data-emoji="wastebasket">🗑️</span></li>
 <li>replacing <span class="emoji" data-emoji="repeat">🔁</span></li>
 </ul>
 <p><strong>… specific parts in texts</strong></p>
@@ -507,7 +531,8 @@ Reach out to support@me.ch</code></pre>
 <li>für Preprocessing Textanalysen unverzichtbar</li>
 <li>Data Cleaning</li>
 </ul></li>
-<li>funktioniert genau gleich in Python, R und anderen Programmiersprachen</li>
+<li>funktioniert genau gleich in Python, R und anderen
+Programmiersprachen</li>
 </ul>
 </aside>
 </section>
@@ -517,14 +542,17 @@ Reach out to support@me.ch</code></pre>
 <aside class="notes">
 <ul>
 <li>Aufbereitung braucht viel Zeit</li>
-<li>einfaches Modell mit ein paar Zeilen Code, Bereinigung immer spezifisch für Datenquelle</li>
+<li>einfaches Modell mit ein paar Zeilen Code, Bereinigung immer
+spezifisch für Datenquelle</li>
 </ul>
-<p><a href="https://medium.com/koverhoop/data-cleaning-and-pre-processing-in-python-b28eea7ac045">src</a></p>
+<p><a
+href="https://medium.com/koverhoop/data-cleaning-and-pre-processing-in-python-b28eea7ac045">src</a></p>
 </aside>
 </section>
 <section id="what-are-regular-expressions-regex" class="slide level2">
 <h2>What are Regular Expressions (RegEx)?</h2>
-<h3 id="regex-builds-on-two-classes-of-symbols">RegEx builds on two classes of symbols</h3>
+<h3 id="regex-builds-on-two-classes-of-symbols">RegEx builds on two
+classes of symbols</h3>
 <ul>
 <li><strong>literal</strong> characters and strings
 <ul>
@@ -542,7 +570,8 @@ Reach out to support@me.ch</code></pre>
 <li>Regex = Muster = generalisierende Beschreibung</li>
 <li>Erklären von String = Zeichensequenz</li>
 <li>zwei Arten von Zeichen</li>
-<li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreue Repräsentation)
+<li>Literale = Zeichen steht für tatsächliches Zeichen (buchstabentreue
+Repräsentation)
 <ul>
 <li>wie letztes Mal</li>
 </ul></li>
@@ -557,7 +586,10 @@ Reach out to support@me.ch</code></pre>
 </section>
 <section id="finding-extracting" class="slide level2">
 <h2>Finding + Extracting</h2>
-<h3 id="extended-globally-search-for-regular-expression-and-print-egrep"><strong>e</strong>xtended <strong>g</strong>lobally search for <strong>r</strong>egular <strong>e</strong>xpression and <strong>p</strong>rint (egrep)</h3>
+<h3
+id="extended-globally-search-for-regular-expression-and-print-egrep"><strong>e</strong>xtended
+<strong>g</strong>lobally search for <strong>r</strong>egular
+<strong>e</strong>xpression and <strong>p</strong>rint (egrep)</h3>
 <ul>
 <li>tool to filter/keep matching lines only</li>
 </ul>
@@ -582,22 +614,26 @@ egrep -h &quot;only&quot; *.txt       # suppress file name</code></pre>
 </section>
 <section id="quantifiers" class="slide level2">
 <h2>Quantifiers</h2>
-<h3 id="repeat-preceding-character-x-times">repeat preceding character <code>X</code> times</h3>
+<h3 id="repeat-preceding-character-x-times">repeat preceding character
+<code>X</code> times</h3>
 <ul>
 <li><code>?</code> zero or one</li>
 <li><code>+</code> one or more</li>
 <li><code>*</code> zero or any number</li>
-<li><code>{n}</code>, <code>{m,n}</code> a specified number of times</li>
+<li><code>{n}</code>, <code>{m,n}</code> a specified number of
+times</li>
 </ul>
 <pre class="bash"><code>egrep -r &quot;Bundesrath?es&quot;        # match old and new spelling
 egrep -r &quot;a+&quot;                   # match one or more &quot;a&quot;
 egrep -r &quot;e{2}&quot;                 # match sequence of two &quot;e&quot;</code></pre>
-<p><span class="emoji" data-emoji="warning">⚠️</span> Do not confuse regex with Bash wildcards!</p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> Do not confuse
+regex with Bash wildcards!</p>
 <aside class="notes">
 <ul>
 <li>erste Klasse von Meta-Symbolen: Quantifikatoren</li>
 <li>definieren Anzahl von vorangehendem Zeichen</li>
-<li>in Regex beziehen sich Operatoren auf vorderes Zeichen, in Wildcard nicht</li>
+<li>in Regex beziehen sich Operatoren auf vorderes Zeichen, in Wildcard
+nicht</li>
 </ul>
 </aside>
 </section>
@@ -630,7 +666,8 @@ egrep -rohi &quot;[a-z]+ [a-z]+&quot;</code></pre>
 <li><code>.</code> matches any character (excl. newline)</li>
 <li><code>\</code> escapes to match literal
 <ul>
-<li><code>\.</code> means the literal <code>.</code> instead of “any symbol”</li>
+<li><code>\.</code> means the literal <code>.</code> instead of “any
+symbol”</li>
 </ul></li>
 <li><code>\w</code> matches any alpha-numeric character
 <ul>
@@ -649,9 +686,11 @@ egrep -r &quot;\(.*\)&quot;</code></pre>
 </ul>
 </aside>
 </section>
-<section id="the-power-of-." class="slide level2" data-background="#4d7e65">
+<section id="the-power-of-." class="slide level2"
+data-background="#4d7e65">
 <h2 data-background="#4d7e65">The power of <code>.*</code> …</h2>
-<p>matches <strong><em>any character</em></strong> <strong><em>any times</em></strong></p>
+<p>matches <strong><em>any character</em></strong> <strong><em>any
+times</em></strong></p>
 </section>
 <section id="more-complex-examples" class="slide level2">
 <h2>More Complex Examples</h2>
@@ -663,11 +702,13 @@ egrep -iro &quot;[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}&quot; **/*.txt
 </code></pre>
 <aside class="notes">
 <ul>
-<li>bei Erstellung von Online-Accounts prüfen RegEx Validität von Email</li>
+<li>bei Erstellung von Online-Accounts prüfen RegEx Validität von
+Email</li>
 </ul>
 </aside>
 </section>
-<section id="combining-regex-with-frequency-analysis" class="slide level2">
+<section id="combining-regex-with-frequency-analysis"
+class="slide level2">
 <h2>Combining RegEx with Frequency Analysis</h2>
 <h3 id="something-actually-useful">something actually useful</h3>
 <pre class="bash"><code># count political areas by looking up words ending with &quot;politik&quot;
@@ -680,21 +721,33 @@ egrep -rioh &quot;\w*ismus&quot; **/*.txt | sort | uniq -c | sort -h</code></pre
 <li>bis jetzt Spielerei, um RegEx zu lernen</li>
 <li>Grundlage für Seminararbeit
 <ul>
-<li>systematisches Suchen, quantifizieren und analysieren von Begriffsverwendung</li>
+<li>systematisches Suchen, quantifizieren und analysieren von
+Begriffsverwendung</li>
 </ul></li>
 </ul>
 </aside>
 </section>
-<section id="start-simple-add-complexity-subsequently." class="slide level2" data-background="../images/knitting.jpg">
-<h2 data-background="../images/knitting.jpg">Start simple, <br>add complexity subsequently.</h2>
+<section id="start-simple-add-complexity-subsequently."
+class="slide level2" data-background="../images/knitting.jpg">
+<h2 data-background="../images/knitting.jpg">Start simple, <br>add
+complexity subsequently.</h2>
 <!-- https://wallpaperscraft.com/download/needles_thread_knitting_105073/2048x1365 -->
 </section>
-<section id="in-class-exercise" class="slide level2" data-background="#3c70b5">
+<section id="in-class-exercise" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercise</h2>
 <ol type="1">
-<li>Use the command line to navigate to the local copy of the Github repository KED2022 and make sure it is up-to-date with <code>git pull</code>. Change in to the directory <code>materials/data/swiss_party_programmes/txt</code>.</li>
-<li>Use <code>egrep</code> to extract all uppercased words like <code>UNO, OECD, SP</code> and count their frequency.</li>
-<li>Use <code>egrep</code> to extract all plural nouns with female endings e.g. <code>Schweizerinnen</code> (starting with an uppercase letter, ending with <code>innen</code>, and any letter in between). Do the same for the male forms. Is there a qualitative or a quantitative difference between the gendered forms?</li>
+<li>Use the command line to navigate to the local copy of the Github
+repository KED2022 and make sure it is up-to-date with
+<code>git pull</code>. Change in to the directory
+<code>materials/data/swiss_party_programmes/txt</code>.</li>
+<li>Use <code>egrep</code> to extract all uppercased words like
+<code>UNO, OECD, SP</code> and count their frequency.</li>
+<li>Use <code>egrep</code> to extract all plural nouns with female
+endings e.g. <code>Schweizerinnen</code> (starting with an uppercase
+letter, ending with <code>innen</code>, and any letter in between). Do
+the same for the male forms. Is there a qualitative or a quantitative
+difference between the gendered forms?</li>
 </ol>
 <pre class="bash"><code># Some not so random hints 
 piping with |
@@ -705,34 +758,47 @@ egrep -roh **/*.txt</code></pre>
 <ul>
 <li><code>egrep -roh "[A-Z]{2,}" **/*.txt | sort | uniq -c | sort -h</code></li>
 <li><strong>Pause</strong></li>
-<li>CTRL+C um Befehl abzubrechen (falls länger als eine Sekunde dauert, ist etwas falsch)</li>
-<li>Start mit einfachem grep-Befehl, dann schauen, was gematcht wird und dann auszählen</li>
+<li>CTRL+C um Befehl abzubrechen (falls länger als eine Sekunde dauert,
+ist etwas falsch)</li>
+<li>Start mit einfachem grep-Befehl, dann schauen, was gematcht wird und
+dann auszählen</li>
 </ul>
 </aside>
 </section>
-<section id="in-class-solution" class="slide level2" data-background="#3c70b5">
+<section id="in-class-solution" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Solution</h2>
 <ol type="1">
-<li>Use <code>egrep</code> to extract all uppercased words like <code>UNO, OECD, SP</code> and count their frequency.
+<li>Use <code>egrep</code> to extract all uppercased words like
+<code>UNO, OECD, SP</code> and count their frequency.
 <ul>
 <li><code>egrep -roh "[A-Z]{2,}" **/*.txt | sort | uniq -c | sort -h</code></li>
 </ul></li>
-<li>Use <code>egrep</code> to extract all plural nouns with female endings e.g. <code>Schweizerinnen</code> (starting with an uppercase letter, ending with <code>innen</code>, and any letter in between). Do the same for the male forms. Is there a qualitative or a quantitative difference between the gendered forms?
+<li>Use <code>egrep</code> to extract all plural nouns with female
+endings e.g. <code>Schweizerinnen</code> (starting with an uppercase
+letter, ending with <code>innen</code>, and any letter in between). Do
+the same for the male forms. Is there a qualitative or a quantitative
+difference between the gendered forms?
 <ul>
 <li><code>egrep -roh "[A-Z][a-z]+innen\b" **/*.txt | sort | uniq -c | sort -h</code></li>
-<li><code>egrep -roh "[A-Z][a-z]+er\b" **/*.txt | sort | uniq -c | sort -h</code> (there is no way with regular expression to extract only nouns of the male form but not <code>Wasser</code> and the like. For this, you have to use some kind of machine learning.)</li>
+<li><code>egrep -roh "[A-Z][a-z]+er\b" **/*.txt | sort | uniq -c | sort -h</code>
+(there is no way with regular expression to extract only nouns of the
+male form but not <code>Wasser</code> and the like. For this, you have
+to use some kind of machine learning.)</li>
 </ul></li>
 </ol>
 </section>
 <section id="replacing-removing" class="slide level2">
 <h2>Replacing + Removing</h2>
-<h3 id="stream-editor-sed"><strong>s</strong>tream <strong>ed</strong>itor (sed)</h3>
+<h3 id="stream-editor-sed"><strong>s</strong>tream
+<strong>ed</strong>itor (sed)</h3>
 <ul>
 <li>advanced find + replace using regex
 <ul>
 <li><code>sed "s/WHAT/WITH/g" file.txt</code></li>
 </ul></li>
-<li><code>sed</code> replaces any sequence, <code>tr</code> only single symbols</li>
+<li><code>sed</code> replaces any sequence, <code>tr</code> only single
+symbols</li>
 </ul>
 <pre class="bash"><code>echo &quot;hello&quot; | sed &quot;s/llo/y/g&quot;      # replace &quot;llo&quot; with a &quot;y&quot;
 
@@ -747,7 +813,7 @@ egrep -roh **/*.txt</code></pre>
 <li>wie Suchen-Ersetzen-Funktion von Word, nur mächtiger dank Regex</li>
 <li>Löschen = Ersetzen mit leeren Sequenz</li>
 <li>flag “global”</li>
-<li>Demonstration mit \b</li>
+<li>Demonstration mit </li>
 <li><code>echo "hello hell" | sed "s/l\b/lo/g"</code></li>
 </ul>
 </aside>
@@ -757,7 +823,8 @@ egrep -roh **/*.txt</code></pre>
 <h3 id="reuse-match-with-grouping">reuse match with grouping</h3>
 <ul>
 <li>define a group with parentheses <code>(group_pattern)</code></li>
-<li><code>\1</code> equals the expression inside first pair of parentheses</li>
+<li><code>\1</code> equals the expression inside first pair of
+parentheses</li>
 <li><code>\2</code> expression of second pair</li>
 <li>…</li>
 </ul>
@@ -820,14 +887,16 @@ echo &quot;an apple, other apple&quot; | egrep &quot;a[^,]*apple&quot;</code></p
 </aside>
 </section>
 <section id="assignment-2" class="slide level2">
-<h2>Assignment #2 <span class="emoji" data-emoji="writing_hand">✍️</span></h2>
+<h2>Assignment #2 <span class="emoji"
+data-emoji="writing_hand">✍️</span></h2>
 <ul>
 <li>get/submit via OLAT
 <ul>
 <li>starting tomorrow</li>
 <li>deadline 15 April 2022, 23:59</li>
 </ul></li>
-<li>use forum on <a href="https://lms.uzh.ch/auth/RepositoryEntry/16703095856">OLAT</a>
+<li>use forum on <a
+href="https://lms.uzh.ch/auth/RepositoryEntry/16703095856">OLAT</a>
 <ul>
 <li>subscribe to get notifications</li>
 </ul></li>
@@ -839,33 +908,48 @@ echo &quot;an apple, other apple&quot; | egrep &quot;a[^,]*apple&quot;</code></p
 </ul>
 </aside>
 </section>
-<section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
+<section id="in-class-exercises-i" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercises I</h2>
 <ol type="1">
-<li>Use <code>egrep</code> to extract capitalized words and count them. What are the most frequent nouns?</li>
-<li>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>. Hint: Use a disjunction.</li>
+<li>Use <code>egrep</code> to extract capitalized words and count them.
+What are the most frequent nouns?</li>
+<li>Use <code>egrep</code> to extract words following any of these
+strings: <code>der die das</code>. Hint: Use a disjunction.</li>
 <li>Do the self-check on the next slide.</li>
-<li>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.</li>
+<li>Use <code>sed -E</code> to remove the table of content, the footer
+and the page number in the programme of the Green Party. Check the
+corresponding PDF to get a visual impression and test your regular
+expression with <code>egrep</code> first to see if you match the correct
+parts in the document.</li>
 </ol>
 </section>
-<section id="in-class-solution-i" class="slide level2" data-background="#3c70b5">
+<section id="in-class-solution-i" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Solution I</h2>
 <ol type="1">
-<li>Use <code>egrep</code> to extract capitalized words and count them. What are the most frequent nouns?
+<li>Use <code>egrep</code> to extract capitalized words and count them.
+What are the most frequent nouns?
 <ul>
 <li><code>egrep -roh "[A-Z][a-z]+" **/*.txt | sort | uniq -c | sort -h</code></li>
 </ul></li>
-<li>Use <code>egrep</code> to extract words following any of these strings: <code>der die das</code>. Hint: Use a disjunction.
+<li>Use <code>egrep</code> to extract words following any of these
+strings: <code>der die das</code>. Hint: Use a disjunction.
 <ul>
 <li><code>egrep -roh "(der|die|das) \w+" **/*.txt</code></li>
 </ul></li>
-<li>Use <code>sed -E</code> to remove the table of content, the footer and the page number in the programme of the Green Party. Check the corresponding PDF to get a visual impression and test your regular expression with <code>egrep</code> first to see if you match the correct parts in the document.
+<li>Use <code>sed -E</code> to remove the table of content, the footer
+and the page number in the programme of the Green Party. Check the
+corresponding PDF to get a visual impression and test your regular
+expression with <code>egrep</code> first to see if you match the correct
+parts in the document.
 <ul>
 <li><code>cat gruene_programme_2019.txt | sed "1,192d" | sed -E "s/^Wahlplattform.*2023$//g" | sed -E "s/^[0-9]+$//g"</code></li>
 </ul></li>
 </ol>
 </section>
-<section id="in-class-self-check" class="slide level2" data-background="#3c70b5">
+<section id="in-class-self-check" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Self-Check</h2>
 <h4 id="equivalent-patterns">equivalent patterns</h4>
 <pre class="bash"><code>a+ == aa*               # &quot;a&quot; once or more than once
@@ -875,33 +959,48 @@ a{2,3} == (aa|aaa)      # two or three &quot;a&quot;
 [ab] == (a|b)           # &quot;a&quot; or &quot;b&quot;
 [0-9] == (0|1|2|3|4|5|6|7|8|9)  #any digit</code></pre>
 </section>
-<section id="in-class-exercise-ii" class="slide level2" data-background="#3c70b5">
+<section id="in-class-exercise-ii" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercise II</h2>
 <ol type="1">
-<li>Count all the bigrams (sequence of two words) using character sets and quantifiers. What about trigrams (three words)?</li>
-<li>Extract the words following numbers (also consider numbers like: <code>1'000, 1,000 or 5%</code>). Then, count all the words while excluding the numbers themselves. Hint: Pipe another grep to remove the digits.</li>
+<li>Count all the bigrams (sequence of two words) using character sets
+and quantifiers. What about trigrams (three words)?</li>
+<li>Extract the words following numbers (also consider numbers like:
+<code>1'000, 1,000 or 5%</code>). Then, count all the words while
+excluding the numbers themselves. Hint: Pipe another grep to remove the
+digits.</li>
 <li>You are ready to come up with your own patterns…</li>
 </ol>
 </section>
-<section id="in-class-solution-ii" class="slide level2" data-background="#3c70b5">
+<section id="in-class-solution-ii" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Solution II</h2>
 <ol type="1">
-<li>Count all the bigrams (sequence of two words) using character sets and quantifiers. What about trigrams (three words)?
+<li>Count all the bigrams (sequence of two words) using character sets
+and quantifiers. What about trigrams (three words)?
 <ul>
 <li><code>egrep -hoir "\b[a-z]+ [a-z]+\b" | sort | uniq -c | sort -h</code></li>
 <li><code>egrep -hoir "\b[a-z]+ [a-z]+ [a-z]+\b" | sort | uniq -c | sort -h</code></li>
 </ul></li>
-<li>Extract the words following numbers (also consider numbers like: <code>1'000, 1,000 or 5%</code>). Then, count all the words while excluding the numbers themselves. Hint: Pipe another grep to remove the digits.
+<li>Extract the words following numbers (also consider numbers like:
+<code>1'000, 1,000 or 5%</code>). Then, count all the words while
+excluding the numbers themselves. Hint: Pipe another grep to remove the
+digits.
 <ul>
 <li><code>egrep -rhoi "[0-9][0-9,'%]+ [a-z]+" | egrep -io "[a-z]+" | sort | uniq -c | sort -h</code></li>
-<li>Alternative: <code>egrep -rhoi "[0-9][0-9,'%]+ [a-z]+" | sed -E "s/[0-9][0-9,'%]+//g" | sort | uniq -c | sort -h</code></li>
+<li>Alternative:
+<code>egrep -rhoi "[0-9][0-9,'%]+ [a-z]+" | sed -E "s/[0-9][0-9,'%]+//g" | sort | uniq -c | sort -h</code></li>
 </ul></li>
 </ol>
 </section>
-<section id="in-class-exercise-iii" class="slide level2" data-background="#3c70b5">
+<section id="in-class-exercise-iii" class="slide level2"
+data-background="#3c70b5">
 <h2 data-background="#3c70b5">In-class: Exercise III</h2>
 <ol type="1">
-<li><p>Since you know about RegEx, we can use a more sophisticated tokenizer to split a text into words. What is the difference between the old and new approach? Test it and check the helper page with <code>man</code>.</p>
+<li><p>Since you know about RegEx, we can use a more sophisticated
+tokenizer to split a text into words. What is the difference between the
+old and new approach? Test it and check the helper page with
+<code>man</code>.</p>
 <pre class="bash"><code># new, improved approach
 cat text.txt | tr -sc &quot;[a-zäöüA-ZÄÖÜ0-9-]&quot; &quot;\n&quot;
 
@@ -913,22 +1012,32 @@ cat text.txt | tr &quot; &quot; &quot;\n&quot;   </code></pre></li>
 <h2>More Resources</h2>
 <h3 id="required">required</h3>
 <ul>
-<li>Ben Schmidt. 2019. <a href="https://github.com/HumanitiesDataAnalysis/HDA19/blob/master/Handouts/01-regex.pdf">Regular Expressions</a>.</li>
-<li><a href="https://aflueckiger.github.io/KED2022/materials/cheatsheet_command_line.pdf">Cheatsheet</a> of this course</li>
+<li>Ben Schmidt. 2019. <a
+href="https://github.com/HumanitiesDataAnalysis/HDA19/blob/master/Handouts/01-regex.pdf">Regular
+Expressions</a>.</li>
+<li><a
+href="https://aflueckiger.github.io/KED2022/materials/cheatsheet_command_line.pdf">Cheatsheet</a>
+of this course</li>
 </ul>
 <p><br></p>
 <h3 id="highly-recommended">highly recommended</h3>
 <ul>
-<li>Nikolaj Lindberg. <a href="https://stts.se/egrep_for_linguists/egrep_for_linguists.pdf">egrep for Linguists</a>.</li>
+<li>Nikolaj Lindberg. <a
+href="https://stts.se/egrep_for_linguists/egrep_for_linguists.pdf">egrep
+for Linguists</a>.</li>
 </ul>
 <p><br></p>
-<h3 id="online-regular-expression-editor">online regular expression editor</h3>
+<h3 id="online-regular-expression-editor">online regular expression
+editor</h3>
 <ul>
-<li><a href="https://regex101.com/">regex101</a> to write and check patterns</li>
+<li><a href="https://regex101.com/">regex101</a> to write and check
+patterns</li>
 </ul>
 </section>
-<section id="questions" class="slide level2 white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
-<h2 class="white-text" data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h2>
+<section id="questions" class="slide level2 white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">
+<h2 class="white-text"
+data-background="../images/paint-anna-kolosyuk-unsplash.jpg">Questions?</h2>
 <!-- Adapted from https://www.artembutusov.com/pandoc-markdown-syntax-highlighting-with-highlight-js/ -->
 <p><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"></p>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/atom-one-dark-reasonable.min.css">

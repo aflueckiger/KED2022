@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Alex Flückiger">
+  <meta name="dcterms.date" content="2022-04-14">
   <title>The ABC of Computational Text Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -11,13 +12,40 @@
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/simple.css" id="theme">
   <style type='text/css'>
@@ -37,10 +65,12 @@
       --red: #b5533c;
       --black: #1d1e1f;
       --grey: #4a4a4b;
-      --color-control: #6497b1;
-      --color-headers: #03396c;
-      --color-marker: #b3cde0;
-
+      --color-subtitle: #00008B;
+      --color-headings: #00003F;
+      --color-small-headings: #5D5D9A;
+      --color-strong: #206C46;
+      --color-control: var(--color-small-headings);
+      --color-marker: #B6B6C8;
   }
 
 
@@ -79,21 +109,16 @@
   }
 
   .reveal .controls {
-      font-size: 12px;
       bottom: 24px;
-      right: 2px;
       color: var(--color-control);
   }
 
   .reveal .progress {
       height: 5px;
-      color: var(--color-headers);
+      color: var(--color-headings);
   }
 
   .reveal .slide-number {
-      right: 30px;
-      bottom: 4px;
-      font-size: 22px;
       background-color: transparent;
       color: var(--black);
   }
@@ -110,7 +135,7 @@
   }
 
   p.subtitle{
-      color: var(--color-headers);
+      color: var(--color-subtitle);
       font-family: 'Permanent Marker', cursive;
       font-size: 1.5em;
       padding-top: 1em;
@@ -140,7 +165,7 @@
   .reveal h4,
   .reveal h5,
   .reveal h6 {
-      color: var(--color-headers);
+      color: var(--color-headings)
   }
 
   .reveal h2 {
@@ -148,6 +173,8 @@
   }
 
   .reveal h3 {
+      color: var(--color-small-headings);
+      font-weight: bold;
       font-size: 1.3em;
   }
 
@@ -187,26 +214,30 @@
 
   ol li li,
   ul li li {
-      font-style: italic;
       margin-top: 0.2em;
       list-style-type: None;
       font-size: 0.8em;
+      font-weight: 300;
   }
 
   /*********************************************
   * OTHER TEXT
   *********************************************/
-  section:not(.has-dark-background) strong,
-  section:not(.has-dark-background) b {
-    color: #005b96;
+  section.has-dark-background strong,
+  section.has-dark-background b {
+    color: white
+  }
+
+  strong, b {
+      color: var(--color-strong)
   }
 
   .reveal a {
-      color: rgb(84, 151, 207);
+      color: var(--color-subtitle)
   }
 
   .reveal a:hover {
-    color: rgb(180, 10, 34);
+    color: #8B0000;
     text-shadow: none;
     border: none;
   }
@@ -217,13 +248,14 @@
   }
 
   .reveal figure figcaption {
+      font-style: italic;
     color: var(--grey);
     font-size: 75%;
   }
 
   section:not(.has-dark-background) span.citation{
       font-size: 60%;
-      font-style: italic;
+      font-weight:300;
       color: gray;
       vertical-align: bottom;
   }
@@ -240,6 +272,10 @@
       max-height: 600px;
   }
 
+
+  section.has-dark-background code {
+      color: silver;
+  }
 
   .reveal table {
       font-size: 0.8em;
@@ -301,7 +337,7 @@
   }
 
   .answer {
-      font-style: italic;
+      
       background-color: rgba(00, 00, 00, .2);
       padding: 0.8em;
       margin-top: 0.3em;
@@ -333,8 +369,7 @@
   }
   .reading p,
   .references {
-      font-size: 0.7em;
-
+      font-size: 0.6em;
   }
 
   .references > div{
@@ -348,7 +383,7 @@
   }
 
   .green {
-      color: #386C03;
+      color: #206C46;
   }
 
   .red {
@@ -371,7 +406,6 @@
 
   .l-double strong {
     font-size: 1.3em;
-    color: #4b729e;
   }
 
   .l-image-corner {
@@ -399,12 +433,9 @@
   <h1 class="title">The ABC of Computational Text Analysis</h1>
   <p class="subtitle">Supplements</p>
   <p class="author">Alex Flückiger</p>
-  <p class="institute"><div class="line-block">Faculty of Humanities and Social Sciences<br />
-University of Lucerne</div></p>
-  <p class="date">25 February 2022<br></br>
-<div class="institute">
-Faculty of Humanities and Social Sciences<br>University of Lucerne
-</div></p>
+  <p class="institute">Faculty of Humanities and Social
+Sciences<br>University of Lucerne</p>
+  <p class="date">14 April 2022</p>
 </section>
 
 <section id="purpose" class="slide level2">
@@ -493,11 +524,100 @@ for file in *.txt; do           # loop over all text files
  i=$((i+1))
 done</code></pre>
 </section>
-<section id="data-cleaning" class="slide level2">
-<h2>Data Cleaning</h2>
+<section id="imperfect-data-a-tail-of-bias" class="slide level2">
+<h2>Imperfect Data: A Tail of Bias</h2>
+<ul>
+<li><p>social bias</p>
+<ul>
+<li>view from somewhere, stereotypes</li>
+</ul></li>
+<li><p>data/archive holes</p>
+<ul>
+<li>lost, uncollected</li>
+</ul></li>
+<li><p>corpus curation</p>
+<ul>
+<li>supposition that key-word indicates topic</li>
+</ul></li>
+<li><p>noise in data</p>
+<ul>
+<li>OCR errors, inconsistent spelling, non-content</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><span class="emoji" data-emoji="point_right">👉</span> think about
+the data and mitigate issues</p>
+<aside class="notes">
+<ul>
+<li>fehlende, rauschende, selektive &amp; verzerrte Daten</li>
+<li>sozialer Kontext
+<ul>
+<li>z.B. Budgetkürzung oder Neuausrichtung –&gt; Wegfall von Thema</li>
+<li>Sicht von weisen Männern auf Thema</li>
+</ul></li>
+<li>non-content elements
+<ul>
+<li>Metadaten, Kopfzeilen etc.</li>
+</ul></li>
+</ul>
+</aside>
 </section>
-<section id="in-class-exercises-i" class="slide level2" data-background="#3c70b5">
-<h2 data-background="#3c70b5">In-class: Exercises I</h2>
+<section id="outlook-nlp-is-on-fire" class="slide level2">
+<h2>Outlook: NLP is on Fire 🔥</h2>
+<ul>
+<li><p>supervised machine learning</p></li>
+<li><p>you can do basically anything with modern NLP</p>
+<ul>
+<li>train on human-annotated data</li>
+</ul></li>
+<li><p>effort, insights and quality may differ</p>
+<ul>
+<li>for better or worse</li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li>die meisten haben ihr Schulwissen wieder vergessen, wieso kann das
+der Computer</li>
+<li>Intuition einfach, genaue technische Funktionsweise egal
+<ul>
+<li>Genauigkeit wichtig, aber noch zu advanced</li>
+<li>best-practice</li>
+</ul></li>
+<li>viel genauer dank Embeddings (self-supervised)</li>
+</ul>
+</aside>
+</section>
+<section id="mind-your-data" class="slide level2">
+<h2>Mind your Data</h2>
+<ul>
+<li>Who has a voice in your data?
+<ul>
+<li>social context</li>
+</ul></li>
+<li>bigger is not necessarily better
+<ul>
+<li>more vs. more diverse data</li>
+</ul></li>
+<li>clean your data thoroughly
+<ul>
+<li>noisy vs. clean data</li>
+</ul></li>
+</ul>
+</section>
+<section id="anatomy-of-aicrawford2018-illustrated-by-the-amazon-echo"
+class="slide level2" data-background="../images/anatomy_of_ai.png">
+<h2 data-background="../images/anatomy_of_ai.png"><span
+style="color:var(--red)">Anatomy of AI<span class="citation"
+data-cites="Crawford2018">(Crawford and Joler 2018)</span><br>
+illustrated by the Amazon Echo</span></h2>
+<aside class="notes">
+<ul>
+<li>Es geht um mehr als nur Technologie</li>
+<li>Technologie ist eingewoben ins Soziale</li>
+<li>Soziotechnische Systeme</li>
+</ul>
+</aside>
 </section>
 <section id="grid-example" class="slide level2">
 <h2>Grid Example</h2>
@@ -540,6 +660,14 @@ $(function() {
     });
 });
 </script>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Crawford2018" class="csl-entry" role="doc-biblioentry">
+Crawford, Kate, and Vladan Joler. 2018. <span>“Anatomy of an <span>AI
+System</span>.”</span> <span>Anatomy of an AI System</span>. 2018. <a
+href="http://www.anatomyof.ai">http://www.anatomyof.ai</a>.
+</div>
+</div>
 </section>
     </div>
   </div>
